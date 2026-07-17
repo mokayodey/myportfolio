@@ -1,0 +1,74 @@
+<!-- @dsCard group="Components" viewport="700x460" name="Surfaces — Card, ListItem, Rating" subtitle="Cards, discovery rows, star ratings" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 24px; background: var(--background); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; max-width: 652px; }
+  .lbl { font: var(--type-label-small); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--on-surface-variant); margin: 0 0 8px 2px; }
+  .list { background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--elevation-1); padding: 6px 14px; margin-top: 18px; max-width: 652px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Card, ListItem, Rating, Divider, Badge } = window.MaendeleoDesignSystem_e7e7ed;
+  function Demo() {
+    const [fav, setFav] = React.useState({1:true});
+    const rows = [
+      { id:1, title:"Karibu Market", meta:["Grocery","$$","0.4 mi"], rating:5, supporting:"Fresh produce daily — open till 8pm" },
+      { id:2, title:"Tausi Café", meta:["Coffee","$","1.2 mi"], rating:4, supporting:"Cozy spot with garden seating" },
+      { id:3, title:"Mwanga Studio", meta:["Services","$$$","2.1 mi"], rating:4, supporting:"Photography & print, by appointment" },
+    ];
+    return (
+      <div>
+        <div className="grid">
+          <div>
+            <p className="lbl">Elevated</p>
+            <Card variant="elevated">
+              <div style={{font:"var(--type-title-medium)",color:"var(--on-surface)",marginBottom:4}}>Section title</div>
+              <div style={{font:"var(--type-body-medium)",color:"var(--on-surface-variant)"}}>Within 5 miles · $$–$$$</div>
+            </Card>
+          </div>
+          <div>
+            <p className="lbl">Outlined</p>
+            <Card variant="outlined">
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                <span style={{font:"var(--type-title-medium)"}}>Status</span><Badge tone="success">Open</Badge>
+              </div>
+              <Rating value={4.5} showValue />
+            </Card>
+          </div>
+          <div>
+            <p className="lbl">Filled / interactive</p>
+            <Card variant="filled" interactive>
+              <div style={{font:"var(--type-title-medium)",color:"var(--on-surface)",marginBottom:4}}>Hover me</div>
+              <div style={{font:"var(--type-body-medium)",color:"var(--on-surface-variant)"}}>Lifts on hover</div>
+            </Card>
+          </div>
+        </div>
+
+        <div className="list">
+          {rows.map((r,i)=>(
+            <React.Fragment key={r.id}>
+              <ListItem {...r}
+                favorite={!!fav[r.id]}
+                onToggleFavorite={()=>setFav(s=>({...s,[r.id]:!s[r.id]}))} />
+              {i<rows.length-1 && <Divider inset />}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<Demo />);
+</script>
+</body>
+</html>

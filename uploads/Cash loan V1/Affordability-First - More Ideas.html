@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affordability-First — More Ideas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2b2b2b; --ink-soft: #6f6f6f; --line: #3a3a3a;
+    --paper: #ffffff; --fill: #e6e6e4; --fill-2: #f4f4f2;
+    --accent: #1F8A36; --accent-wash: #dff0e2; --mute: #b8b9b4; --amber: #b5651d;
+    --hand: 'Gaegu', cursive; --marker: 'Caveat', cursive;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #d9dad6; font-family: var(--hand); color: var(--ink); }
+  body {
+    min-width: 100%; min-height: 100vh; width: max-content;
+    padding: 56px 48px 80px; box-sizing: border-box;
+    background-image: radial-gradient(circle at 1px 1px, #cccdc8 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+  .page-head { margin-bottom: 40px; max-width: 880px; }
+  .page-head .kicker { font-family: var(--marker); font-size: 19px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+  .page-head h1 { font-family: var(--marker); font-size: 46px; font-weight: 700; line-height: 1; margin: 2px 0 10px; }
+  .page-head p { font-size: 18px; color: var(--ink-soft); line-height: 1.45; }
+  .page-head p b { color: var(--ink); }
+
+  .row { display: flex; gap: 40px; align-items: flex-start; }
+  .idea { flex: none; width: 300px; display: flex; flex-direction: column; }
+  .idea__tag { font-family: var(--marker); font-size: 16px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .5px; }
+  .idea__name { font-family: var(--marker); font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+  .idea__why { font-size: 15px; color: var(--ink-soft); line-height: 1.4; margin-bottom: 18px; min-height: 92px; }
+  .idea__why b { color: var(--ink); }
+
+  .phone {
+    width: 300px; min-height: 590px; background: var(--paper);
+    border: 2.5px solid var(--line); border-radius: 30px;
+    padding: 13px 15px 15px; display: flex; flex-direction: column;
+    box-shadow: 5px 6px 0 rgba(0,0,0,.10);
+  }
+  .notch { width: 64px; height: 6px; background: var(--line); border-radius: 3px; margin: 2px auto 12px; opacity: .5; }
+  .bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .bar .back { width: 25px; height: 25px; border: 2px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 14px; flex: none; }
+  .bar .ttl { font-weight: 700; font-size: 18px; }
+  .bar .x { margin-left: auto; font-size: 13px; color: var(--ink-soft); }
+  .q { font-weight: 700; font-size: 20px; line-height: 1.12; margin-bottom: 3px; }
+  .sub { font-size: 13.5px; color: var(--ink-soft); line-height: 1.3; margin-bottom: 14px; }
+
+  .box { border: 2px solid var(--line); border-radius: 12px; background: var(--paper); }
+  .box--fill { background: var(--fill); }
+  .box--sel { border-color: var(--accent); background: var(--accent-wash); }
+  .box--prim { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .cta { margin-top: auto; height: 46px; border-radius: 23px; display: grid; place-items: center; font-weight: 700; font-size: 16px; }
+  .seclabel { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 700; }
+  .counthint { font-family: var(--marker); font-size: 16px; color: var(--accent); margin: 4px 0 10px; }
+  .hint { font-family: var(--marker); font-size: 16px; color: var(--accent); display: flex; gap: 6px; margin-top: 14px; line-height: 1.15; }
+  .hint::before { content: "→"; font-weight: 700; }
+
+  /* A — daily presets */
+  .pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 6px; }
+  .pcell { height: 64px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; }
+  .pcell .n { font-family: var(--marker); font-size: 26px; line-height: 1; }
+  .pcell .u { font-size: 11px; color: var(--ink-soft); font-weight: 400; }
+  .pcell.sel .u { color: #1c6b2c; }
+  .preview { padding: 11px 12px; margin-top: 10px; display: flex; align-items: center; gap: 10px; }
+  .preview .amt { font-weight: 700; font-size: 16px; }
+  .preview .amt small { display: block; font-size: 11px; font-weight: 400; color: var(--ink-soft); }
+  .preview .go { margin-left: auto; color: var(--mute); font-size: 18px; }
+
+  /* B — rhythm */
+  .seg { display: flex; border: 2px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .seg div { flex: 1; text-align: center; padding: 11px 4px; font-weight: 700; font-size: 14px; border-right: 2px solid var(--line); }
+  .seg div:last-child { border-right: none; }
+  .seg div.on { background: var(--accent); color: #fff; }
+  .bigfield { height: 88px; border: 2.5px dashed var(--line); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .bigfield .amt { font-family: var(--marker); font-size: 38px; font-weight: 700; line-height: .9; }
+  .bigfield .cap { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+  .note { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--ink-soft); line-height: 1.35; padding: 10px 12px; }
+  .note .i { width: 18px; height: 18px; border: 2px solid var(--mute); border-radius: 50%; display: grid; place-items: center; font-size: 11px; flex: none; }
+
+  /* C — three plans */
+  .plan { padding: 13px; margin-bottom: 10px; }
+  .plan .pn { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .plan .pn b { font-weight: 700; font-size: 16px; }
+  .plan .pn .tagp { font-family: var(--marker); font-size: 13px; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 10px; padding: 1px 7px; }
+  .plan .big { font-family: var(--marker); font-size: 24px; font-weight: 700; line-height: 1; }
+  .plan .meta { font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+
+  /* D — tune the loan */
+  .hero { padding: 16px; text-align: center; margin-bottom: 14px; }
+  .hero .amt { font-family: var(--marker); font-size: 38px; font-weight: 700; line-height: 1; }
+  .hero .cap { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+  .tunelab { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 9px; }
+  .tunelab b { font-family: var(--marker); font-size: 18px; color: var(--accent); }
+  .stepper { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+  .sbtn { width: 46px; height: 46px; flex: none; border: 2px solid var(--line); border-radius: 12px; display: grid; place-items: center; font-size: 26px; font-weight: 700; background: var(--fill-2); }
+  .sbtn.minus { color: var(--accent); border-color: var(--accent); background: var(--accent-wash); }
+  .sfield { flex: 1; height: 46px; border: 2px solid var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .sfield .cur { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+  .sfield .val { font-family: var(--marker); font-size: 26px; font-weight: 700; }
+  .tradeline { text-align: center; font-family: var(--marker); font-size: 16px; color: var(--ink-soft); }
+  .tradeline b { color: var(--ink); }
+
+  /* E — income safety */
+  .meter { padding: 13px; margin: 12px 0; }
+  .meter .top { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 9px; }
+  .meter .top b { color: var(--accent); }
+  .bararea { height: 14px; border: 2px solid var(--line); border-radius: 8px; background: var(--fill); position: relative; overflow: hidden; }
+  .bararea .fillb { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent-wash); border-right: 2px solid var(--accent); }
+  .meter .scale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--ink-soft); margin-top: 6px; }
+  .reco { padding: 13px; margin-bottom: 4px; }
+  .reco .amt { font-family: var(--marker); font-size: 26px; font-weight: 700; line-height: 1; }
+  .reco .meta { font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+
+  /* F — conversational */
+  .chat { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+  .bub { max-width: 80%; padding: 11px 13px; border-radius: 16px; font-size: 14px; line-height: 1.35; }
+  .bub.app { align-self: flex-start; border: 2px solid var(--line); border-bottom-left-radius: 4px; background: var(--paper); }
+  .bub.me { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+  .replies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+  .reply { border: 2px solid var(--accent); color: var(--accent); border-radius: 20px; padding: 8px 14px; font-weight: 700; font-size: 14px; }
+  .reply.fill { background: var(--accent); color: #fff; }
+
+  .footnote { margin-top: 38px; max-width: 880px; font-size: 15px; color: var(--ink-soft); line-height: 1.5; border-left: 3px solid var(--accent); padding-left: 14px; }
+  .footnote b { color: var(--ink); }
+</style>
+</head>
+<body>
+  <div class="page-head">
+    <div class="kicker">Affordability-first · variations</div>
+    <h1>Six ways to lead with "what can you pay?"</h1>
+    <p>All keep daily payment as the anchor — they differ in <b>how the customer enters it</b> (type, tap, drag, speak), and <b>how matching loans come back</b> (list, plans, single tuned loan).</p>
+  </div>
+
+  <div class="row">
+
+    <!-- A — DAILY PRESETS -->
+    <div class="idea">
+      <div class="idea__tag">Variation A</div>
+      <div class="idea__name">Daily presets</div>
+      <p class="idea__why"><b>Zero typing.</b> Tap a round daily amount to start. Lowest-effort entry — best for the low-literacy / low-confidence users testing flagged. "Other" opens the keypad.</p>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bar"><div class="back">‹</div><div class="ttl">Cash loan</div><div class="x">Cancel</div></div>
+        <div class="q">What can you pay each day?</div>
+        <div class="sub">Tap an amount to begin.</div>
+        <div class="pgrid">
+          <div class="box pcell"><span class="n">50</span><span class="u">per day</span></div>
+          <div class="box pcell sel box--sel"><span class="n">100</span><span class="u">per day</span></div>
+          <div class="box pcell"><span class="n">150</span><span class="u">per day</span></div>
+          <div class="box pcell"><span class="n">200</span><span class="u">per day</span></div>
+        </div>
+        <div class="box pcell" style="height:46px;flex-direction:row;gap:6px;"><span style="font-size:15px;">Other amount</span></div>
+        <div class="box box--sel preview"><span class="amt">3 loans fit<small>up to KES 12,000</small></span><span class="go">›</span></div>
+        <div class="box box--prim cta">See loans</div>
+        <div class="hint">No keyboard needed to start</div>
+      </div>
+    </div>
+
+    <!-- B — PAY BY RHYTHM -->
+    <div class="idea">
+      <div class="idea__tag">Variation B</div>
+      <div class="idea__name">Pay by your rhythm</div>
+      <p class="idea__why">Match repayment to <b>how income arrives</b> — daily, weekly, or on payday. Affordability isn't only "per day" for everyone; a salaried customer thinks per month. Sets up the start-date / payday idea too.</p>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bar"><div class="back">‹</div><div class="ttl">Cash loan</div><div class="x">Cancel</div></div>
+        <div class="q">How would you like to repay?</div>
+        <div class="sub">Pick the rhythm that fits your income.</div>
+        <div class="seg"><div class="on">Daily</div><div>Weekly</div><div>On payday</div></div>
+        <div class="seclabel">I CAN PAY EACH DAY</div>
+        <div class="bigfield"><div class="amt">KES 100</div><div class="cap">per day</div></div>
+        <div class="box box--fill note"><span class="i">i</span><span>We'll only show loans whose daily payment fits this.</span></div>
+        <div class="box box--prim cta" style="margin-top:14px;">Show loans that fit</div>
+        <div class="hint">Repayment shaped around their cash flow</div>
+      </div>
+    </div>
+
+    <!-- C — THREE PLANS -->
+    <div class="idea">
+      <div class="idea__tag">Variation C</div>
+      <div class="idea__name">Three named plans</div>
+      <p class="idea__why">After the budget, return loans as <b>3 labelled choices</b> instead of a scroll list. Naming the trade-off ("Comfortable / Balanced / Fast") cuts the decision load and avoids comparing raw numbers.</p>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bar"><div class="back">‹</div><div class="ttl">Cash loan</div><div class="x">Cancel</div></div>
+        <div class="q">Loans for KES 100/day</div>
+        <div class="sub">Pick the plan that suits you.</div>
+        <div class="box box--sel plan">
+          <div class="pn"><b>Comfortable</b><span class="tagp">most pick this</span></div>
+          <div class="big">KES 9,000</div>
+          <div class="meta">KES 86/day · 120 days · total 10,320</div>
+        </div>
+        <div class="box plan">
+          <div class="pn"><b>Balanced</b></div>
+          <div class="big">KES 12,000</div>
+          <div class="meta">KES 96/day · 150 days · total 14,400</div>
+        </div>
+        <div class="box plan">
+          <div class="pn"><b>Fast payoff</b></div>
+          <div class="big">KES 5,000</div>
+          <div class="meta">KES 69/day · 80 days · total 5,520</div>
+        </div>
+        <div class="box box--prim cta">Next step</div>
+        <div class="hint">A 3-way choice, not a numbers table</div>
+      </div>
+    </div>
+
+    <!-- D — TUNE THE LOAN -->
+    <div class="idea">
+      <div class="idea__tag">Variation D</div>
+      <div class="idea__name">Tune one loan</div>
+      <p class="idea__why">No separate budget question. Show the loan, and make the <b>daily payment the lever</b>: lower it and the term stretches live. Affordability and selection happen in one move.</p>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bar"><div class="back">‹</div><div class="ttl">Cash loan</div><div class="x">Cancel</div></div>
+        <div class="q">Make it fit your budget</div>
+        <div class="sub">Adjust the daily payment — we'll set the rest.</div>
+        <div class="box box--sel hero">
+          <div class="amt">KES 12,000</div>
+          <div class="cap">paid to you today</div>
+        </div>
+        <div class="tunelab"><span>Daily payment</span><b>KES 96 / day</b></div>
+        <div class="stepper">
+          <div class="sbtn minus">−</div>
+          <div class="sfield"><span class="cur">KES</span><span class="val">96</span></div>
+          <div class="sbtn">+</div>
+        </div>
+        <div class="tradeline">Pay less daily → <b>finish in 180 days</b><br>instead of 150</div>
+        <div class="box box--prim cta">Next step</div>
+        <div class="hint">Affordability IS the control</div>
+      </div>
+    </div>
+
+    <!-- E — INCOME SAFETY -->
+    <div class="idea">
+      <div class="idea__tag">Variation E</div>
+      <div class="idea__name">Income-aware</div>
+      <p class="idea__why">Ask what they <b>earn</b>, then recommend a loan that keeps repayment a safe share of income, with a <b>comfort meter</b>. A responsible-lending angle that builds trust and curbs over-borrowing.</p>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bar"><div class="back">‹</div><div class="ttl">Cash loan</div><div class="x">Cancel</div></div>
+        <div class="q">What do you usually earn a day?</div>
+        <div class="sub">We'll suggest a loan you can comfortably repay.</div>
+        <div class="bigfield"><div class="amt">KES 500</div><div class="cap">per day (roughly)</div></div>
+        <div class="box meter">
+          <div class="top"><span>Daily payment vs income</span><b>Comfortable</b></div>
+          <div class="bararea"><div class="fillb" style="width:19%"></div></div>
+          <div class="scale"><span>comfortable</span><span>a stretch</span><span>too much</span></div>
+        </div>
+        <div class="box box--sel reco">
+          <div class="amt">KES 9,000 suggested</div>
+          <div class="meta">KES 86/day · ~17% of income · 120 days</div>
+        </div>
+        <div class="box box--prim cta" style="margin-top:10px;">See this loan</div>
+        <div class="hint">Trust + safety, not just access</div>
+      </div>
+    </div>
+
+    <!-- F — CONVERSATIONAL -->
+    <div class="idea">
+      <div class="idea__tag">Variation F</div>
+      <div class="idea__name">Conversational</div>
+      <p class="idea__why">Ask in plain language with <b>tap-to-reply chips</b>. Familiar as chat, guided one question at a time — strong for low-literacy users and removes any "where do I tap?" doubt.</p>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bar"><div class="back">‹</div><div class="ttl">Cash loan</div><div class="x">Cancel</div></div>
+        <div class="chat">
+          <div class="bub app">Hi Jane! 👋 Let's find a loan that fits you.</div>
+          <div class="bub app">What can you comfortably pay <b>each day</b>?</div>
+          <div class="bub me">KES 100 a day</div>
+          <div class="bub app">Nice — I found <b>3 loans</b> that fit. Want to see them?</div>
+        </div>
+        <div class="replies">
+          <div class="reply">KES 50</div>
+          <div class="reply">KES 150</div>
+          <div class="reply">Type amount</div>
+          <div class="reply fill">Show me →</div>
+        </div>
+        <div class="hint">Guided, plain-language, hard to get lost</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footnote">
+    <b>How to read these:</b> A &amp; F lower the effort/literacy barrier (tap or chat, no keyboard). B fits repayment to income cadence and links to the start-date flow. C &amp; D change the <b>output</b> — named plans vs one tunable loan. E adds a responsible-lending layer. They're combinable: e.g. <b>A's presets → C's three plans</b>, or <b>B's rhythm → D's tuning</b>. Tell me which one or two to develop into full flows or hi-fi.
+  </div>
+</body>
+</html>

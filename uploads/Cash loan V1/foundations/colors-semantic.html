@@ -1,0 +1,40 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Semantic roles" subtitle="Primary / secondary / tertiary / error + containers" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface); font-family: var(--font-sans); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pair { display: flex; flex-direction: column; gap: 6px; }
+  .role { height: 56px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font: var(--type-label-large); }
+  .cont { height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font: var(--type-label-medium); }
+  .name { font: var(--type-body-small); color: var(--on-surface-variant); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="pair">
+      <div class="role" style="background:var(--primary);color:var(--on-primary)">Primary</div>
+      <div class="cont" style="background:var(--primary-container);color:var(--on-primary-container)">Container</div>
+      <span class="name">--primary</span>
+    </div>
+    <div class="pair">
+      <div class="role" style="background:var(--secondary);color:var(--on-secondary)">Secondary</div>
+      <div class="cont" style="background:var(--secondary-container);color:var(--on-secondary-container)">Container</div>
+      <span class="name">--secondary</span>
+    </div>
+    <div class="pair">
+      <div class="role" style="background:var(--tertiary);color:var(--on-tertiary)">Tertiary</div>
+      <div class="cont" style="background:var(--tertiary-container);color:var(--on-tertiary-container)">Container</div>
+      <span class="name">--tertiary</span>
+    </div>
+    <div class="pair">
+      <div class="role" style="background:var(--error);color:var(--on-error)">Error</div>
+      <div class="cont" style="background:var(--error-container);color:var(--on-error-container)">Container</div>
+      <span class="name">--error</span>
+    </div>
+  </div>
+</body>
+</html>

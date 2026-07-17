@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M-KOPA Cash Loan — V1 Slider</title>
+<style>
+  :root {
+    --color-primary: #1F8A36; --color-primary-strong: #15772C; --color-on-primary: #fff;
+    --color-primary-container: #E7F6EC; --color-bg: #ECEDEF; --color-surface: #fff;
+    --color-field: #F3F4F5; --color-on-surface: #1A1A1A; --color-on-surface-variant: #6B6F72;
+    --color-outline: #D6D8DB; --color-outline-strong: #B4B8BC; --color-error: #E0312D;
+    --button-height: 3.25rem; --app-bar-height: 4rem; --radius-card: 1.5rem; --radius-pill: 1.75rem;
+    --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem;
+    --font-family:'Segoe UI',Roboto,system-ui,-apple-system,sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; font-family:var(--font-family); background:#DDE0E2; color:var(--color-on-surface); display:flex; align-items:center; justify-content:center; }
+  .device { width:360px; height:780px; background:var(--color-bg); border-radius:34px; box-shadow:0 18px 50px rgba(0,0,0,.22); overflow:hidden; position:relative; display:flex; flex-direction:column; }
+  .sb { height:30px; flex:0 0 30px; display:flex; align-items:center; justify-content:space-between; padding:0 16px 0 20px; font-size:.75rem; font-weight:600; }
+  .sb__icons { display:flex; align-items:center; gap:5px; }
+  .screen { display:flex; flex-direction:column; flex:1; min-height:0; }
+  .content { flex:1; overflow-y:auto; padding:16px 16px 24px; }
+  .content::-webkit-scrollbar { width:4px; } .content::-webkit-scrollbar-thumb { background:var(--color-outline-strong); border-radius:2px; }
+  .app-bar { height:var(--app-bar-height); flex:0 0 var(--app-bar-height); display:flex; align-items:center; gap:12px; padding:0 16px; }
+  .app-bar__back { width:42px; height:42px; flex:0 0 42px; border-radius:50%; background:var(--color-surface); border:none; cursor:pointer; display:grid; place-items:center; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  .app-bar__back svg { width:22px; height:22px; }
+  .app-bar__title { font-size:1.375rem; font-weight:700; flex:1; text-align:center; }
+  .app-bar__action { background:none; border:none; cursor:pointer; color:var(--color-primary); font-size:.9375rem; font-weight:700; }
+  .headline { font-size:1.7rem; font-weight:700; line-height:1.15; margin-bottom:8px; letter-spacing:-.3px; }
+  .sub { font-size:.875rem; color:var(--color-on-surface-variant); margin-bottom:24px; }
+  .actions { flex:0 0 auto; padding:12px 16px 20px; background:var(--color-surface); }
+  .btn { height:var(--button-height); border:none; border-radius:var(--radius-pill); font-size:.9375rem; font-weight:700; cursor:pointer; font-family:inherit; width:100%; background:var(--color-primary); color:#fff; }
+  .btn:active { background:var(--color-primary-strong); }
+
+  /* slider selector */
+  .amount-big { text-align:center; font-size:2.5rem; font-weight:700; letter-spacing:-1px; margin:20px 0 24px; }
+  .slider-wrap { padding:0 4px; }
+  .slider { -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:3px; background:var(--color-outline); outline:none; }
+  .slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%; background:var(--color-primary); cursor:pointer; border:3px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.25); }
+  .slider::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:var(--color-primary); cursor:pointer; border:3px solid #fff; }
+  .slider-labels { display:flex; justify-content:space-between; margin-top:18px; }
+  .slider-labels__col { font-size:.875rem; }
+  .slider-labels__col--right { text-align:right; }
+  .slider-labels__cap { color:var(--color-on-surface-variant); margin-bottom:2px; }
+  .slider-labels__val { font-weight:700; }
+  .divider { height:1px; background:var(--color-outline); margin:26px 0 18px; }
+
+  /* duration options */
+  .opt { background:var(--color-surface); border-radius:var(--radius-card); padding:16px; margin-bottom:8px; cursor:pointer; border:1.5px solid transparent; transition:border-color .12s, box-shadow .12s; }
+  .opt--sel { border-color:var(--color-primary); box-shadow:0 2px 12px rgba(0,0,0,.07); }
+  .opt__head { display:flex; align-items:center; justify-content:space-between; }
+  .opt__left { display:flex; align-items:center; gap:12px; }
+  .radio { width:22px; height:22px; border-radius:50%; border:2px solid var(--color-outline-strong); display:grid; place-items:center; flex:0 0 auto; }
+  .opt--sel .radio { border-color:var(--color-primary); }
+  .radio__dot { width:12px; height:12px; border-radius:50%; background:var(--color-primary); display:none; }
+  .opt--sel .radio__dot { display:block; }
+  .opt__days { font-size:1.0625rem; font-weight:700; }
+  .opt--sel .opt__days { color:var(--color-primary); }
+  .opt__daily { font-size:1.0625rem; font-weight:700; }
+  .opt__bd { display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--color-outline); }
+  .opt--sel .opt__bd { display:block; }
+  .opt__row { display:flex; justify-content:space-between; font-size:.875rem; margin-bottom:8px; }
+  .opt__row:last-child { margin-bottom:0; }
+  .opt__row-l { color:var(--color-on-surface-variant); }
+  .opt__row-v { font-weight:700; }
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="sb"><span>9:30</span><div class="sb__icons">
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="#1A1A1A"><path d="M8.5 2.2C5.6 2.2 3 3.3 1.1 5.1l1.3 1.4C4 5 6.1 4.1 8.5 4.1s4.5.9 6.1 2.4l1.3-1.4C14 3.3 11.4 2.2 8.5 2.2zm0 3.8c-1.7 0-3.3.7-4.4 1.8L8.5 12 13 7.8C11.8 6.7 10.2 6 8.5 6z"/></svg>
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="#1A1A1A"><path d="M1 11h3V6H1v5zm5 0h3V3H6v8zm5 0h4V0h-4v11z"/></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="#1A1A1A"><path d="M15 4h1a1 1 0 011 1v1h1v4h-1v8a1 1 0 01-1 1H6a1 1 0 01-1-1V5a1 1 0 011-1h9z"/></svg>
+    </div></div>
+    <section class="screen" data-screen-label="Cash loan — Slider">
+      <header class="app-bar">
+        <button class="app-bar__back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <h1 class="app-bar__title">Cash loan</h1>
+        <button class="app-bar__action">CANCEL</button>
+      </header>
+      <main class="content">
+        <h2 class="headline">How much would you like?</h2>
+        <p class="sub">Select the amount of money and the amount of days you want to pay.</p>
+
+        <div class="amount-big" id="amount-big">KES 5,000</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" id="slider" min="0" max="3" step="1" value="0">
+          <div class="slider-labels">
+            <div class="slider-labels__col"><div class="slider-labels__cap">Min amount</div><div class="slider-labels__val">KES 5,000</div></div>
+            <div class="slider-labels__col slider-labels__col--right"><div class="slider-labels__cap">Max amount</div><div class="slider-labels__val">KES 15,000</div></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div id="options"></div>
+      </main>
+      <footer class="actions"><button class="btn">Next step</button></footer>
+    </section>
+  </div>
+<script>
+  const AMOUNTS=[5000,9000,12000,15000];
+  const OFFERS={5000:[{days:80,daily:69},{days:107,daily:55},{days:130,daily:49}],9000:[{days:120,daily:86},{days:145,daily:75},{days:165,daily:71}],12000:[{days:130,daily:108},{days:157,daily:95},{days:180,daily:89}],15000:[{days:150,daily:121},{days:176,daily:110},{days:196,daily:105}]};
+  const state={ai:0,di:0};
+  const fmt=n=>'KES '+n.toLocaleString('en-US');
+  const slider=document.getElementById('slider');
+  function fill(){const p=state.ai/3*100;slider.style.background='linear-gradient(90deg,var(--color-primary) '+p+'%,var(--color-outline) '+p+'%)';}
+  function renderAmount(){document.getElementById('amount-big').textContent=fmt(AMOUNTS[state.ai]);fill();}
+  function renderOptions(){const a=AMOUNTS[state.ai],opts=OFFERS[a],list=document.getElementById('options');list.innerHTML='';opts.forEach((o,i)=>{const total=o.days*o.daily,interest=total-a,sel=i===state.di;const c=document.createElement('div');c.className='opt'+(sel?' opt--sel':'');c.innerHTML='<div class="opt__head"><div class="opt__left"><div class="radio"><div class="radio__dot"></div></div><div class="opt__days">'+o.days+' days</div></div><div class="opt__daily">'+fmt(o.daily)+' daily</div></div><div class="opt__bd"><div class="opt__row"><span class="opt__row-l">Total amount to pay back</span><span class="opt__row-v">'+fmt(total)+'</span></div><div class="opt__row"><span class="opt__row-l">Interest and fees</span><span class="opt__row-v">'+fmt(interest)+'</span></div></div>';c.addEventListener('click',()=>{state.di=i;renderOptions();});list.appendChild(c);});}
+  slider.addEventListener('input',()=>{state.ai=+slider.value;state.di=0;renderAmount();renderOptions();});
+  renderAmount();renderOptions();
+</script>
+</body>
+</html>

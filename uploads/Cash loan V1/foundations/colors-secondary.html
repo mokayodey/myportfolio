@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Secondary — Amber scale" subtitle="Warm accent tonal ramp, 05→98" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface); font-family: var(--font-sans); }
+  .ramp { display: flex; border-radius: var(--radius-sm); overflow: hidden; }
+  .sw { flex: 1; height: 88px; display: flex; align-items: flex-end; padding: 6px; box-sizing: border-box; }
+  .sw span { font: var(--type-label-small); letter-spacing: var(--tracking-label); }
+  .cap { margin-top: 12px; display: flex; gap: 8px; align-items: baseline; }
+  .cap b { font: var(--type-title-small); color: var(--on-surface); }
+  .cap em { font: var(--type-body-small); color: var(--on-surface-variant); font-style: normal; }
+</style>
+</head>
+<body>
+  <div class="ramp" id="ramp"></div>
+  <div class="cap"><b>Secondary · Amber</b><em>--secondary = amber/50 (#FFA90A) · selection accent &amp; warning</em></div>
+  <script>
+    const steps = [5,10,15,20,25,30,35,40,45,50,60,70,80,85,90,95,98];
+    document.getElementById('ramp').innerHTML = steps.map(s => {
+      const k = String(s).padStart(2,'0');
+      const light = s <= 50;
+      return `<div class="sw" style="background:var(--amber-${k})"><span style="color:${light?'#291B00':'#fff'}">${k}</span></div>`;
+    }).join('');
+  </script>
+</body>
+</html>

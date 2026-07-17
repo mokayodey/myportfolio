@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="713" height="181" viewBox="0 0 713 181">
+  <defs>
+    <filter id="Rectangle_12" x="0" y="0" width="181" height="181" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"></feOffset>
+      <feGaussianBlur stdDeviation="15" result="blur"></feGaussianBlur>
+      <feFlood flood-opacity="0.102"></feFlood>
+      <feComposite operator="in" in2="blur"></feComposite>
+      <feComposite in="SourceGraphic"></feComposite>
+    </filter>
+    <filter id="Rectangle_33" x="107" y="0" width="181" height="181" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"></feOffset>
+      <feGaussianBlur stdDeviation="15" result="blur-2"></feGaussianBlur>
+      <feFlood flood-opacity="0.102"></feFlood>
+      <feComposite operator="in" in2="blur-2"></feComposite>
+      <feComposite in="SourceGraphic"></feComposite>
+    </filter>
+    <filter id="Rectangle_34" x="213" y="0" width="181" height="181" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"></feOffset>
+      <feGaussianBlur stdDeviation="15" result="blur-3"></feGaussianBlur>
+      <feFlood flood-opacity="0.102"></feFlood>
+      <feComposite operator="in" in2="blur-3"></feComposite>
+      <feComposite in="SourceGraphic"></feComposite>
+    </filter>
+    <filter id="Rectangle_35" x="320" y="0" width="180" height="181" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"></feOffset>
+      <feGaussianBlur stdDeviation="15" result="blur-4"></feGaussianBlur>
+      <feFlood flood-opacity="0.102"></feFlood>
+      <feComposite operator="in" in2="blur-4"></feComposite>
+      <feComposite in="SourceGraphic"></feComposite>
+    </filter>
+    <filter id="Rectangle_37" x="425" y="0" width="181" height="181" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"></feOffset>
+      <feGaussianBlur stdDeviation="15" result="blur-5"></feGaussianBlur>
+      <feFlood flood-opacity="0.102"></feFlood>
+      <feComposite operator="in" in2="blur-5"></feComposite>
+      <feComposite in="SourceGraphic"></feComposite>
+    </filter>
+    <filter id="Rectangle_38" x="531" y="0" width="182" height="181" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"></feOffset>
+      <feGaussianBlur stdDeviation="15" result="blur-6"></feGaussianBlur>
+      <feFlood flood-opacity="0.102"></feFlood>
+      <feComposite operator="in" in2="blur-6"></feComposite>
+      <feComposite in="SourceGraphic"></feComposite>
+    </filter>
+  </defs>
+  <g id="Colors" transform="translate(-147 -2160)">
+    <g transform="matrix(1, 0, 0, 1, 147, 2160)" filter="url(#Rectangle_12)">
+      <rect id="Rectangle_12-2" data-name="Rectangle 12" width="91" height="91" rx="5" transform="translate(45 45)" fill="#044a35"></rect>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 147, 2160)" filter="url(#Rectangle_33)">
+      <rect id="Rectangle_33-2" data-name="Rectangle 33" width="91" height="91" rx="5" transform="translate(152 45)" fill="#12926a"></rect>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 147, 2160)" filter="url(#Rectangle_34)">
+      <rect id="Rectangle_34-2" data-name="Rectangle 34" width="91" height="91" rx="5" transform="translate(258 45)" fill="#ffce60"></rect>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 147, 2160)" filter="url(#Rectangle_35)">
+      <rect id="Rectangle_35-2" data-name="Rectangle 35" width="90" height="91" rx="5" transform="translate(365 45)" fill="#0098ff"></rect>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 147, 2160)" filter="url(#Rectangle_37)">
+      <rect id="Rectangle_37-2" data-name="Rectangle 37" width="91" height="91" rx="5" transform="translate(470 45)" fill="#00c795"></rect>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 147, 2160)" filter="url(#Rectangle_38)">
+      <rect id="Rectangle_38-2" data-name="Rectangle 38" width="92" height="91" rx="5" transform="translate(576 45)" fill="#00ffbf"></rect>
+    </g>
+  </g>
+</svg>

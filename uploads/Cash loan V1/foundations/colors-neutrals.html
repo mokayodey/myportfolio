@@ -1,0 +1,32 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Neutrals & surfaces" subtitle="Background, surface, text, outline neutrals" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface); font-family: var(--font-sans); }
+  .ramp { display: flex; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--outline-variant); }
+  .sw { flex: 1; height: 60px; }
+  .roles { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .chip { display: flex; align-items: center; gap: 8px; font: var(--type-body-small); color: var(--on-surface-variant); }
+  .dot { width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--outline-variant); }
+</style>
+</head>
+<body>
+  <div class="ramp" id="ramp"></div>
+  <div class="roles">
+    <span class="chip"><span class="dot" style="background:var(--background)"></span>background</span>
+    <span class="chip"><span class="dot" style="background:var(--surface)"></span>surface</span>
+    <span class="chip"><span class="dot" style="background:var(--surface-variant)"></span>surface-variant</span>
+    <span class="chip"><span class="dot" style="background:var(--on-surface)"></span>on-surface</span>
+    <span class="chip"><span class="dot" style="background:var(--on-surface-variant)"></span>on-surface-variant</span>
+    <span class="chip"><span class="dot" style="background:var(--outline)"></span>outline</span>
+  </div>
+  <script>
+    const steps = [0,5,10,15,20,25,30,35,40,45,50,60,70,80,85,90,95,98,100];
+    document.getElementById('ramp').innerHTML = steps.map(s =>
+      `<div class="sw" style="background:var(--neutral-${String(s).padStart(2,'0')})"></div>`).join('');
+  </script>
+</body>
+</html>

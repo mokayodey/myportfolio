@@ -1,0 +1,20 @@
+/* ============================================================
+   Maendeleo · Elevation
+   Soft, layered ambient shadows. Level 5 captured from source;
+   1–4 interpolated to a consistent ramp. Cards favour low levels.
+   ============================================================ */
+
+:root {
+  --elevation-0: none;
+  --elevation-1: 0px 1px 1px 0px rgba(0,0,0,0.03),
+                 0px 1px 2px 0px rgba(0,0,0,0.02);
+  --elevation-2: 0px 1px 1px 0px rgba(0,0,0,0.03),
+                 0px 2px 6px 0px rgba(0,0,0,0.03);
+  --elevation-3: 0px 1px 1px 0px rgba(0,0,0,0.03),
+                 0px 6px 12px 0px rgba(0,0,0,0.04);
+  --elevation-4: 0px 4px 6px 0px rgba(0,0,0,0.03),
+                 0px 12px 20px 0px rgba(0,0,0,0.05);
+  --elevation-5: 0px 1px 1px 0px rgba(0,0,0,0.03),
+                 0px 8px 7px 0px rgba(0,0,0,0.04),
+                 0px 22px 22px 0px rgba(0,0,0,0.06);
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>M-KOPA Cash Loan — Test Flows (Nigeria)</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1F6B2E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="M-KOPA Test">
+<link rel="apple-touch-icon" href="assets/app-icon-192.png">
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; background: #cdd0cf; color: var(--on-background); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .device { width: 372px; height: 788px; background: var(--background); border-radius: 44px; border: 10px solid #0c0e0c; box-shadow: var(--elevation-5); overflow: hidden; display: flex; flex-direction: column; }
+  .statusbar { height: 36px; flex: 0 0 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 24px; font: var(--type-label-medium); font-weight: 600; }
+  .statusbar__icons { display: flex; align-items: center; gap: 6px; }
+  .content { flex: 1; overflow-y: auto; padding: 16px 20px 28px; }
+  .content::-webkit-scrollbar { width: 0; }
+
+  .brand { display: flex; align-items: center; gap: 11px; margin: 6px 0 22px; }
+  .brand__logo { width: 42px; height: 42px; border-radius: 12px; background: var(--green-90); display: grid; place-items: center; }
+  .brand__logo svg { width: 24px; height: 24px; }
+  .brand__name { font: var(--type-title-large); font-size: 18px; font-weight: 800; }
+  h1 { font: var(--type-title-large); font-size: 20px; margin: 0 0 6px; letter-spacing: -.2px; }
+  .lede { font: var(--type-body-small); color: var(--on-surface-variant); margin: 0 0 22px; line-height: 1.5; }
+  .grid { display: grid; gap: 12px; }
+  .card { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); padding: 15px; text-decoration: none; color: inherit; box-shadow: var(--elevation-1); transition: box-shadow .15s, border-color .15s; }
+  .card:active { box-shadow: var(--elevation-3); border-color: var(--primary); }
+  .card__badge { width: 44px; height: 44px; flex: none; border-radius: var(--radius-md); background: var(--primary-container); color: var(--green-90); display: grid; place-items: center; font: var(--type-headline-small); font-size: 20px; font-weight: 800; }
+  .card__body { flex: 1; }
+  .card__title { font: var(--type-title-medium); font-size: 15px; }
+  .card__title span { color: var(--on-surface-variant); font-weight: 500; }
+  .card__desc { font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 3px; line-height: 1.4; }
+  .card__go { color: var(--primary); flex: none; }
+  .card__go svg { width: 20px; height: 20px; display: block; }
+  .note { font: var(--type-body-small); color: var(--on-surface-variant); margin: 22px 0 0; line-height: 1.5; }
+  .note b { color: var(--on-background); }
+
+  /* ---- install prompt ---- */
+  .install { display: none; align-items: center; gap: 12px; background: var(--primary-container); border: 1px solid var(--primary); border-radius: var(--radius-lg); padding: 13px 14px; margin: 0 0 20px; }
+  .install__ic { width: 38px; height: 38px; flex: none; border-radius: var(--radius-md); background: var(--green-90); color: #fff; display: grid; place-items: center; }
+  .install__ic svg { width: 21px; height: 21px; }
+  .install__body { flex: 1; }
+  .install__title { font: var(--type-title-medium); font-size: 14px; font-weight: 700; color: var(--green-90); }
+  .install__desc { font: var(--type-body-small); color: var(--green-85); margin-top: 2px; line-height: 1.4; }
+  .install__btn { flex: none; border: none; cursor: pointer; background: var(--primary); color: #fff; font: var(--type-label-large); font-weight: 700; padding: 9px 16px; border-radius: var(--radius-full); }
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="device">
+    <div class="statusbar">
+      <span>9:30</span>
+      <div class="statusbar__icons">
+        <svg width="17" height="12" viewBox="0 0 17 13" fill="currentColor"><path d="M8.5 2.2C5.6 2.2 3 3.3 1.1 5.1l1.3 1.4C4 5 6.1 4.1 8.5 4.1s4.5.9 6.1 2.4l1.3-1.4C14 3.3 11.4 2.2 8.5 2.2zm0 3.8c-1.7 0-3.3.7-4.4 1.8L8.5 12 13 7.8C11.8 6.7 10.2 6 8.5 6z"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 13" fill="currentColor"><path d="M1 11h3V6H1v5zm5 0h3V3H6v8zm5 0h4V0h-4v11z"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="currentColor" stroke-width="1.3"/><rect x="2.7" y="3.2" width="14" height="5.6" rx="1.2" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="content">
+      <div class="brand">
+        <div class="brand__logo"><svg viewBox="0 0 118 118" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M68.3522 93.017V54.1602H49.4167V92.9706C52.4576 93.8059 55.6577 94.2617 58.9671 94.2617C62.2166 94.2617 65.3609 93.8233 68.3522 93.017Z" fill="#fff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M91.9061 72.0226V41.4988L91.8252 40.2069L90.5333 40.1675C88.1387 40.0929 89.9611 40.1482 74.3068 40.1054L72.9707 40.1016V91.4961C81.5931 87.7837 88.4385 80.7558 91.9061 72.0226Z" fill="#fff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M44.5675 91.2656V68.2188H25.6321V71.3627C28.9944 80.2661 35.8646 87.4542 44.5675 91.2656Z" fill="#fff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M99.004 59C99.004 81.059 81.0579 99.0049 58.9996 99.0049C36.9413 99.0049 18.9951 81.059 18.9951 59C18.9951 36.9417 36.9413 18.9956 58.9996 18.9956C81.0579 18.9956 99.004 36.9417 99.004 59ZM58.9996 0C26.4671 0 0 26.4673 0 59C0 91.5331 26.4671 118 58.9996 118C91.5323 118 118 91.5331 118 59C118 26.4673 91.5323 0 58.9996 0Z" fill="#fff"/></svg></div>
+        <div class="brand__name">M-KOPA</div>
+      </div>
+      <h1>Cash Loan — usability test flows <span style="display:block;font:var(--type-label-large);color:var(--on-surface-variant);margin-top:4px;">Nigeria · NGN</span></h1>
+      <p class="lede">Pick a flow to test. Each one launches like the real M-KOPA app from the phone's home screen — tap the app icon to begin.</p>
+
+      <div class="install" id="install">
+        <div class="install__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg></div>
+        <div class="install__body">
+          <div class="install__title">Install as an app</div>
+          <div class="install__desc" id="install-desc">Add to your home screen so it opens full-screen, like the real app.</div>
+        </div>
+        <button class="install__btn" id="install-btn">Install</button>
+      </div>
+
+      <div class="grid">
+        <a class="card" href="Cash Loan - NG Hi-fi.html?flow=A">
+          <div class="card__badge">1</div>
+          <div class="card__body">
+            <div class="card__title">Today <span>· how it works now</span></div>
+            <div class="card__desc">Pick an amount; each card expands to show total to pay back and term.</div>
+          </div>
+          <span class="card__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="card" href="Cash Loan - NG Hi-fi.html?flow=B">
+          <div class="card__badge">2</div>
+          <div class="card__body">
+            <div class="card__title">Filter by amount</div>
+            <div class="card__desc">Choose an amount, then a daily repayment plan — daily payment as the hero.</div>
+          </div>
+          <span class="card__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="card" href="Cash Loan - NG Hi-fi.html?flow=S">
+          <div class="card__badge">3</div>
+          <div class="card__body">
+            <div class="card__title">Amount only <span>· single knob</span></div>
+            <div class="card__desc">Slide the loan amount; daily payment, total and term update live.</div>
+          </div>
+          <span class="card__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="card" href="Cash Loan - NG Hi-fi.html?flow=E">
+          <div class="card__badge">4</div>
+          <div class="card__body">
+            <div class="card__title">Amount + daily <span>· two-knob live</span></div>
+            <div class="card__desc">Set the amount and the daily payment you want; the term is worked out live.</div>
+          </div>
+          <span class="card__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="card" href="Cash Loan - NG Hi-fi.html?flow=DD">
+          <div class="card__badge">5</div>
+          <div class="card__body">
+            <div class="card__title">Dropdown <span>· amount from a list</span></div>
+            <div class="card__desc">Pick the loan amount from a dropdown, then choose a daily repayment plan.</div>
+          </div>
+          <span class="card__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></span>
+        </a>
+      </div>
+
+      <p class="note">Each flow opens on an Android home screen — tap the <b>M-KOPA</b> icon to launch the app. The <b>All flows</b> icon on that home screen brings you back here.</p>
+    </div>
+  </div>
+
+<script>
+  // ---- PWA install support ----
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+  const installEl = document.getElementById('install');
+  const installBtn = document.getElementById('install-btn');
+  const installDesc = document.getElementById('install-desc');
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!isStandalone) installEl.style.display = 'flex';
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installEl.style.display = 'none';
+    }
+  });
+
+  window.addEventListener('appinstalled', () => { installEl.style.display = 'none'; });
+
+  // iOS has no beforeinstallprompt — show manual instructions instead
+  if (isiOS && !isStandalone) {
+    installDesc.textContent = 'Tap the Share button, then “Add to Home Screen” to open it full-screen like the real app.';
+    installBtn.style.display = 'none';
+    installEl.style.display = 'flex';
+  }
+</script>
+</body>
+</html>
