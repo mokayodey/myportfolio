@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #F4F0E8;
+  --color-muted: #EBE4D6;
+  --color-ink: #1C1A16;
+  --color-accent: #C1622D;
+  --color-gold: #E8A165;
+
+  --font-archivo: 'Archivo', -apple-system, sans-serif;
+  --font-archivo-expanded: 'Archivo Expanded', -apple-system, sans-serif;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-archivo);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.work-row {
+  transition: opacity .15s ease;
+}
+.work-row:hover {
+  opacity: .72;
+}
+
+/* PrototypeFrame: swap to the desktop scale set per-instance via the
+   --proto-desktop-scale custom property (see components/PrototypeFrame.tsx). */
+@media (min-width: 768px) {
+  .prototype-frame-iframe {
+    transform: scale(var(--proto-desktop-scale)) !important;
+  }
+}

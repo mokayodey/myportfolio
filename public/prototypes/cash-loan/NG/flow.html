@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#1F6B2E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="M-KOPA Test">
+<link rel="apple-touch-icon" href="assets/app-icon-192.png">
+<title>Cash Loan — Flows A · B · C (Hi-fi)</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  html, body { height: 100%; }
+  @media (max-width: 600px) {
+    html, body { min-height: 100dvh; background: var(--background); }
+    .device { width: 100vw !important; height: 100dvh !important; max-width: 100vw !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; box-sizing: border-box !important; padding-top: env(safe-area-inset-top) !important; padding-bottom: env(safe-area-inset-bottom) !important; }
+    body.test-mode { padding: 0 !important; gap: 0 !important; min-height: 100dvh !important; justify-content: stretch !important; background: var(--background) !important; }
+    body.test-mode .launcher-link { display: none !important; }
+  }
+  body {
+    margin: 0; background: var(--neutral-20);
+    display: flex; flex-direction: column; align-items: center;
+    gap: var(--space-20); padding: var(--space-32) var(--space-16) var(--space-48);
+    min-height: 100vh;
+  }
+
+  /* ---- flow switcher ---- */
+  .switcher { display: flex; flex-direction: column; align-items: center; gap: var(--space-12); }
+  .seg { display: flex; background: var(--surface); border: 1px solid var(--outline); border-radius: var(--radius-full); padding: 4px; box-shadow: var(--elevation-2); }
+  .seg button {
+    border: none; background: none; cursor: pointer; font: var(--type-label-large);
+    color: var(--on-surface-variant); padding: 9px 18px; border-radius: var(--radius-full);
+    display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1.1;
+    transition: background .15s, color .15s;
+  }
+  .seg button .sm { font: var(--type-label-small); opacity: .85; font-weight: 500; }
+  .seg button.on { background: var(--primary); color: var(--on-primary); }
+  .flow-caption { font: var(--type-body-small); color: var(--on-surface-variant); max-width: 360px; text-align: center; min-height: 32px; }
+  .flow-caption b { color: var(--on-background); font-weight: 600; }
+
+  /* ---- device ---- */
+  .device {
+    width: 372px; height: 788px; background: var(--background);
+    border-radius: 44px; border: 10px solid #0c0e0c;
+    box-shadow: var(--elevation-5); overflow: hidden; position: relative;
+    display: flex; flex-direction: column;
+    /* shrink the type + spacing scale across the whole prototype */
+    --type-headline-small: 600 21px/27px var(--font-display);
+    --type-display-small: 600 30px/36px var(--font-display);
+    --type-title-large: 600 17px/22px var(--font-sans);
+    --type-title-medium: 600 14px/19px var(--font-sans);
+    --type-title-small: 600 13px/17px var(--font-sans);
+    --type-body-large: 400 14px/20px var(--font-sans);
+    --type-body-medium: 400 13px/18px var(--font-sans);
+    --type-body-small: 400 11px/15px var(--font-sans);
+    --type-label-large: 500 13px/17px var(--font-sans);
+    --type-label-medium: 500 11px/15px var(--font-sans);
+    --type-label-small: 500 10px/14px var(--font-sans);
+    --space-24: 18px;
+    --space-20: 15px;
+    --space-16: 12px;
+    --space-12: 9px;
+  }
+  .statusbar { height: 36px; flex: 0 0 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 24px; font: var(--type-label-medium); font-weight: 600; color: var(--on-background); }
+  .statusbar__icons { display: flex; align-items: center; gap: 6px; }
+
+  .screen { position: absolute; inset: 36px 0 0; display: none; flex-direction: column; background: var(--background); }
+  .screen.active { display: flex; }
+  .content { flex: 1; overflow-y: auto; padding: var(--space-8) var(--space-20) var(--space-20); }
+  .content::-webkit-scrollbar { width: 0; }
+
+  /* app bar */
+  .appbar { height: 52px; flex: 0 0 52px; display: flex; align-items: center; gap: var(--space-12); padding: 0 var(--space-16); }
+  .appbar__back { width: 38px; height: 38px; flex: none; border-radius: var(--radius-full); background: var(--surface); border: none; cursor: pointer; display: grid; place-items: center; color: var(--on-surface); box-shadow: var(--elevation-1); }
+  .appbar__back svg { width: 21px; height: 21px; }
+  .appbar__title { font: var(--type-title-medium); font-size: 16px; flex: 1; }
+  .appbar__cancel { background: none; border: none; cursor: pointer; color: var(--on-surface-variant); font: var(--type-label-large); padding: var(--space-8); }
+
+  h2.head { font: var(--type-title-large); font-size: 17px; line-height: 1.2; letter-spacing: -.2px; margin: 0 0 var(--space-6); }
+  h2.head--lede { font-size: 15px; line-height: 1.5; font-weight: 600; }
+  p.sub { font: var(--type-body-small); color: var(--on-surface-variant); margin: 0 0 var(--space-20); }
+
+  .btn { height: 46px; border: none; border-radius: var(--radius-full); font: var(--type-label-large); font-weight: 700; cursor: pointer; width: 100%; background: var(--primary); color: var(--on-primary); transition: filter .12s, opacity .12s; }
+  .btn:active { filter: brightness(.92); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .actions { flex: none; padding: var(--space-12) var(--space-20) var(--space-24); background: var(--surface); border-top: 1px solid var(--outline-variant); }
+
+  /* ---- home ---- */
+  .home-head { display: flex; align-items: center; justify-content: space-between; margin: var(--space-12) 2px var(--space-24); }
+  .home-head .greet { font: var(--type-title-large); font-size: 17px; }
+  .bell { position: relative; background: none; border: none; cursor: pointer; color: var(--on-background); padding: 4px; }
+  .bell svg { width: 26px; height: 26px; }
+  .badge { position: absolute; top: -1px; right: -3px; background: var(--error); color: var(--on-error); font: var(--type-label-small); font-weight: 700; min-width: 17px; height: 17px; padding: 0 4px; border-radius: var(--radius-full); display: grid; place-items: center; border: 1.5px solid var(--background); }
+  .sec-title { font: var(--type-title-medium); font-size: 15px; margin-bottom: var(--space-12); }
+  .offer { background: var(--green-90); color: var(--neutral-00); border-radius: var(--radius-xl); padding: var(--space-24); position: relative; overflow: hidden; }
+  .offer__art { position: absolute; right: 8px; top: 50%; transform: translateY(-58%); width: 134px; height: 104px; }
+  .offer__title { font: var(--type-title-medium); font-size: 16px; font-weight: 700; margin-bottom: var(--space-12); }
+  .offer__li { font: var(--type-body-medium); margin-bottom: var(--space-6); opacity: .95; }
+  .offer__cta { margin-top: var(--space-16); background: var(--green-20); color: var(--green-90); border: none; border-radius: var(--radius-full); font: var(--type-label-large); font-weight: 700; padding: 13px 22px; cursor: pointer; }
+  .offer__cta:active { filter: brightness(.95); }
+
+  .bottomnav { flex: none; display: flex; justify-content: space-around; align-items: center; background: var(--surface); border-top: 1px solid var(--outline-variant); padding: var(--space-8) 0 var(--space-12); }
+  .navitem { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; color: var(--on-surface-variant); font: var(--type-label-small); }
+  .navitem--active { color: var(--primary); }
+  .navitem svg { width: 24px; height: 24px; }
+
+  /* ---- shared select bits ---- */
+  .seclabel { font: var(--type-label-medium); color: var(--on-surface-variant); margin-bottom: var(--space-8); letter-spacing: .4px; }
+  .counthint { font: var(--type-label-large); font-weight: 700; color: var(--primary); margin: var(--space-16) 2px var(--space-12); }
+
+  /* amount chips (Flow B) */
+  .chips { display: flex; gap: var(--space-4); margin: 0 calc(-1 * var(--space-20)) var(--space-8); padding: 0 var(--space-20) 2px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
+  .chips:active { cursor: grabbing; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: 0 0 auto; height: 42px; padding: 0 11px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-full); border: none; background: var(--neutral-15); cursor: pointer; font: var(--type-label-large); color: var(--on-surface); white-space: nowrap; user-select: none; transition: background .15s, color .15s; }
+  .chip:active { background: var(--neutral-20); }
+  .chip--sel { background: var(--neutral-95); color: var(--neutral-00); }
+
+  /* daily budget stepper (Flow C) */
+  .budget-display { text-align: center; margin: var(--space-8) 0 var(--space-4); }
+  .budget-display .amt { font: var(--type-display-small); font-size: 52px; line-height: 1; letter-spacing: -1.5px; }
+  .budget-display .amt .cur { font: var(--type-headline-small); color: var(--on-surface-variant); vertical-align: 9px; margin-right: 4px; }
+  .budget-display .per { font: var(--type-body-medium); color: var(--on-surface-variant); margin-top: var(--space-8); }
+  .stepper { display: flex; align-items: center; justify-content: center; gap: var(--space-16); margin: var(--space-24) 0 var(--space-8); }
+  .stepbtn { width: 48px; height: 48px; flex: none; border-radius: var(--radius-full); border: 2px solid var(--primary); background: var(--primary-container); color: var(--green-90); font-size: 28px; font-weight: 700; cursor: pointer; display: grid; place-items: center; }
+  .stepbtn:active { filter: brightness(.95); }
+  .stepbtn:disabled { border-color: var(--outline); color: var(--on-surface-variant); background: var(--surface-variant); cursor: not-allowed; opacity: .6; }
+  .quickchips { display: flex; gap: var(--space-8); justify-content: center; margin: var(--space-20) 0 var(--space-6); }
+  .quickchip { flex: 1; height: 44px; border-radius: var(--radius-sm); border: 1.5px solid var(--outline); background: var(--surface); cursor: pointer; font: var(--type-title-small); color: var(--on-surface); }
+  .quickchip--sel { background: var(--primary-container); border-color: var(--primary); color: var(--on-primary-container); }
+  .helper { text-align: center; font: var(--type-body-small); color: var(--on-surface-variant); margin-top: var(--space-16); }
+
+  /* daily presets (Flow C — Variation A) */
+  .pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); margin: var(--space-8) 0 var(--space-12); }
+  .pcell { height: 74px; border-radius: var(--radius-lg); border: 2px solid var(--outline); background: var(--surface); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-shadow: var(--elevation-1); transition: border-color .12s, background .12s; }
+  .pcell:active { background: var(--surface-variant); }
+  .pcell .n { font: var(--type-display-small); font-size: 24px; line-height: 1; }
+  .pcell .u { font: var(--type-body-small); color: var(--on-surface-variant); }
+  .pcell--sel { background: var(--primary-container); border-color: var(--primary); }
+  .pcell--sel .n { color: var(--green-90); }
+  .pcell--sel .u { color: var(--green-90); opacity: .85; }
+  .pother { height: 52px; width: 100%; border-radius: var(--radius-sm); border: 1.5px dashed var(--outline); background: var(--surface); cursor: pointer; font: var(--type-title-small); color: var(--on-surface); display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .pother:active { background: var(--surface-variant); }
+  /* pay-by-rhythm segmented control (Flow F) */
+  .segrhythm { display: flex; background: var(--surface); border: 1.5px solid var(--outline); border-radius: var(--radius-full); padding: 4px; margin-bottom: var(--space-20); }
+  .segrhythm button { flex: 1; height: 42px; border: none; background: none; cursor: pointer; font: var(--type-label-large); color: var(--on-surface); border-radius: var(--radius-full); position: relative; transition: background .15s, color .15s; }
+  .segrhythm button + button::before { content: ""; position: absolute; left: 0; top: 9px; bottom: 9px; width: 1px; background: var(--outline-variant); }
+  .segrhythm button.on { background: var(--green-90); color: #fff; }
+  .segrhythm button.on::before, .segrhythm button.on + button::before { display: none; }
+  /* guided step progress (Flow G) */
+  .stepbar { display: flex; align-items: center; gap: 8px; margin-bottom: var(--space-16); }
+  .stepbar__seg { flex: 1; height: 5px; border-radius: var(--radius-full); background: var(--neutral-15); }
+  .stepbar__seg.done { background: var(--primary); }
+  .steplabel { font: var(--type-label-medium); color: var(--on-surface-variant); letter-spacing: .4px; margin-bottom: var(--space-8); }
+  /* Flow F live results */
+  .reslabel { font: var(--type-label-medium); color: var(--on-surface-variant); letter-spacing: .4px; margin: var(--space-16) 0 var(--space-12); }
+  .fres-empty { border: 1.5px dashed var(--outline); border-radius: var(--radius-lg); padding: 30px 22px; text-align: center; color: var(--on-surface-variant); font: var(--type-body-medium); line-height: 1.5; }
+  .fres { background: var(--surface); border: 1.5px solid var(--outline); border-radius: var(--radius-lg); padding: 13px 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; transition: border-color .15s; }
+  .fres--sel { border-color: var(--primary); border-width: 2px; padding: 12px 15px; }
+  .fres--over { opacity: .5; }
+  .fres__amt { font: var(--type-title-medium); font-size: 17px; }
+  .fres__amt b { font-weight: 800; }
+  .fres__amt .k { color: var(--on-surface-variant); font-weight: 500; font-size: 14px; }
+  .fres__meta { font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 3px; }
+  .fres__chev { color: var(--on-surface-variant); flex: none; }
+  .fres__chev svg { width: 22px; height: 22px; display: block; }
+  .fres__sel { flex: none; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-full); padding: 10px 22px; font: var(--type-label-large); cursor: pointer; }
+  .fres__sel:active { filter: brightness(.95); }
+  .acard__select { margin-top: var(--space-12); }
+  .succ-icon { width: 96px; height: 96px; margin: 26px auto 20px; }
+  .succ-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .succ h2.succ-title { text-align: center; font: var(--type-title-large); font-size: 22px; font-weight: 800; color: var(--primary); line-height: 1.25; margin: 0 0 8px; }
+  .succ p.succ-sub { text-align: center; font: var(--type-body-medium); color: var(--on-surface); margin: 0 0 26px; }
+  .succ-card { background: var(--surface); border-radius: var(--radius-xl); padding: 16px 18px; box-shadow: var(--elevation-1); }
+  .succ-card .succ-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; font: var(--type-title-medium); font-size: 16px; }
+  .succ-card .succ-row b { font-weight: 800; }
+  .succ-card .succ-row b.green { color: var(--green-90); }
+  .succ-row--muted { color: var(--on-surface-variant); font-weight: 500; }
+  .succ-row--muted b { font-weight: 700; }
+  .succ-hr { height: 1px; background: var(--outline-variant); margin: 10px 0; }
+  .succ-spacer { flex: 1; min-height: 16px; }
+  /* ---- new Summary review (SA/NG) ---- */
+  .head--summary { font: var(--type-headline-small); font-size: 30px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 4px; }
+  .sumcard2 { background: var(--surface); border-radius: var(--radius-xl); padding: 22px 18px 18px; box-shadow: var(--elevation-1); }
+  .sum2-lbl { text-align: center; font: var(--type-title-small); color: var(--on-surface-variant); }
+  .sum2-amt { text-align: center; font: var(--type-headline-small); font-size: 34px; font-weight: 800; color: var(--green-90); margin: 4px 0 2px; }
+  .sum2-hr { height: 1px; background: var(--outline-variant); margin: 16px 0; }
+  .sum2-cols { display: flex; align-items: center; gap: 10px; }
+  .sum2-col { flex: 1; }
+  .sum2-col--r { text-align: right; }
+  .sum2-collbl { font: var(--type-label-small); color: var(--on-surface-variant); letter-spacing: .3px; }
+  .sum2-colval { font: var(--type-title-medium); font-size: 16px; font-weight: 700; margin-top: 3px; }
+  .sum2-arrow { width: 24px; height: 24px; flex: none; color: var(--primary); }
+  .sum2-viewlink { display: block; width: 100%; text-align: center; background: none; border: none; cursor: pointer; color: var(--primary); font: var(--type-title-small); font-weight: 700; padding: 16px 0; }
+  .sendcard2 { background: var(--surface-variant); border-radius: var(--radius-lg); padding: 16px; }
+  .sendcard2__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .sendcard2__title { font: var(--type-body-medium); color: var(--on-surface); }
+  .sendcard2__change { background: none; border: none; cursor: pointer; color: var(--primary); font: var(--type-title-small); font-weight: 700; }
+  .sendcard2__lbl { font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 10px; }
+  .sendcard2__val { font: var(--type-title-medium); font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .ld-rows { display: flex; flex-direction: column; gap: 18px; margin-top: 4px; }
+  .ld-r { display: flex; justify-content: space-between; align-items: center; gap: 12px; font: var(--type-body-medium); color: var(--on-surface-variant); }
+  .ld-r b { font: var(--type-title-medium); font-size: 16px; font-weight: 700; color: var(--on-surface); text-align: right; }
+  .ld-hr { height: 1px; background: var(--outline-variant); margin: 18px 0; }
+  .ld-total { display: flex; justify-content: space-between; align-items: center; font: var(--type-title-medium); color: var(--on-surface-variant); }
+  .ld-total b { font: var(--type-title-large); font-size: 18px; font-weight: 800; color: var(--on-surface); }
+  .datecard--grey { background: var(--surface-variant) !important; border: none !important; margin-top: 12px; }
+  /* micro-interaction: swap presets → input */
+  .swap-out { animation: swapOut .24s ease forwards; }
+  .swap-in { animation: swapIn .3s ease; }
+  @keyframes swapOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-8px); } }
+  @keyframes swapIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .pother--on { border-style: solid; border-color: var(--primary); background: var(--primary-container); color: var(--green-90); }
+  .otherstep { display: none; align-items: center; gap: var(--space-12); margin-top: var(--space-12); }
+  .otherstep.show { display: flex; }
+  .otherstep .sval { flex: 1; height: 52px; border: 2px solid var(--primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; gap: 5px; font: var(--type-title-medium); font-size: 18px; }
+  .otherstep .sval .cur { font: var(--type-label-medium); color: var(--on-surface-variant); }
+  .fitpreview { display: flex; align-items: center; gap: 10px; background: var(--primary-container); border-radius: var(--radius-md); padding: 12px 14px; margin-top: var(--space-16); }
+  .fitpreview .star { color: var(--green-90); font-size: 16px; }
+  .fitpreview .txt { font: var(--type-body-medium); color: var(--green-90); }
+  .fitpreview .txt b { font-weight: 700; }
+
+  /* budget bar on loans screen (Flow C) */
+  .budgetbar { background: var(--surface); border: 1.5px solid var(--outline); border-radius: var(--radius-lg); padding: 13px 14px; margin-bottom: var(--space-6); }
+  .budgetbar .lbl { font: var(--type-label-medium); color: var(--on-surface-variant); letter-spacing: .4px; }
+  .budgetrow { display: flex; align-items: center; gap: var(--space-8); margin-top: var(--space-8); }
+  .budgetfield { flex: 1; height: 44px; border: 2px solid var(--primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; gap: 4px; padding: 0 8px; background: var(--surface); }
+  .budgetfield .cur, .budgetfield .per { font: var(--type-label-medium); color: var(--on-surface-variant); }
+  .budgetinput { border: none; outline: none; background: transparent; font: var(--type-title-large); font-size: 17px; text-align: center; width: 72px; color: var(--on-surface); -moz-appearance: textfield; padding: 0; }
+  .budgetinput::-webkit-outer-spin-button, .budgetinput::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .minibtn { width: 44px; height: 44px; flex: none; border-radius: var(--radius-sm); border: 2px solid var(--primary); background: var(--primary-container); color: var(--green-90); font-size: 24px; font-weight: 700; cursor: pointer; display: grid; place-items: center; }
+  .minibtn:active { filter: brightness(.95); }
+  .minibtn:disabled { border-color: var(--outline); color: var(--on-surface-variant); background: var(--surface-variant); cursor: not-allowed; opacity: .6; }
+  .budgetval { font: var(--type-title-large); font-size: 17px; color: var(--on-surface); }
+  /* Flow E live result card */
+  .livecard { margin-top: var(--space-20); background: var(--primary-container); border-radius: var(--radius-xl); padding: 16px 18px; }
+  .livecard__daily { display: flex; align-items: baseline; gap: 8px; }
+  .livecard__daily span { font: var(--type-headline-small); font-size: 32px; font-weight: 800; color: var(--green-90); }
+  .livecard__daily small { font: var(--type-label-medium); color: var(--green-90); }
+  .livecard__rows { margin-top: 12px; border-top: 1px solid rgba(0,0,0,.10); padding-top: 10px; }
+  .livecard__rows .r { display: flex; justify-content: space-between; align-items: center; font: var(--type-body-medium); padding: 4px 0; }
+  .livecard__rows .r b { font-weight: 700; color: var(--on-surface); }
+
+  /* offer rows */
+  .loan { background: var(--surface); border: 2px solid transparent; border-radius: var(--radius-lg); padding: 15px 16px; margin-bottom: var(--space-12); cursor: pointer; display: flex; align-items: center; gap: 13px; box-shadow: var(--elevation-1); transition: border-color .12s, box-shadow .12s; }
+  .loan--sel { border-color: var(--primary); box-shadow: 0 2px 12px rgba(47,136,34,.16); }
+  .loan__radio { width: 22px; height: 22px; border-radius: var(--radius-full); border: 2px solid var(--outline); display: grid; place-items: center; flex: none; }
+  .loan--sel .loan__radio { border-color: var(--primary); }
+  .loan__radio::after { content: ""; width: 11px; height: 11px; border-radius: var(--radius-full); background: var(--primary); transform: scale(0); transition: transform .12s; }
+  .loan--sel .loan__radio::after { transform: scale(1); }
+  .loan__amt { font: var(--type-title-medium); font-size: 15px; }
+  .loan__amt small { display: block; font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 2px; font-weight: 400; }
+  .loan__day { margin-left: auto; text-align: right; }
+  .loan__day b { font: var(--type-title-medium); font-size: 14px; }
+  .loan__day small { display: block; font: var(--type-label-small); color: var(--on-surface-variant); font-weight: 500; }
+  .loan--sel .loan__amt, .loan--sel .loan__day b { color: var(--green-90); }
+  .loan--over { opacity: .5; }
+  .loan--over .loan__day b { color: var(--amber-70); }
+  .unlocknote { text-align: center; font: var(--type-body-small); color: var(--on-surface-variant); margin: var(--space-6) 0 var(--space-12); }
+
+  /* Flow A — expandable amount cards */
+  .acard { background: var(--surface); border: 2px solid transparent; border-radius: var(--radius-xl); padding: 13px 16px; margin-bottom: var(--space-12); cursor: pointer; box-shadow: var(--elevation-1); transition: border-radius .12s, box-shadow .12s; }
+  .acard--sel { border-radius: var(--radius-lg); box-shadow: var(--elevation-2); }
+  .acard--dim { opacity: .42; pointer-events: none; }
+  .eblocked-note { font: var(--type-label-medium); color: var(--on-surface-variant); text-align: center; margin: 2px 0 14px; padding-top: 16px; border-top: 1px dashed var(--outline-variant); }
+
+  /* ---- loan laddering ---- */
+  .ladderpitch { font: var(--type-body-small); color: var(--on-surface-variant); margin: 0 0 12px; line-height: 1.5; text-align: left; }
+  .ladderlink { border: none; background: none; padding: 0; font: inherit; font-weight: 700; color: var(--primary); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .ladder-scrim { position: absolute; inset: 0; background: var(--scrim); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 40; }
+  .ladder-scrim.open { opacity: 1; pointer-events: auto; }
+  .ladder-sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 41; background: var(--surface); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: 20px 24px 24px; transform: translateY(110%); transition: transform .26s ease-out; box-shadow: var(--elevation-4); }
+  .ladder-sheet.open { transform: translateY(0); }
+  .ladder-close { position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border: none; background: none; cursor: pointer; color: var(--on-surface); display: grid; place-items: center; }
+  .ladder-close svg { width: 22px; height: 22px; }
+  .ladder-title { font: var(--type-headline-small); font-size: 27px; line-height: 1.12; font-weight: 700; margin: 6px 0 12px; max-width: 76%; letter-spacing: -.4px; }
+  .ladder-sub { font: var(--type-body-medium); color: var(--on-surface-variant); margin: 0 0 18px; line-height: 1.45; }
+  .ladder-sub b { color: var(--on-surface); font-weight: 700; }
+  .ladder-hr { height: 1px; background: var(--outline-variant); margin: 0 0 18px; }
+  .ladder-h3 { font: var(--type-title-large); font-size: 18px; font-weight: 700; margin: 0 0 24px; }
+  .ladder-steps { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 26px; }
+  .ladder-step { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .ladder-cap { font: var(--type-label-medium); font-weight: 600; color: var(--on-surface-variant); margin-bottom: 8px; text-align: center; min-height: 16px; }
+  .ladder-cap--now { color: var(--primary); font-weight: 700; }
+  .ladder-bar { width: 100%; border-radius: var(--radius-md); }
+  .ladder-bar--now { height: 62px; background: var(--primary); }
+  .ladder-bar--ghost { border: 1.5px dashed var(--outline); background: var(--neutral-05); }
+  .ladder-bar--mid { height: 94px; }
+  .ladder-bar--tall { height: 126px; }
+  .ladder-foot { font: var(--type-label-medium); color: var(--on-surface-variant); margin-top: 10px; }
+  .ladder-foot--now { color: var(--primary); font-weight: 700; }
+  .ladder-actions .btn { width: 100%; }
+  /* ---- amount dropdown (Flow 5) ---- */
+  .ddfield { margin-bottom: var(--space-20); }
+  .ddfield .lbl { display: block; font: var(--type-label-medium); font-weight: 600; letter-spacing: .4px; color: var(--on-surface-variant); margin-bottom: 8px; }
+  .ddwrap { position: relative; }
+  .ddselect { width: 100%; appearance: none; -webkit-appearance: none; background: var(--surface); border: 1.5px solid var(--outline); border-radius: 12px; padding: 15px 46px 15px 16px; font: var(--type-title-medium); font-size: 17px; font-weight: 600; color: var(--on-surface); cursor: pointer; }
+  .ddselect:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(47,136,34,0.12); }
+  .ddchev { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; pointer-events: none; color: var(--on-surface-variant); }
+  .acard__head { display: flex; align-items: center; justify-content: space-between; }
+  .acard__left { display: flex; align-items: center; gap: 14px; }
+  .acard__radio { width: 24px; height: 24px; border-radius: var(--radius-full); border: 2px solid var(--outline); display: grid; place-items: center; flex: none; }
+  .acard--sel .acard__radio { border-color: var(--primary); }
+  .acard__radio::after { content: ""; width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--primary); transform: scale(0); transition: transform .12s; }
+  .acard--sel .acard__radio::after { transform: scale(1); }
+  .acard__amt { font: var(--type-title-large); font-size: 16px; font-weight: 700; }
+  .acard--sel .acard__amt { color: var(--primary); }
+  .acard__daily { font: var(--type-title-medium); font-size: 14px; font-weight: 700; }
+  .acard__details { display: none; }
+  .acard--sel .acard__details { display: block; }
+  .acard__hr { height: 1px; background: var(--outline-variant); margin: 14px 0; }
+  .acard__dr { display: flex; justify-content: space-between; font: var(--type-body-medium); color: var(--on-surface-variant); padding: 5px 0; }
+  .acard__dr b { color: var(--on-surface); font-weight: 700; }
+  .acard--over { opacity: .5; }
+
+  /* ---- review ---- */
+  .recap { background: var(--primary-container); border-radius: var(--radius-lg); padding: var(--space-20); margin-bottom: var(--space-16); }
+  .recap .amt { font: var(--type-headline-small); font-size: 20px; color: var(--green-90); }
+  .recap .meta { font: var(--type-body-small); color: var(--green-90); opacity: .85; margin-top: var(--space-4); }
+  .datecard { background: var(--surface); border: 1.5px solid var(--outline); border-radius: var(--radius-lg); padding: 12px 14px; display: flex; align-items: center; gap: 13px; margin-bottom: var(--space-16); cursor: pointer; width: 100%; text-align: left; font: inherit; }
+  .datecard:active { background: var(--surface-variant); }
+  .datecard__ic { width: 38px; height: 38px; flex: none; border-radius: var(--radius-sm); background: var(--primary-container); color: var(--green-90); display: grid; place-items: center; }
+  .datecard__ic svg { width: 22px; height: 22px; }
+  .datecard__body { flex: 1; }
+  .datecard__lbl { font: var(--type-label-small); color: var(--on-surface-variant); letter-spacing: .4px; }
+  .datecard__val { font: var(--type-title-medium); margin-top: 2px; }
+  .datecard__chg { color: var(--primary); font: var(--type-label-large); font-weight: 700; }
+  .grace-pill { display: inline-flex; align-items: center; gap: 6px; font: var(--type-label-medium); font-weight: 700; color: var(--green-90); background: var(--primary-container); border-radius: var(--radius-full); padding: 6px 13px; margin-bottom: var(--space-12); }
+  .brk { background: var(--surface); border: 1.5px solid var(--outline); border-radius: var(--radius-lg); padding: 4px 16px; }
+  .brk .r { display: flex; justify-content: space-between; font: var(--type-body-medium); padding: 13px 0; border-bottom: 1px solid var(--outline-variant); }
+  .brk .r:last-child { border-bottom: none; }
+  .brk .r b { font-weight: 700; }
+  .brk .r.hl b { color: var(--green-90); }
+
+  /* ---- review · A/C summary variant ---- */
+  .sendcard { background: var(--surface); border-radius: var(--radius-lg); padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: var(--space-16); box-shadow: var(--elevation-1); }
+  .sendcard__body { flex: 1; }
+  .sendcard__title { font: var(--type-title-medium); font-size: 14px; margin-bottom: 6px; }
+  .sendcard__num { display: flex; align-items: center; gap: 8px; font: var(--type-body-medium); }
+  .sendcard__num .flag { font-size: 18px; }
+  .sendcard__arrow { color: var(--on-surface); flex: none; }
+  .sumcard { background: var(--surface); border-radius: var(--radius-lg); padding: 14px; margin-bottom: var(--space-16); box-shadow: var(--elevation-1); }
+  .sumtop .sumrow { display: flex; justify-content: space-between; align-items: center; font: var(--type-title-medium); font-size: 14px; padding: 5px 0; }
+  .sumtop .sumrow b { font-weight: 700; }
+  .sumtop .sumrow .green { color: var(--primary); }
+  .sumhr { height: 1px; background: var(--outline-variant); margin: 12px 0; }
+  .sumdetails { display: none; }
+  .sumdetails.show { display: block; }
+  .sumdetails .dr { display: flex; justify-content: space-between; font: var(--type-body-medium); color: var(--on-surface-variant); padding: 7px 0; }
+  .sumdetails .dr b { color: var(--on-surface); font-weight: 700; }
+  .showmore { background: none; border: none; width: 100%; text-align: center; color: var(--primary); font: var(--type-label-large); font-weight: 700; cursor: pointer; padding: 12px 0 2px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .warncard { border: 1.5px solid var(--secondary); border-radius: var(--radius-lg); padding: 16px; }
+  .warncard b { font: var(--type-title-medium); font-size: 14px; display: block; margin-bottom: 6px; }
+  .warncard p { font: var(--type-body-small); color: var(--on-surface-variant); margin: 0; }
+  .tnc { font: var(--type-body-small); color: var(--on-surface-variant); margin: 0 0 12px; line-height: 1.45; }
+  .tnc a { color: var(--primary); font-weight: 600; }
+  .btn--outline { background: var(--surface); color: var(--primary); border: 1.5px solid var(--primary); margin-top: 10px; }
+  .btn--outline:active { background: var(--surface-variant); filter: none; }
+
+  /* ---- bottom sheet ---- */
+  .sheet-scrim { position: absolute; inset: 0; background: var(--scrim); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 20; }
+  .sheet-scrim.open { opacity: 1; pointer-events: auto; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 21; background: var(--surface); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: 10px 20px 24px; transform: translateY(110%); transition: transform .28s cubic-bezier(.32,.72,.32,1); box-shadow: var(--elevation-5); }
+  .sheet.open { transform: translateY(0); }
+  .sheet__grab { width: 44px; height: 5px; background: var(--outline); border-radius: var(--radius-full); margin: 4px auto 14px; }
+  .sheet__head { display: flex; align-items: flex-start; margin-bottom: var(--space-16); }
+  .sheet__head .t { font: var(--type-title-medium); font-size: 18px; }
+  .sheet__head .t small { display: block; font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 3px; }
+  .sheet__close { margin-left: auto; width: 30px; height: 30px; border: none; background: var(--surface-variant); border-radius: var(--radius-full); cursor: pointer; font-size: 15px; color: var(--on-surface-variant); flex: none; }
+  .drow { display: flex; align-items: center; gap: 13px; padding: 15px 14px; margin-bottom: var(--space-8); border: 2px solid var(--outline); border-radius: var(--radius-sm); cursor: pointer; background: var(--surface); }
+  .drow--sel { border-color: var(--primary); background: var(--primary-container); }
+  .drow__radio { width: 20px; height: 20px; border-radius: var(--radius-full); border: 2px solid var(--outline); flex: none; display: grid; place-items: center; }
+  .drow--sel .drow__radio { border-color: var(--primary); }
+  .drow__radio::after { content: ""; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--primary); transform: scale(0); transition: transform .12s; }
+  .drow--sel .drow__radio::after { transform: scale(1); }
+  .drow__t { font: var(--type-title-small); font-size: 15px; }
+  .drow__t small { display: block; font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 2px; font-weight: 400; }
+  .drow__chev { margin-left: auto; color: var(--outline); font-size: 20px; }
+  .sheet__back { display: inline-flex; align-items: center; gap: 6px; font: var(--type-label-large); font-weight: 700; color: var(--primary); margin-bottom: var(--space-12); cursor: pointer; background: none; border: none; padding: 4px 0; }
+
+  /* calendar */
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-16); }
+  .cal-head .mo { font: var(--type-title-medium); }
+  .cal-nav { width: 34px; height: 34px; border: 1.5px solid var(--outline); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--on-surface); }
+  .cal-nav:disabled { opacity: .35; cursor: not-allowed; }
+  .cal-nav svg { width: 18px; height: 18px; }
+  .cal-dow { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: var(--space-8); }
+  .cal-dow span { text-align: center; font: var(--type-label-small); color: var(--on-surface-variant); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; }
+  .cal-d { aspect-ratio: 1; display: grid; place-items: center; font: var(--type-label-large); border-radius: var(--radius-sm); border: 1.5px solid transparent; }
+  .cal-d.blank { visibility: hidden; }
+  .cal-d.able { background: var(--surface-variant); cursor: pointer; }
+  .cal-d.able:active { background: var(--surface-dim); }
+  .cal-d.today { border-color: var(--outline); color: var(--on-surface-variant); }
+  .cal-d.sel { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+  .cal-d.disabled { color: var(--neutral-25); }
+  .cal-legend { display: flex; gap: 16px; margin: var(--space-16) 2px 0; font: var(--type-body-small); color: var(--on-surface-variant); }
+  .cal-legend i { display: inline-block; width: 13px; height: 13px; border-radius: 4px; margin-right: 5px; vertical-align: -2px; }
+  .cal-legend .g { background: var(--surface-variant); border: 1px solid var(--outline); }
+  .cal-legend .s { background: var(--primary); }
+
+  /* ---- success ---- */
+  .succ { flex: 1; display: flex; flex-direction: column; padding: var(--space-8) var(--space-20) var(--space-24); }
+  .tick { width: 84px; height: 84px; border-radius: var(--radius-full); background: var(--primary-container); display: grid; place-items: center; margin: var(--space-32) auto var(--space-20); }
+  .tick svg { width: 44px; height: 44px; color: var(--green-90); }
+  .succ h2 { text-align: center; font: var(--type-title-large); font-size: 17px; margin-bottom: var(--space-8); }
+  .succ p { text-align: center; font: var(--type-body-medium); color: var(--on-surface-variant); margin-bottom: var(--space-24); }
+  .succ-date { background: var(--primary-container); border-radius: var(--radius-lg); padding: var(--space-20); text-align: center; margin-bottom: var(--space-12); }
+  .succ-date .cap { font: var(--type-body-small); color: var(--green-90); opacity: .85; }
+  .succ-date .d { font: var(--type-headline-small); color: var(--green-90); margin-top: 3px; }
+  .succ-then { background: var(--surface); border: 1.5px solid var(--outline); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font: var(--type-body-medium); }
+  .succ-then b { font: var(--type-title-medium); font-size: 16px; }
+
+  /* ---- home dashboard ---- */
+  .balance-card { background: var(--surface); border-radius: var(--radius-xl); padding: 18px; margin-bottom: var(--space-12); }
+  .balance-head { display: flex; justify-content: space-between; align-items: flex-start; }
+  .balance-label { font: var(--type-label-medium); color: var(--on-surface-variant); letter-spacing: .4px; }
+  .balance-amt { display: flex; align-items: center; gap: 8px; font: var(--type-headline-small); font-size: 24px; margin-top: 2px; }
+  .balance-amt .eye { width: 20px; height: 20px; color: var(--on-surface-variant); }
+  .balance-phone { width: 40px; height: 40px; flex: none; border: 1.5px solid var(--outline); border-radius: var(--radius-full); display: grid; place-items: center; color: var(--on-surface); }
+  .balance-phone svg { width: 16px; height: 18px; }
+  .progress { height: 8px; background: var(--neutral-15); border-radius: var(--radius-full); margin: 14px 0 10px; overflow: hidden; }
+  .progress > i { display: block; height: 100%; width: 42%; background: var(--primary); border-radius: var(--radius-full); }
+  .balance-missed { font: var(--type-title-small); color: var(--primary); margin-bottom: 14px; }
+  .lock-card { background: var(--surface); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: var(--space-20); }
+  .lock-card svg { width: 18px; height: 22px; flex: none; color: var(--on-surface); }
+  .lock-card__txt { flex: 1; font: var(--type-title-small); color: var(--on-surface); }
+  .lock-card__time { font: var(--type-title-small); font-weight: 700; }
+  .pay-card { background: var(--surface); border-radius: var(--radius-lg); padding: 16px; margin-bottom: var(--space-20); }
+  .pay-card h3 { font: var(--type-title-medium); font-size: 16px; margin: 0 0 12px; }
+  .pay-row { display: flex; align-items: center; gap: 12px; }
+  .pay-row__ic { width: 40px; height: 40px; flex: none; border: 1.5px solid var(--outline); border-radius: var(--radius-full); display: grid; place-items: center; color: var(--on-surface-variant); }
+  .pay-row__ic svg { width: 20px; height: 20px; }
+  .pay-row__who { flex: 1; }
+  .pay-row__who b { font: var(--type-title-small); display: block; }
+  .pay-row__who small { font: var(--type-body-small); color: var(--on-surface-variant); }
+  .pay-row__amt { text-align: right; }
+  .pay-row__amt b { font: var(--type-title-small); display: block; }
+  .pay-row__amt small { font: var(--type-body-small); color: var(--on-surface-variant); }
+  .offer { margin-bottom: var(--space-12); }
+  .offer--data { background: #D9E8F3; color: var(--on-surface); }
+  .offer--data .offer__title { color: var(--on-surface); }
+  .offer--data .offer__li { color: var(--on-surface-variant); opacity: 1; }
+  .offer--data .offer__cta { background: var(--green-20); color: var(--green-90); }
+  .offer--data .offer__art { color: #20405B; }
+
+  /* ---- landing / eligibility ---- */
+  .landing { text-align: center; }
+  .landing .landing-hero { max-width: 100%; max-height: 196px; width: auto; object-fit: contain; margin: 2px auto 10px; }
+  .landing .landing-amt { margin: 5px 0 42px; }
+  .landing .landing-benefits { gap: 11px; }
+  .landing-illus { height: 168px; background: var(--neutral-10); border-radius: var(--radius-lg); display: grid; place-items: center; color: var(--neutral-30); }
+  .landing-illus svg { width: 88px; height: 88px; }
+  .landing-note { background: var(--surface); border-radius: var(--radius-full); box-shadow: var(--elevation-3); padding: 10px 16px; display: flex; align-items: center; gap: 10px; text-align: left; margin: -24px 6px 18px; position: relative; }
+  .landing-note__ic { width: 30px; height: 30px; flex: none; border-radius: var(--radius-full); background: var(--primary-container); color: var(--green-90); display: grid; place-items: center; }
+  .landing-note__ic svg { width: 17px; height: 17px; }
+  .landing-note b { font: var(--type-title-small); font-size: 13px; display: block; }
+  .landing-note small { font: var(--type-body-small); color: var(--on-surface-variant); }
+  .landing-hero { display: block; width: 100%; max-width: 270px; margin: 0 auto 14px; }
+  .landing-kicker { font: var(--type-title-medium); font-size: 16px; font-weight: 600; color: var(--on-surface); margin-bottom: 6px; }
+  .landing-elig { font: var(--type-title-large); font-size: 22px; color: var(--on-surface); line-height: 1.22; }
+  .landing-amt { font: var(--type-headline-small); font-size: 34px; font-weight: 800; color: var(--primary); margin: 6px 0 22px; }
+  .landing-benefits { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  .benefit { display: flex; align-items: center; gap: 13px; background: var(--surface); box-shadow: var(--elevation-1); padding: 9px 16px; border-radius: 22px; }
+  .benefit__ic { width: 24px; height: 24px; flex: none; display: grid; place-items: center; }
+  .benefit__ic img { width: 24px; height: 24px; object-fit: contain; }
+  .benefit__ic svg { width: 27px; height: 27px; }
+  .benefit__ic--solid { border-radius: var(--radius-full); background: var(--primary); color: #fff; }
+  .benefit__ic--solid svg { width: 20px; height: 20px; }
+  .benefit__title { font: var(--type-title-medium); font-size: 14px; font-weight: 700; }
+  .benefit__sub { font: var(--type-body-small); color: var(--on-surface-variant); margin-top: 2px; display: block; }
+  .landing-foot { font: var(--type-body-small); color: var(--on-surface-variant); margin: 20px auto 0; text-align: center; line-height: 1.5; }
+
+  /* ---- Android launch experience ---- */
+  .screen[data-screen="android"], .screen[data-screen="splash"] { inset: 0; }
+  .android { display: flex; flex-direction: column; height: 100%; background: radial-gradient(120% 90% at 30% 12%, #2f8822 0%, #134e22 45%, #0c2c10 100%); color: #fff; }
+  .android__status { display: flex; justify-content: space-between; align-items: center; padding: 11px 20px 0; font: var(--type-label-medium); font-weight: 600; }
+  .android__clock { text-align: center; margin-top: 30px; }
+  .android__time { font-family: var(--font-display); font-size: 56px; font-weight: 300; line-height: 1; }
+  .android__date { font: var(--type-title-medium); opacity: .92; margin-top: 4px; }
+  .android__grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 6px; align-content: start; padding: 34px 20px 0; }
+  .app { display: flex; flex-direction: column; align-items: center; gap: 6px; background: none; border: none; cursor: default; font: inherit; }
+  .app__icon { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; box-shadow: 0 5px 12px rgba(0,0,0,.28); color: #fff; }
+  .app__icon svg { width: 26px; height: 26px; }
+  .app__label { font: var(--type-label-small); color: #fff; opacity: .95; }
+  .app--mkopa { cursor: pointer; }
+  .app--mkopa .app__icon { background: #fff; }
+  .app--mkopa:active .app__icon { transform: scale(.94); }
+  .android__dock { background: rgba(255,255,255,.16); border-radius: 26px; margin: 14px 16px 18px; padding: 12px 8px; display: flex; justify-content: space-around; }
+  .android__dock .app__label { display: none; }
+  .app--allflows { text-decoration: none; }
+
+  .splash { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; height: 100%; background: var(--green-90); color: #fff; }
+  .splash__logo { width: 84px; height: 84px; border-radius: 22px; background: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(0,0,0,.3); }
+  .splash__logo svg { width: 46px; height: 46px; }
+  .splash__name { font: var(--type-title-large); font-weight: 800; letter-spacing: .5px; }
+  .splash__dots { display: flex; gap: 7px; }
+  .splash__dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.55); animation: splashdot 1s infinite ease-in-out; }
+  .splash__dots i:nth-child(2){ animation-delay:.15s; } .splash__dots i:nth-child(3){ animation-delay:.3s; }
+  @keyframes splashdot { 0%,100%{opacity:.3; transform:translateY(0);} 50%{opacity:1; transform:translateY(-4px);} }
+
+  .launcher-link { display: none; align-items: center; gap: 6px; font: var(--type-label-large); color: var(--on-surface-variant); text-decoration: none; margin-bottom: 10px; }
+  body.test-mode .switcher { display: none; }
+  body.test-mode .launcher-link { display: inline-flex; }
+
+  /* ---- landing as popup (Flow A) ---- */
+  .lp-scrim { position: absolute; inset: 0; background: var(--scrim); z-index: 30; display: none; }
+  .lp-scrim.open { display: block; }
+  .lp-modal { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 24px 24px 0 0; z-index: 31; display: none; flex-direction: column; max-height: 96%; box-shadow: var(--elevation-5); }
+  .lp-modal.open { display: flex; }
+  .lp-handle { width: 44px; height: 5px; background: var(--outline); border-radius: var(--radius-full); margin: 10px auto 2px; flex: none; }
+  .lp-close { align-self: flex-end; width: 34px; height: 34px; flex: none; border: none; background: none; cursor: pointer; color: var(--on-surface); margin: 0 12px; display: grid; place-items: center; }
+  .lp-close svg { width: 18px; height: 18px; }
+  .lp-scroll { overflow-y: auto; }
+  .lp-scroll::-webkit-scrollbar { width: 0; }
+  .lp-modal .landing-hero { width: auto; max-width: 100%; max-height: 104px; object-fit: contain; display: block; margin: 2px auto 0; }
+  .lp-body { padding: 8px 20px 0; text-align: center; }
+  .lp-body .landing-amt { margin: 3px 0 12px; }
+  .lp-body .landing-benefits { text-align: left; gap: 9px; }
+  .lp-body .landing-elig { font-size: 19px; }
+  .lp-body .landing-amt { font-size: 29px; }
+  .lp-foot { margin-top: 12px; }
+  .lp-foot { margin-top: 18px; }
+  .lp-foot { font: var(--type-body-small); color: var(--on-surface-variant); text-align: center; margin: 18px auto 0; line-height: 1.55; }
+  .lp-actions { padding: 14px 20px 18px; flex: none; }
+  .lp-actions .btn { width: 100%; }
+</style>
+</head>
+<body>
+  <div class="switcher">
+    <div class="seg" id="seg">
+      <button data-flow="A" class="on">Flow 1<span class="sm">Today</span></button>
+      <button data-flow="B">Flow 2<span class="sm">By amount</span></button>
+      <button data-flow="S">Flow 3<span class="sm">Amount only</span></button>
+      <button data-flow="E">Flow 4<span class="sm">Amount + daily</span></button>
+      <button data-flow="DD">Flow 5<span class="sm">Dropdown</span></button>
+    </div>
+    <div class="flow-caption" id="flow-caption"></div>
+  </div>
+
+  <div class="device">
+    <div class="statusbar">
+      <span>9:30</span>
+      <div class="statusbar__icons">
+        <svg width="17" height="12" viewBox="0 0 17 13" fill="currentColor"><path d="M8.5 2.2C5.6 2.2 3 3.3 1.1 5.1l1.3 1.4C4 5 6.1 4.1 8.5 4.1s4.5.9 6.1 2.4l1.3-1.4C14 3.3 11.4 2.2 8.5 2.2zm0 3.8c-1.7 0-3.3.7-4.4 1.8L8.5 12 13 7.8C11.8 6.7 10.2 6 8.5 6z"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 13" fill="currentColor"><path d="M1 11h3V6H1v5zm5 0h3V3H6v8zm5 0h4V0h-4v11z"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="currentColor" stroke-width="1.3"/><rect x="2.7" y="3.2" width="14" height="5.6" rx="1.2" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <section class="screen" data-screen="android" data-screen-label="Phone home">
+      <div class="android">
+        <div class="android__status"><span>9:30</span><span>● ▰ ▂</span></div>
+        <div class="android__clock">
+          <div class="android__time">9:30</div>
+          <div class="android__date">Mon, 21 June</div>
+        </div>
+        <div class="android__grid">
+          <div class="app"><div class="app__icon" style="background:#4285F4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 011 1v16a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1zm6 15a1 1 0 100 2 1 1 0 000-2z"/></svg></div><div class="app__label">Phone</div></div>
+          <div class="app"><div class="app__icon" style="background:#34A853"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a1 1 0 011 1v11a1 1 0 01-1 1H8l-4 4V5a1 1 0 011-1z"/></svg></div><div class="app__label">Messages</div></div>
+          <div class="app"><div class="app__icon" style="background:#EA4335"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4" fill="#fff"/></svg></div><div class="app__label">Camera</div></div>
+          <div class="app"><div class="app__icon" style="background:#5F6368"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4l-2 1 1 2-2 2-2-1-1 2h-2l-1-2-2 1-2-2 1-2-2-1V11l2-1-1-2 2-2 2 1 1-2h2l1 2 2-1 2 2-1 2 2 1z"/></svg></div><div class="app__label">Settings</div></div>
+          <button class="app app--mkopa" id="launch-app"><div class="app__icon"><svg viewBox="0 0 118 118" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M68.3522 93.017V54.1602H49.4167V92.9706C52.4576 93.8059 55.6577 94.2617 58.9671 94.2617C62.2166 94.2617 65.3609 93.8233 68.3522 93.017Z" fill="#2F8822"/><path fill-rule="evenodd" clip-rule="evenodd" d="M91.9061 72.0226V41.4988L91.8252 40.2069L90.5333 40.1675C88.1387 40.0929 89.9611 40.1482 74.3068 40.1054L72.9707 40.1016V91.4961C81.5931 87.7837 88.4385 80.7558 91.9061 72.0226Z" fill="#2F8822"/><path fill-rule="evenodd" clip-rule="evenodd" d="M44.5675 91.2656V68.2188H25.6321V71.3627C28.9944 80.2661 35.8646 87.4542 44.5675 91.2656Z" fill="#2F8822"/><path fill-rule="evenodd" clip-rule="evenodd" d="M99.004 59C99.004 81.059 81.0579 99.0049 58.9996 99.0049C36.9413 99.0049 18.9951 81.059 18.9951 59C18.9951 36.9417 36.9413 18.9956 58.9996 18.9956C81.0579 18.9956 99.004 36.9417 99.004 59ZM58.9996 0C26.4671 0 0 26.4673 0 59C0 91.5331 26.4671 118 58.9996 118C91.5323 118 118 91.5331 118 59C118 26.4673 91.5323 0 58.9996 0Z" fill="#2F8822"/></svg></div><div class="app__label">M-KOPA</div></button>
+          <div class="app"><div class="app__icon" style="background:#1DA1F2"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/></svg></div><div class="app__label">Browser</div></div>
+          <div class="app"><div class="app__icon" style="background:#FBBC05"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="16" height="14" rx="2"/></svg></div><div class="app__label">Gallery</div></div>
+          <a class="app app--allflows" href="../index.html"><div class="app__icon" style="background:#5F6368"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></div><div class="app__label">All flows</div></a>
+        </div>
+        <div class="android__dock">
+          <div class="app"><div class="app__icon" style="background:#4285F4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 011 1v16a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg></div></div>
+          <div class="app"><div class="app__icon" style="background:#34A853"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a1 1 0 011 1v11a1 1 0 01-1 1H8l-4 4V5a1 1 0 011-1z"/></svg></div></div>
+          <div class="app"><div class="app__icon" style="background:#EA4335"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4" fill="#fff"/></svg></div></div>
+          <div class="app"><div class="app__icon" style="background:#1DA1F2"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/></svg></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="splash" data-screen-label="Launching">
+      <div class="splash">
+        <div class="splash__logo"><svg viewBox="0 0 118 118" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M68.3522 93.017V54.1602H49.4167V92.9706C52.4576 93.8059 55.6577 94.2617 58.9671 94.2617C62.2166 94.2617 65.3609 93.8233 68.3522 93.017Z" fill="#2F8822"/><path fill-rule="evenodd" clip-rule="evenodd" d="M91.9061 72.0226V41.4988L91.8252 40.2069L90.5333 40.1675C88.1387 40.0929 89.9611 40.1482 74.3068 40.1054L72.9707 40.1016V91.4961C81.5931 87.7837 88.4385 80.7558 91.9061 72.0226Z" fill="#2F8822"/><path fill-rule="evenodd" clip-rule="evenodd" d="M44.5675 91.2656V68.2188H25.6321V71.3627C28.9944 80.2661 35.8646 87.4542 44.5675 91.2656Z" fill="#2F8822"/><path fill-rule="evenodd" clip-rule="evenodd" d="M99.004 59C99.004 81.059 81.0579 99.0049 58.9996 99.0049C36.9413 99.0049 18.9951 81.059 18.9951 59C18.9951 36.9417 36.9413 18.9956 58.9996 18.9956C81.0579 18.9956 99.004 36.9417 99.004 59ZM58.9996 0C26.4671 0 0 26.4673 0 59C0 91.5331 26.4671 118 58.9996 118C91.5323 118 118 91.5331 118 59C118 26.4673 91.5323 0 58.9996 0Z" fill="#2F8822"/></svg></div>
+        <div class="splash__name">M-KOPA</div>
+        <div class="splash__dots"><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <section class="screen active" data-screen="home" data-screen-label="Home">
+      <div class="content">
+        <div class="home-head">
+          <div class="greet">Hi Richard 👋</div>
+          <button class="bell" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+            <span class="badge">3</span>
+          </button>
+        </div>
+
+        <div class="balance-card">
+          <div class="balance-head">
+            <div>
+              <div class="balance-label">Left to pay</div>
+              <div class="balance-amt">NGN 8,440
+                <svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l20 20M9.9 4.2A9.8 9.8 0 0112 4c5 0 9 4 10 8a12 12 0 01-2.3 3.4M6.6 6.6A12 12 0 002 12c1 4 5 8 10 8a9.6 9.6 0 004.2-1M9.9 9.9a3 3 0 004.2 4.2"/></svg>
+              </div>
+            </div>
+            <div class="balance-phone"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="2" width="10" height="20" rx="2.5"/></svg></div>
+          </div>
+          <div class="progress"><i></i></div>
+          <div class="balance-missed">0 missed payments</div>
+          <button class="btn">Pay now</button>
+        </div>
+
+        <div class="pay-card">
+          <h3>Latest payment</h3>
+          <div class="pay-row">
+            <div class="pay-row__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.2"/></svg></div>
+            <div class="pay-row__who"><b>Loan</b><small>Oct 4, 10:09 AM</small></div>
+            <div class="pay-row__amt"><b>NGN 100</b><small>ABC34XYZ12</small></div>
+          </div>
+        </div>
+
+        <div class="sec-title">Offers</div>
+        <div class="offer">
+          <svg class="offer__art" viewBox="0 0 134 104" fill="none">
+            <g transform="rotate(-9 67 52)">
+              <rect x="20" y="34" width="98" height="46" rx="8" fill="#1F5A16"/>
+              <rect x="14" y="26" width="98" height="46" rx="8" fill="#2F8822"/>
+              <rect x="8" y="18" width="98" height="46" rx="8" fill="#FFD100"/>
+              <circle cx="57" cy="41" r="12" fill="none" stroke="#0F2D0B" stroke-width="3"/>
+              <line x1="22" y1="26" x2="32" y2="26" stroke="#0F2D0B" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="82" y1="56" x2="92" y2="56" stroke="#0F2D0B" stroke-width="2.4" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <div class="offer__title">Nice work! You've earned a cash offer of</div>
+          <div class="offer__li">up to NGN 300,000</div>
+          <button class="offer__cta" id="offer-cta">Apply now</button>
+        </div>
+        <div class="offer offer--data">
+          <svg class="offer__art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="width:84px;height:84px;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg>
+          <div class="offer__title">Data bundles up to 10GB</div>
+          <div class="offer__li">today from NGN 38/day</div>
+          <button class="offer__cta offer__cta--data">Get data</button>
+        </div>
+      </div>
+      <nav class="bottomnav">
+        <button class="navitem navitem--active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l9 8h-2.5v9h-5v-6h-3v6h-5v-9H3z"/></svg>Home</button>
+        <button class="navitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 14V11M12 14V8M16 14v-2"/></svg>Product</button>
+        <button class="navitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.2"/></svg>Pay</button>
+        <button class="navitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.4 2.4 0 014.6.9c0 1.6-2.2 2-2.2 3.2"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>Help</button>
+        <button class="navitem" id="nav-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>Close</button>
+      </nav>
+    </section>
+
+    <section class="screen" data-screen="landing" data-screen-label="Eligibility">
+      <header class="appbar">
+        <button class="appbar__back" id="landing-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="appbar__title"></div>
+      </header>
+      <div class="content landing">
+        <img class="landing-hero" src="assets/loan-offer.png" alt="Loan offer approved">
+        <div class="landing-kicker">Great news, Richard!</div>
+        <div class="landing-elig">You've earned access to a cash loan of up to</div>
+        <div class="landing-amt">NGN 300,000</div>
+        <div class="landing-benefits">
+          <div class="benefit"><span class="benefit__ic"><img src="assets/ic-flexible.png" alt=""></span><div class="benefit__body"><div class="benefit__title">Choose a plan you can afford</div><div class="benefit__sub">Payments that match what you earn</div></div></div>
+          <div class="benefit"><span class="benefit__ic"><img src="assets/ic-fast.png" alt=""></span><div class="benefit__body"><div class="benefit__title">Find out fast</div><div class="benefit__sub">Know if you qualify in under 2 minutes</div></div></div>
+          <div class="benefit"><span class="benefit__ic"><img src="assets/ic-nofees.png" alt=""></span><div class="benefit__body"><div class="benefit__title">See exactly what you'll pay</div><div class="benefit__sub">No hidden fees</div></div></div>
+        </div>
+        <p class="landing-foot">We may ask a few quick questions to find the best offer for you.</p>
+      </div>
+      <div class="actions"><button class="btn" id="find-offer">Get my offer</button></div>
+    </section>
+
+    <section class="screen" data-screen="listA" data-screen-label="Choose amount (today)">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title"></div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">Choose your amount.</h2>
+        <p class="sub">Pick how much and when to pay</p>
+        <div id="listA-rows"></div>
+      </div>
+      <div class="actions">
+        <p class="ladderpitch">Repay on time and we increase how much you can borrow. <button type="button" class="ladderlink" data-ladder>Learn more</button></p>
+        <button class="btn" data-next="review" data-guard="sel">Choose</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="selectB" data-screen-label="Choose by amount">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">How much would you like?</h2>
+        <p class="sub">Pick an amount, then choose how to repay.</p>
+        <div class="chips" id="B-chips"></div>
+        <div class="counthint" id="B-count"></div>
+        <div id="B-rows"></div>
+      </div>
+      <div class="actions">
+        <p class="ladderpitch">Repay on time and we increase how much you can borrow. <button type="button" class="ladderlink" data-ladder>Learn more</button></p>
+        <button class="btn" data-next="review" data-guard="sel">Next step</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="budgetC" data-screen-label="Daily budget">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">How much can you afford to pay?</h2>
+        <p class="sub">Choose how much and when you can pay.</p>
+        <div class="segrhythm" id="C-rhythm">
+          <button data-r="daily" class="on">Daily</button>
+          <button data-r="weekly">Weekly</button>
+          <button data-r="payday">Monthly</button>
+        </div>
+        <div class="pgrid" id="C-presets"></div>
+        <button class="pother" id="C-other">Other amount</button>
+        <div class="otherstep" id="C-otherstep">
+          <button class="stepbtn" id="C-minus" aria-label="Less">−</button>
+          <div class="sval"><span class="cur">NGN</span><span id="C-budget">100</span><span class="cur" id="C-per" style="margin-left:4px;">/day</span></div>
+          <button class="stepbtn" id="C-plus" aria-label="More">+</button>
+        </div>
+        <div class="fitpreview"><span class="star">★</span><span class="txt" id="C-fit"></span></div>
+      </div>
+      <div class="actions"><button class="btn" id="budget-next">Show my loans</button></div>
+    </section>
+
+    <section class="screen" data-screen="budgetF" data-screen-label="Affordability">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">How much can you afford to pay?</h2>
+        <p class="sub">Choose how much and when you can pay.</p>
+        <div class="segrhythm" id="F-rhythm">
+          <button data-r="daily" class="on">Daily</button>
+          <button data-r="weekly">Weekly</button>
+          <button data-r="payday">Monthly</button>
+        </div>
+        <div class="pgrid" id="F-presets"></div>
+        <button class="pother" id="F-other">Select other amount</button>
+        <div class="otherstep" id="F-otherstep">
+          <button class="stepbtn" id="F-minus" aria-label="Less">−</button>
+          <div class="sval"><span class="cur">NGN</span><input class="budgetinput" id="F-budget-input" type="text" inputmode="numeric" value="100" aria-label="Amount"><span class="cur" id="F-otherper" style="margin-left:4px;">/day</span></div>
+          <button class="stepbtn" id="F-plus" aria-label="More">+</button>
+        </div>
+        <div class="reslabel" id="F-reslabel">Loans for you</div>
+        <div id="F-results"></div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="loansC" data-screen-label="Loans that fit">
+      <header class="appbar">
+        <button class="appbar__back" data-back="budgetC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Choose a loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <div class="budgetbar">
+          <div class="lbl">I CAN PAY UP TO</div>
+          <div class="budgetrow">
+            <button class="minibtn" id="C2-minus" aria-label="Less">−</button>
+            <div class="budgetfield">
+              <span class="cur">NGN</span>
+              <input class="budgetinput" id="C2-input" type="text" inputmode="numeric" value="100" aria-label="Daily amount">
+              <span class="per">/day</span>
+            </div>
+            <button class="minibtn" id="C2-plus" aria-label="More">+</button>
+          </div>
+        </div>
+        <div class="counthint" id="C2-count"></div>
+        <div id="C2-rows"></div>
+      </div>
+      <div class="actions"><button class="btn" data-next="review" data-guard="sel">Next step</button></div>
+    </section>
+
+    <section class="screen" data-screen="selectD" data-screen-label="Combined (amount + daily)">
+      <header class="appbar">
+        <button class="appbar__back" data-back="budgetC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">Choose your loan</h2>
+        <p class="sub">Pick your amount and payment plan.</p>
+        <div class="chips" id="D-chips"></div>
+        <div class="budgetbar" style="margin-top:var(--space-16);">
+          <div class="lbl">I CAN PAY UP TO</div>
+          <div class="budgetrow">
+            <button class="minibtn" id="D-minus" aria-label="Less">−</button>
+            <div class="budgetfield">
+              <span class="cur">NGN</span>
+              <input class="budgetinput" id="D-input" type="text" inputmode="numeric" value="100" aria-label="Amount">
+              <span class="per" id="D-per">/day</span>
+            </div>
+            <button class="minibtn" id="D-plus" aria-label="More">+</button>
+          </div>
+        </div>
+        <div class="counthint" id="D-count"></div>
+        <div id="D-rows"></div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="selectE" data-screen-label="Two-knob live">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">Choose your loan</h2>
+        <p class="sub">Set the amount and what you can pay daily.</p>
+        <div class="budgetbar">
+          <div class="lbl">LOAN AMOUNT</div>
+          <div class="budgetrow">
+            <button class="minibtn" id="E-amt-minus" aria-label="Less">−</button>
+            <div class="budgetfield"><span class="cur">NGN</span><span class="budgetval" id="E-amt">9,000</span></div>
+            <button class="minibtn" id="E-amt-plus" aria-label="More">+</button>
+          </div>
+        </div>
+        <div class="budgetbar" style="margin-top:var(--space-16);">
+          <div class="lbl">DAILY PAYMENT</div>
+          <div class="budgetrow">
+            <button class="minibtn" id="E-daily-minus" aria-label="Less per day">−</button>
+            <div class="budgetfield"><span class="cur">NGN</span><span class="budgetval" id="E-dailyval">2,000</span><span class="per">/day</span></div>
+            <button class="minibtn" id="E-daily-plus" aria-label="More per day">+</button>
+          </div>
+        </div>
+        <div class="counthint" id="E-count"></div>
+        <div id="E-rows"></div>
+      </div>
+      <div class="actions">
+        <p class="ladderpitch">Repay on time and we increase how much you can borrow. <button type="button" class="ladderlink" data-ladder>Learn more</button></p>
+        <button class="btn" data-next="review" data-guard="sel">Next</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="selectS" data-screen-label="Amount only">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">Choose your loan</h2>
+        <p class="sub">Select the amount, then choose how long to repay.</p>
+        <div class="budgetbar">
+          <div class="lbl">LOAN AMOUNT</div>
+          <div class="budgetrow">
+            <button class="minibtn" id="S-amt-minus" aria-label="Less">−</button>
+            <div class="budgetfield"><span class="cur">NGN</span><span class="budgetval" id="S-amt">80,000</span></div>
+            <button class="minibtn" id="S-amt-plus" aria-label="More">+</button>
+          </div>
+        </div>
+        <div class="counthint" id="S-count"></div>
+        <div id="S-rows"></div>
+      </div>
+      <div class="actions">
+        <p class="ladderpitch">Repay on time and we increase how much you can borrow. <button type="button" class="ladderlink" data-ladder>Learn more</button></p>
+        <button class="btn" data-next="review" data-guard="sel">Next</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="selectDD" data-screen-label="Dropdown">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <h2 class="head">Choose your loan</h2>
+        <p class="sub">Select an amount from the list, then choose how long to repay.</p>
+        <div class="ddfield">
+          <label class="lbl" for="DD-select">LOAN AMOUNT</label>
+          <div class="ddwrap">
+            <select id="DD-select" class="ddselect"></select>
+            <svg class="ddchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="counthint" id="DD-count"></div>
+        <div id="DD-rows"></div>
+      </div>
+      <div class="actions">
+        <p class="ladderpitch">Repay on time and we increase how much you can borrow. <button type="button" class="ladderlink" data-ladder>Learn more</button></p>
+        <button class="btn" data-next="review" data-guard="sel">Next step</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="budgetG" data-screen-label="Guided · budget">
+      <header class="appbar">
+        <button class="appbar__back" data-back="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <div class="stepbar"><div class="stepbar__seg done"></div><div class="stepbar__seg"></div><div class="stepbar__seg"></div></div>
+        <div class="steplabel">STEP 1 OF 3 · YOUR BUDGET</div>
+        <h2 class="head">What can you comfortably pay?</h2>
+        <p class="sub">Pick a rhythm and an amount — we'll match a loan to it.</p>
+        <div class="segrhythm" id="G-rhythm">
+          <button data-r="daily" class="on">Daily</button>
+          <button data-r="weekly">Weekly</button>
+          <button data-r="payday">Monthly</button>
+        </div>
+        <div class="pgrid" id="G-presets"></div>
+        <div class="fitpreview"><span class="star">★</span><span class="txt" id="G-fit"></span></div>
+      </div>
+      <div class="actions"><button class="btn" id="G-next1">Next</button></div>
+    </section>
+
+    <section class="screen" data-screen="amountG" data-screen-label="Guided · amount">
+      <header class="appbar">
+        <button class="appbar__back" data-back="budgetG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title">Cash loan</div>
+        <button class="appbar__cancel" data-back="home">Cancel</button>
+      </header>
+      <div class="content">
+        <div class="stepbar"><div class="stepbar__seg done"></div><div class="stepbar__seg done"></div><div class="stepbar__seg"></div></div>
+        <div class="steplabel">STEP 2 OF 3 · YOUR LOAN</div>
+        <h2 class="head">How much do you need?</h2>
+        <p class="sub" id="G-sub">These fit a budget of NGN 100/day.</p>
+        <div class="counthint" id="G-count"></div>
+        <div id="G-rows"></div>
+      </div>
+      <div class="actions"><button class="btn" data-next="review" data-guard="sel">Next</button></div>
+    </section>
+
+    <section class="screen" data-screen="review" data-screen-label="Review">
+      <header class="appbar">
+        <button class="appbar__back" id="review-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="appbar__title"></div>
+      </header>
+      <div class="content">
+        <div data-rv="B">
+        <h2 class="head">Your cash is almost ready.</h2>
+        <p class="sub">Check your details below.</p>
+        <div class="recap">
+          <div class="amt" id="rv-amt">NGN 12,000</div>
+          <div class="meta" id="rv-meta">NGN 89 / day · 180 days</div>
+        </div>
+        <div class="brk">
+          <div class="r"><span>You receive</span><b id="rv-receive">NGN 12,000</b></div>
+          <div class="r"><span id="rv-daily-label">Daily payment</span><b id="rv-daily">NGN 89 / day</b></div>
+          <div class="r hl"><span id="rv-first-label">First payment</span><b id="rv-first">Mon, 22 Jun</b></div>
+          <div class="r" id="rv-finish-row"><span>Finish by</span><b id="rv-finish">19 Dec 2026</b></div>
+          <div class="r"><span>Total to repay</span><b id="rv-total">NGN 16,020</b></div>
+        </div>
+        </div><div data-rv="AC">
+          <h2 class="head head--summary">Check your details</h2>
+          <p class="sub">Make sure all your details are correct before you confirm.</p>
+          <div class="sumcard2">
+            <div class="sum2-lbl">Loan amount you receive</div>
+            <div class="sum2-amt" id="ac-receive">NGN 12,000</div>
+             <div class="sum2-hr"></div>
+             
+            <div class="sum2-cols" style="justify-content: center; text-align: center;">
+              <div class="sum2-col">
+                <div class="sum2-collbl" id="ac-newlbl">DAILY REPAYMENT</div>
+                <div class="sum2-colval" id="ac-daily">—</div>
+              </div>
+            </div>
+            <button class="sum2-viewlink" id="ac-viewdetails">View loan details</button>
+            <div class="sendcard2">
+              <div class="sendcard2__top"><span class="sendcard2__title">Your loan will be sent to:</span><button class="sendcard2__change">Change</button></div>
+              <div class="sendcard2__lbl">Bank name</div>
+              <div class="sendcard2__val">OPay</div>
+              <div class="sendcard2__lbl">Bank account number</div>
+              <div class="sendcard2__val">1234635563</div>
+            </div>
+          </div>
+          <div class="warncard" style="margin-top:14px;">
+            <b>Keep your payments up to date to keep your phone active.</b>
+          </div>
+        </div></div>
+
+      <div class="actions" data-rv="B"><button class="btn" data-next="success">Confirm &amp; get loan</button></div>
+      <div class="actions" data-rv="AC">
+        <p class="tnc">All payments are reported to Credit Reference Bureaus (CRBs).<br>By tapping 'Next' you accept our <a href="#">Terms and Conditions</a>.</p>
+        <button class="btn" id="ac-agree">Next</button>
+      </div>
+
+      <div class="sheet-scrim" id="ld-scrim"></div>
+      <div class="sheet" id="ld-sheet">
+        <div class="sheet__grab"></div>
+        <div class="sheet__head">
+          <div class="t">Loan details</div>
+          <button class="sheet__close" id="ld-close">✕</button>
+        </div>
+        <div class="ld-rows">
+          <div class="ld-r"><span>Loan amount</span><b id="ld-amount">NGN 12,000</b></div>
+          <div class="ld-r"><span>Interest amount</span><b id="ld-interest">NGN 3,600</b></div>
+          <div class="ld-r"><span>Repayment days</span><b id="ld-days">180 days</b></div>
+          <div class="ld-r"><span>Daily payment</span><b id="ld-daily">NGN 89</b></div>
+          <div class="ld-r"><span>Monthly Percentage Rate (MPR)</span><b id="ld-mpr">4.8%</b></div>
+        </div>
+        <div class="ld-hr"></div>
+        <div class="ld-total"><span>Total amount to pay back</span><b id="ld-total">NGN 16,020</b></div>
+        <button class="btn" id="ld-continue" style="margin-top:16px;">Next</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="success" data-screen-label="Success">
+      <div class="succ">
+        <div class="succ-icon"><img src="assets/success-tick.png" alt="Success"></div>
+        <h2 class="succ-title">Your cash loan was sent successfully!</h2>
+        <p class="succ-sub">You should have received it.</p>
+        <div class="succ-card">
+          <div class="succ-row"><span>Amount received</span><b class="green" id="sc-amt">—</b></div>
+          <div class="succ-row"><span>Daily payment</span><b id="sc-daily">—</b></div>
+          <div class="succ-hr"></div>
+          <div class="succ-row succ-row--muted"><span>Loan period</span><b id="sc-days">—</b></div>
+          <div class="succ-row succ-row--muted"><span>Total price</span><b id="sc-total">—</b></div>
+        </div>
+        <div class="succ-spacer"></div>
+        <button class="btn" data-back="home">Close</button>
+      </div>
+    </section>
+
+    <div class="ladder-scrim" id="ladder-scrim"></div>
+    <div class="ladder-sheet" id="ladder-sheet">
+      <button class="ladder-close" id="ladder-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <h2 class="ladder-title">Your borrowing limit grows</h2>
+      <p class="ladder-sub">Repay on time and we <b>increase how much you can borrow.</b></p>
+      <div class="ladder-hr"></div>
+      <h3 class="ladder-h3">Repay this and get more.</h3>
+      <div class="ladder-steps">
+        <div class="ladder-step">
+          <div class="ladder-cap ladder-cap--now">NGN 180,000</div>
+          <div class="ladder-bar ladder-bar--now"></div>
+          <div class="ladder-foot ladder-foot--now">Now</div>
+        </div>
+        <div class="ladder-step">
+          <div class="ladder-cap">Limit Increases</div>
+          <div class="ladder-bar ladder-bar--ghost ladder-bar--mid"></div>
+          <div class="ladder-foot">Next Loan</div>
+        </div>
+        <div class="ladder-step">
+          <div class="ladder-cap">Limit Increases</div>
+          <div class="ladder-bar ladder-bar--ghost ladder-bar--tall"></div>
+          <div class="ladder-foot">Next Loan</div>
+        </div>
+      </div>
+      <div class="ladder-actions"><button class="btn" id="ladder-okay">Okay</button></div>
+    </div>
+  </div>
+
+<script>
+  // ---------- catalogue ----------
+  const CATALOG = {
+    70000:  [{days:60, daily:1517}, {days:90, daily:1012}, {days:120, daily:759}],
+    80000:  [{days:60, daily:1734}, {days:90, daily:1156}, {days:130, daily:800}],
+    130000: [{days:90, daily:1878}, {days:120, daily:1409}, {days:160, daily:1057}],
+    160000: [{days:100, daily:2080}, {days:140, daily:1486}, {days:180, daily:1156}]
+  };
+  const AMOUNTS = [85000, 120000, 180000, 250000, 300000];
+
+  const BUDGET_MIN = 500, BUDGET_MAX = 8000, BUDGET_STEP = 100;
+  // Affordability model: the daily payment tracks the customer's budget; the term
+  // scales inversely (raise the daily → fewer days), with a 30-day minimum.
+  const COST_FACTOR = 1.34, MIN_DAYS = 30, MAX_DAYS = 200;
+  const D_DAY_OPTIONS = [30, 60, 90, 120, 150, 180, 210, 240, 270];
+
+  // ---------- unified offer set (Flows 2-4): fixed terms, shared card view ----------
+  // Terms reference real M-KOPA NG cash-loan durations (~120-200 days).
+  const FIXED_TERMS = [200, 180, 165, 150, 120];
+  function offersFor(amount){
+    const total = Math.round(amount * COST_FACTOR / 10) * 10;
+    return FIXED_TERMS.map(days => ({ days, daily: Math.ceil(total / days), total }));
+  }
+  // representative (lowest-daily / longest-term) offer per amount
+  const CHEAPEST = {};
+  AMOUNTS.forEach(a => { CHEAPEST[a] = offersFor(a).reduce((m,o)=>o.daily<m.daily?o:m); });
+
+  function offerFor(amount, budget){
+    const total = Math.round(amount * COST_FACTOR / 10) * 10;
+    let days = Math.ceil(total / budget);
+    const over = days > MAX_DAYS;            // budget too low to clear within the max term
+    if (over) days = MAX_DAYS;
+    if (days < MIN_DAYS) days = MIN_DAYS;    // never shorter than 30 days
+    const daily = Math.ceil(total / days);   // ≈ budget, or total/30 at the floor
+    return { amount, days, daily, over };
+  }
+  const QUICK = [50, 100, 150, 200];
+  const TODAY = new Date(2026, 5, 21);  // Sun 21 Jun 2026
+  const GRACE_MAX = 14;
+
+  const FLOW_CAPTIONS = {
+    A: '<b>Flow 1 — Today.</b> How it works now: pick an amount; each card expands on tap to reveal the total to pay back and repayment period before you confirm.',
+    B: '<b>Flow 2 — Filter by amount.</b> Pick an amount first, then choose from the daily repayment plans available for it.',
+    S: '<b>Flow 3 — Amount only.</b> One knob: slide the loan amount and watch the daily payment, total and term update live on a standard plan.',
+    E: '<b>Flow 4 — Amount + daily.</b> Two knobs: set the amount and the daily payment you want — the repayment term is worked out for you, live.',
+    DD: '<b>Flow 5 — Dropdown.</b> Pick the loan amount from a dropdown list, then choose from the daily repayment plans available for it.'
+  };
+
+  const state = {
+    flow: 'A',
+    budget: 100,
+    otherMode: false,
+    selected: null,          // {amount, days, daily}
+    bAmount: 180000,           // amount chosen in Flow B
+    ddAmount: 180000,          // amount chosen in Flow DD (dropdown)
+    bMode: 'lipa',           // 'lipa' (installments) | 'paynow' (lump sum)
+    startDate: addDays(TODAY, 1),
+    calView: new Date(2026, 5, 1),
+    reviewFrom: 'listA'
+  };
+
+  // ---------- date helpers ----------
+  const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const MONFULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+  function stripTime(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function sameDay(a,b){ return stripTime(a).getTime()===stripTime(b).getTime(); }
+  function daysBetween(a,b){ return Math.round((stripTime(b)-stripTime(a))/86400000); }
+  function fmtShort(d){ return DOW[d.getDay()]+', '+d.getDate()+' '+MON[d.getMonth()]; }
+  function fmtShortFull(d){ return DOW[d.getDay()]+', '+d.getDate()+' '+MONFULL[d.getMonth()]; }
+  function fmtLong(d){ return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear(); }
+  const fmtMoney = n => 'NGN ' + n.toLocaleString('en-US');
+
+  // ---------- navigation ----------
+  function show(screen){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelector('[data-screen="'+screen+'"]').classList.add('active');
+    const c = document.querySelector('[data-screen="'+screen+'"] .content, [data-screen="'+screen+'"] .succ');
+    if (c) c.scrollTop = 0;
+    if (screen === 'review') renderReview();
+    if (screen === 'success') renderSuccess();
+    if (screen === 'loansC') renderLoansC();
+    if (screen === 'selectD') renderD();
+    if (screen === 'budgetC') renderBudget();
+    if (screen === 'budgetF') renderBudgetF();
+    if (screen === 'budgetG') renderBudgetG();
+    if (screen === 'amountG') renderAmountG();
+    if (screen === 'selectS') renderS();
+    if (screen === 'selectE') renderE();
+  }
+
+  // flow switcher
+  function setFlow(flow){
+    state.flow = flow;
+    state.selected = null;
+    state.budget = 1500;
+    state.otherMode = false;
+    state.bAmount = 180000;
+    state.bMode = 'lipa';
+    state.eAmount = 180000;
+    state.eDays = 120;
+    state.eDaily = null;
+    state.sAmount = 180000;
+    state.ddAmount = 180000;
+    state.fRhythm = 'daily';
+    state.fPicked = false;
+    state.dRhythm = 'daily';
+    state.startDate = addDays(TODAY, 1);
+    document.querySelectorAll('#seg button').forEach(b => b.classList.toggle('on', b.dataset.flow === flow));
+    document.getElementById('flow-caption').innerHTML = FLOW_CAPTIONS[flow];
+    // home offer copy + CTA per flow
+    const cta = document.getElementById('offer-cta');
+    cta.textContent = 'Apply now';
+    // pre-render the flow's select screen
+    if (flow === 'A') renderListA();
+    if (flow === 'B') renderB();
+    if (flow === 'S') renderS();
+    if (flow === 'E') renderE();
+    if (flow === 'DD') renderDD();
+    show('home');
+  }
+  document.querySelectorAll('#seg button').forEach(b => b.addEventListener('click', () => setFlow(b.dataset.flow)));
+
+  // offer CTA routes by flow
+  function enterFlow(){
+    if (state.flow === 'A') show('listA');
+    else if (state.flow === 'B') show('selectB');
+    else if (state.flow === 'S') show('selectS');
+    else if (state.flow === 'DD') show('selectDD');
+    else show('selectE');
+  }
+  document.getElementById('offer-cta').addEventListener('click', () => show('landing'));
+  document.getElementById('find-offer').addEventListener('click', enterFlow);
+  document.getElementById('landing-close').addEventListener('click', () => show('home'));
+  document.getElementById('launch-app').addEventListener('click', () => { show('splash'); setTimeout(() => show('home'), 950); });
+  document.getElementById('nav-close').addEventListener('click', () => show('android'));
+
+  // generic back / next / done buttons
+  document.querySelectorAll('[data-back]').forEach(el => el.addEventListener('click', () => {
+    let dest = el.getAttribute('data-back');
+    // loansC is shared by C and F — send the back button to the right budget screen
+    if (dest === 'budgetC' && state.flow === 'F') dest = 'budgetF';
+    if (dest === 'home') setFlow(state.flow); else show(dest);
+  }));
+  document.querySelectorAll('[data-next]').forEach(el => el.addEventListener('click', () => {
+    if (el.getAttribute('data-guard') === 'sel' && !state.selected) return;
+    const next = el.getAttribute('data-next');
+    if (next === 'review') {
+      state.reviewFrom = document.querySelector('.screen.active').dataset.screen;
+    }
+    show(next);
+  }));
+  document.getElementById('review-back').addEventListener('click', () => show(state.reviewFrom));
+
+  // ---------- Flow A: amount cards (expand on select) ----------
+  function renderListA(){
+    const wrap = document.getElementById('listA-rows');
+    wrap.innerHTML = '';
+    AMOUNTS.forEach(amount => {
+      const o = CHEAPEST[amount];
+      const total = o.days * o.daily;
+      const sel = state.selected && state.selected.amount === amount;
+      const card = document.createElement('div');
+      card.className = 'acard' + (sel ? ' acard--sel' : '');
+      card.innerHTML =
+        '<div class="acard__head">' +
+          '<div class="acard__left"><span class="acard__radio"></span><span class="acard__amt">' + fmtMoney(amount) + '</span></div>' +
+          '<span class="acard__daily">' + fmtMoney(o.daily) + ' daily</span>' +
+        '</div>' +
+        '<div class="acard__details">' +
+          '<div class="acard__hr"></div>' +
+          '<div class="acard__dr"><span>Total amount to pay back</span><b>' + fmtMoney(total) + '</b></div>' +
+          '<div class="acard__dr"><span>Repayment period</span><b>' + o.days + ' days</b></div>' +
+        '</div>';
+      card.addEventListener('click', () => { state.selected = { amount, days: o.days, daily: o.daily }; renderListA(); });
+      wrap.appendChild(card);
+    });
+    syncNext();
+  }
+
+  // ---------- Flow B: by amount ----------
+  function bCard(opts){
+    // opts: { leftLabel, rightLabel, total, periodLabel, periodValue, sel, onClick }
+    const card = document.createElement('div');
+    card.className = 'acard' + (opts.sel ? ' acard--sel' : '');
+    card.innerHTML =
+      '<div class="acard__head">' +
+        '<div class="acard__left"><span class="acard__radio"></span><span class="acard__amt">' + opts.leftLabel + '</span></div>' +
+        '<span class="acard__daily">' + opts.rightLabel + '</span>' +
+      '</div>' +
+      '<div class="acard__details">' +
+        '<div class="acard__hr"></div>' +
+        '<div class="acard__dr"><span>Total amount to pay back</span><b>' + fmtMoney(opts.total) + '</b></div>' +
+        '<div class="acard__dr"><span>' + opts.periodLabel + '</span><b>' + opts.periodValue + '</b></div>' +
+      '</div>';
+    card.addEventListener('click', opts.onClick);
+    return card;
+  }
+  function renderB(){
+    const chips = document.getElementById('B-chips');
+    chips.innerHTML = '';
+    AMOUNTS.forEach(a => {
+      const b = document.createElement('button');
+      b.className = 'chip' + (a === state.bAmount ? ' chip--sel' : '');
+      b.textContent = fmtMoney(a);
+      b.addEventListener('click', () => { state.bAmount = a; state.selected = null; renderB(); });
+      chips.appendChild(b);
+    });
+    ensureChipVisible(chips);
+    const terms = offersFor(state.bAmount);
+    document.getElementById('B-count').textContent = terms.length + ' ways to repay ' + fmtMoney(state.bAmount);
+    const rows = document.getElementById('B-rows');
+    rows.innerHTML = '';
+    terms.forEach(o => {
+      const total = o.total;
+      const sel = state.selected && state.selected.mode === 'lipa' && state.selected.amount === state.bAmount && state.selected.days === o.days;
+      rows.appendChild(bCard({
+        leftLabel: o.days + ' days',
+        rightLabel: fmtMoney(o.daily) + ' daily',
+        total: total,
+        periodLabel: 'You receive',
+        periodValue: fmtMoney(state.bAmount),
+        sel: sel,
+        onClick: () => { state.selected = { amount: state.bAmount, days: o.days, daily: o.daily, mode: 'lipa' }; renderB(); }
+      }));
+    });
+    syncNext();
+  }
+
+  // ---------- Flow C: budget (daily presets) ----------
+  const PRESETS = [1000, 2000, 3000, 5000];
+  function clampBudget(v){ return Math.max(BUDGET_MIN, Math.min(BUDGET_MAX, v)); }
+  function fitSummary(){
+    const fit = AMOUNTS.map(a => offerFor(a, state.budget)).filter(r => !r.over);
+    if (!fit.length) return 'No loans fit yet — try a higher amount';
+    const maxAmt = Math.max(...fit.map(r => r.amount));
+    return '<b>' + fit.length + (fit.length===1?' loan':' loans') + '</b> up to ' + fmtMoney(maxAmt) + ' available';
+  }
+  function renderBudget(){
+    const rf = RHYTHM[state.dRhythm || 'daily'];
+    document.querySelectorAll('#C-rhythm button').forEach(b => b.classList.toggle('on', b.dataset.r === (state.dRhythm || 'daily')));
+    const grid = document.getElementById('C-presets');
+    grid.innerHTML = '';
+    PRESETS.forEach(v => {
+      const cell = document.createElement('button');
+      cell.className = 'pcell' + (!state.otherMode && v === state.budget ? ' pcell--sel' : '');
+      cell.innerHTML = '<span class="n">' + (v * rf.mult).toLocaleString('en-US') + '</span><span class="u">' + rf.unit + '</span>';
+      cell.addEventListener('click', () => { state.budget = v; state.otherMode = false; renderBudget(); });
+      grid.appendChild(cell);
+    });
+    document.getElementById('C-other').classList.toggle('pother--on', state.otherMode);
+    document.getElementById('C-otherstep').classList.toggle('show', state.otherMode);
+    document.getElementById('C-budget').textContent = (state.budget * rf.mult).toLocaleString('en-US');
+    document.getElementById('C-per').textContent = rf.per;
+    document.getElementById('C-minus').disabled = state.budget <= BUDGET_MIN;
+    document.getElementById('C-plus').disabled = state.budget >= BUDGET_MAX;
+    document.getElementById('C-fit').innerHTML = fitSummary();
+  }
+  document.querySelectorAll('#C-rhythm button').forEach(b => b.addEventListener('click', () => { state.dRhythm = b.dataset.r; renderBudget(); }));
+  document.getElementById('C-other').addEventListener('click', () => { state.otherMode = !state.otherMode; renderBudget(); });
+  document.getElementById('C-minus').addEventListener('click', () => { state.budget = clampBudget(state.budget - BUDGET_STEP); renderBudget(); });
+  document.getElementById('C-plus').addEventListener('click', () => { state.budget = clampBudget(state.budget + BUDGET_STEP); renderBudget(); });
+
+  // ---------- Flow F: pay by rhythm (presets × Daily/Weekly/On payday) ----------
+  // One daily-base preset set; the rhythm just multiplies the label. state.budget
+  // always stays a daily-equivalent so the affordability model is unchanged.
+  const RHYTHM = {
+    daily:  { mult: 1,  unit: 'per day',   per: '/day',   presets: [1000, 2000, 3000, 5000] },
+    weekly: { mult: 7,  unit: 'per week',  per: '/week',  presets: [1000, 2000, 3000, 5000] },
+    payday: { mult: 30, unit: 'per month', per: '/month', presets: [1000, 2000, 3000, 5000] }
+  };
+  function loanRhythm(){
+    if (state.flow === 'D') return RHYTHM[state.dRhythm || 'daily'];
+    return (state.flow === 'F' || state.flow === 'G') ? RHYTHM[state.fRhythm] : { mult: 1, per: '/day' };
+  }
+  // express a term (in days) in the chosen rhythm's unit
+  function termLabel(days, rf){
+    if (rf.mult === 7) { const w = Math.round(days/7); return w + (w===1?' week':' weeks'); }
+    if (rf.mult === 30) { const m = Math.round(days/30); return m + (m===1?' month':' months'); }
+    return days + ' days';
+  }
+  function renderBudgetF(keepInput){
+    const r = RHYTHM[state.fRhythm];
+    const rf = loanRhythm();
+    document.querySelectorAll('#F-rhythm button').forEach(b => b.classList.toggle('on', b.dataset.r === state.fRhythm));
+    const grid = document.getElementById('F-presets');
+    grid.style.display = state.otherMode ? 'none' : 'grid';
+    document.getElementById('F-other').style.display = state.otherMode ? 'none' : '';
+    document.getElementById('F-otherstep').classList.toggle('show', state.otherMode);
+    grid.innerHTML = '';
+    r.presets.forEach(base => {
+      const shown = base * r.mult;
+      const cell = document.createElement('button');
+      cell.className = 'pcell' + (!state.otherMode && state.fPicked && base === state.budget ? ' pcell--sel' : '');
+      cell.innerHTML = '<span class="n">' + shown.toLocaleString('en-US') + '</span><span class="u">' + r.unit + '</span>';
+      cell.addEventListener('click', () => { state.budget = base; state.fPicked = true; renderBudgetF(); });
+      grid.appendChild(cell);
+    });
+    // editable amount field (daily-equivalent, shown in the active rhythm)
+    if (!keepInput) document.getElementById('F-budget-input').value = (state.budget * r.mult).toLocaleString('en-US');
+    document.getElementById('F-otherper').textContent = r.per;
+    document.getElementById('F-minus').disabled = state.budget <= BUDGET_MIN;
+    document.getElementById('F-plus').disabled = state.budget >= BUDGET_MAX;
+    document.getElementById('F-reslabel').textContent = state.fPicked ? 'LOANS THAT FIT' : 'Loans for you';
+
+    const results = document.getElementById('F-results');
+    results.innerHTML = '';
+    if (!state.fPicked){
+      const empty = document.createElement('div');
+      empty.className = 'fres-empty';
+      empty.textContent = 'Pick an amount above and we\u2019ll show the loans that fit it here.';
+      results.appendChild(empty);
+      state.selected = null;
+      syncNext();
+      return;
+    }
+    const reps = AMOUNTS.map(a => offerFor(a, state.budget));
+    const fit = reps.filter(x => !x.over).sort((a,b)=>b.amount-a.amount);
+    const over = reps.filter(x => x.over).sort((a,b)=>a.amount-b.amount);
+    const selRep = state.selected ? fit.find(x => x.amount === state.selected.amount) : null;
+    if (selRep) state.selected = { amount: selRep.amount, days: selRep.days, daily: selRep.daily, mode: 'lipa' };
+    else state.selected = null;   // require an explicit tap to select, per wireframe
+    fit.forEach(x => results.appendChild(fRow(x, false)));
+    if (over.length){
+      const note = document.createElement('div');
+      note.className = 'unlocknote';
+      note.textContent = '\u2014 pay a little more to unlock \u2014';
+      results.appendChild(note);
+      results.appendChild(fRow(over[0], true));
+    }
+    syncNext();
+  }
+  function fRow(o, isOver){
+    const rf = loanRhythm();
+    const rWord = rf.mult === 7 ? 'weekly' : rf.mult === 30 ? 'monthly' : 'daily';
+    const periodic = o.daily * rf.mult;
+    const totalPay = o.days * o.daily;
+    const sel = !isOver && state.selected && state.selected.amount === o.amount;
+    const card = document.createElement('div');
+    card.className = 'acard' + (isOver ? ' acard--over' : (sel ? ' acard--sel' : ''));
+    card.innerHTML =
+      '<div class="acard__head">' +
+        '<div class="acard__left"><span class="acard__radio"></span><span class="acard__amt">' + fmtMoney(o.amount) + '</span></div>' +
+        '<span class="acard__daily">' + fmtMoney(periodic) + (isOver ? ' · over' : ' ' + rWord) + '</span>' +
+      '</div>' +
+      '<div class="acard__details">' +
+        '<div class="acard__hr"></div>' +
+        '<div class="acard__dr"><span>Repay over</span><b>' + termLabel(o.days, rf) + '</b></div>' +
+        (rf.mult > 1 ? '<div class="acard__dr"><span>That’s</span><b>' + fmtMoney(o.daily) + ' / day</b></div>' : '') +
+        '<div class="acard__dr"><span>Total amount to pay back</span><b>' + fmtMoney(totalPay) + '</b></div>' +
+        '<div class="acard__dr"><span>You receive</span><b>' + fmtMoney(o.amount) + '</b></div>' +
+        '<button class="btn acard__select">Choose this loan</button>' +
+      '</div>';
+    if (isOver){
+      card.addEventListener('click', () => { state.budget = clampBudget(Math.ceil(o.daily / BUDGET_STEP) * BUDGET_STEP); renderBudgetF(); });
+    } else {
+      card.addEventListener('click', () => { state.selected = { amount: o.amount, days: o.days, daily: o.daily, mode: 'lipa' }; renderBudgetF(); });
+      card.querySelector('.acard__select').addEventListener('click', (e) => { e.stopPropagation(); state.reviewFrom = document.querySelector('.screen.active').dataset.screen; show('review'); });
+    }
+    return card;
+  }
+  document.querySelectorAll('#F-rhythm button').forEach(b => b.addEventListener('click', () => {
+    state.fRhythm = b.dataset.r;
+    renderBudgetF();
+  }));
+  // micro-interaction: presets + button slide out, the input field slides in (one-way)
+  document.getElementById('F-other').addEventListener('click', () => {
+    const grid = document.getElementById('F-presets');
+    const btn = document.getElementById('F-other');
+    grid.classList.add('swap-out');
+    btn.classList.add('swap-out');
+    setTimeout(() => {
+      grid.classList.remove('swap-out');
+      btn.classList.remove('swap-out');
+      state.otherMode = true;
+      state.fPicked = true;
+      renderBudgetF();
+      const step = document.getElementById('F-otherstep');
+      step.classList.add('swap-in');
+      const fi = document.getElementById('F-budget-input');
+      setTimeout(() => { step.classList.remove('swap-in'); fi.focus(); fi.select(); }, 300);
+    }, 230);
+  });
+  const fInput = document.getElementById('F-budget-input');
+  fInput.addEventListener('input', () => {
+    const raw = parseInt(fInput.value.replace(/\D/g,''), 10);
+    const mult = RHYTHM[state.fRhythm].mult;
+    state.budget = isNaN(raw) ? BUDGET_MIN : clampBudget(Math.round(raw / mult));
+    state.fPicked = true;
+    renderBudgetF(true);   // keep what the user is typing
+  });
+  fInput.addEventListener('blur', () => { fInput.value = (state.budget * RHYTHM[state.fRhythm].mult).toLocaleString('en-US'); });
+  fInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') fInput.blur(); });
+  document.getElementById('F-minus').addEventListener('click', () => { state.budget = clampBudget(state.budget - BUDGET_STEP); state.fPicked = true; renderBudgetF(); });
+  document.getElementById('F-plus').addEventListener('click', () => { state.budget = clampBudget(state.budget + BUDGET_STEP); state.fPicked = true; renderBudgetF(); });
+
+  // ---------- Flow G: guided (affordability-first) ----------
+  function renderBudgetG(){
+    const r = RHYTHM[state.fRhythm];
+    document.querySelectorAll('#G-rhythm button').forEach(b => b.classList.toggle('on', b.dataset.r === state.fRhythm));
+    const grid = document.getElementById('G-presets');
+    grid.innerHTML = '';
+    r.presets.forEach(base => {
+      const shown = base * r.mult;
+      const cell = document.createElement('button');
+      cell.className = 'pcell' + (base === state.budget ? ' pcell--sel' : '');
+      cell.innerHTML = '<span class="n">' + shown.toLocaleString('en-US') + '</span><span class="u">' + r.unit + '</span>';
+      cell.addEventListener('click', () => { state.budget = base; renderBudgetG(); });
+      grid.appendChild(cell);
+    });
+    document.getElementById('G-fit').innerHTML = fitSummary();
+  }
+  document.querySelectorAll('#G-rhythm button').forEach(b => b.addEventListener('click', () => {
+    state.fRhythm = b.dataset.r;
+    renderBudgetG();
+  }));
+  document.getElementById('G-next1').addEventListener('click', () => { renderAmountG(); show('amountG'); });
+
+  function renderAmountG(){
+    const rf = loanRhythm();
+    document.getElementById('G-sub').textContent = 'These fit a budget of R' + (state.budget * rf.mult).toLocaleString('en-US') + rf.per + '.';
+    const reps = AMOUNTS.map(a => offerFor(a, state.budget));
+    const fit = reps.filter(r => !r.over).sort((a,b)=>b.amount-a.amount);
+    const over = reps.filter(r => r.over).sort((a,b)=>a.amount-b.amount);
+    const selRep = state.selected ? fit.find(r => r.amount === state.selected.amount) : null;
+    if (selRep) state.selected = { amount: selRep.amount, days: selRep.days, daily: selRep.daily, mode: 'lipa' };
+    else state.selected = fit.length ? { amount: fit[0].amount, days: fit[0].days, daily: fit[0].daily, mode: 'lipa' } : null;
+    document.getElementById('G-count').textContent = fit.length
+      ? fit.length + (fit.length===1?' loan fits':' loans fit') + ' your budget'
+      : 'No loans fit yet — go back and raise your budget';
+    const rows = document.getElementById('G-rows');
+    rows.innerHTML = '';
+    fit.forEach(r => rows.appendChild(gOfferCard(r.amount, {days:r.days, daily:r.daily}, false)));
+    if (over.length) {
+      const note = document.createElement('div');
+      note.className = 'unlocknote';
+      note.textContent = '— raise your budget to unlock —';
+      rows.appendChild(note);
+      rows.appendChild(gOfferCard(over[0].amount, {days:over[0].days, daily:over[0].daily}, true));
+    }
+    syncNext();
+  }
+  function gOfferCard(amount, o, isOver){
+    const totalPay = o.days * o.daily;
+    const sel = !isOver && state.selected && state.selected.amount === amount && state.selected.days === o.days;
+    const rf = loanRhythm();
+    const rWord = rf.mult === 7 ? 'weekly' : rf.mult === 30 ? 'monthly' : 'daily';
+    const periodic = o.daily * rf.mult;
+    const card = document.createElement('div');
+    card.className = 'acard' + (isOver ? ' acard--over' : (sel ? ' acard--sel' : ''));
+    card.innerHTML =
+      '<div class="acard__head">' +
+        '<div class="acard__left"><span class="acard__radio"></span><span class="acard__amt">' + fmtMoney(amount) + '</span></div>' +
+        '<span class="acard__daily">' + fmtMoney(periodic) + (isOver ? ' · over' : ' ' + rWord) + '</span>' +
+      '</div>' +
+      '<div class="acard__details">' +
+        '<div class="acard__hr"></div>' +
+        '<div class="acard__dr"><span>Repay over</span><b>' + termLabel(o.days, rf) + '</b></div>' +
+        (rf.mult > 1 ? '<div class="acard__dr"><span>That’s</span><b>' + fmtMoney(o.daily) + ' / day</b></div>' : '') +
+        '<div class="acard__dr"><span>Total amount to pay back</span><b>' + fmtMoney(totalPay) + '</b></div>' +
+        '<div class="acard__dr"><span>You receive</span><b>' + fmtMoney(amount) + '</b></div>' +
+      '</div>';
+    card.addEventListener('click', () => {
+      if (isOver) { state.budget = clampBudget(Math.ceil(o.daily / BUDGET_STEP) * BUDGET_STEP); renderAmountG(); return; }
+      state.selected = { amount, days: o.days, daily: o.daily, mode: 'lipa' };
+      renderAmountG();
+    });
+    return card;
+  }
+
+  // ---------- Flow C: loans that fit ----------
+  document.getElementById('C2-minus').addEventListener('click', () => { state.budget = clampBudget(state.budget - BUDGET_STEP); renderLoansC(); });
+  document.getElementById('C2-plus').addEventListener('click', () => { state.budget = clampBudget(state.budget + BUDGET_STEP); renderLoansC(); });
+  const c2input = document.getElementById('C2-input');
+  c2input.addEventListener('input', () => {
+    const raw = parseInt(c2input.value.replace(/\D/g,''), 10);
+    const mult = loanRhythm().mult;
+    state.budget = isNaN(raw) ? BUDGET_MIN : clampBudget(Math.round(raw / mult));
+    renderLoansC(true);   // keep what the user is typing
+  });
+  c2input.addEventListener('blur', () => { c2input.value = (state.budget * loanRhythm().mult).toLocaleString('en-US'); });
+  c2input.addEventListener('keydown', (e) => { if (e.key === 'Enter') c2input.blur(); });
+
+  function renderLoansC(keepInput){
+    const rf = loanRhythm();
+    const per = document.querySelector('#loansC .budgetfield .per') || document.querySelector('[data-screen="loansC"] .per');
+    if (per) per.textContent = rf.per;
+    if (!keepInput) document.getElementById('C2-input').value = (state.budget * rf.mult).toLocaleString('en-US');
+    document.getElementById('C2-minus').disabled = state.budget <= BUDGET_MIN;
+    document.getElementById('C2-plus').disabled = state.budget >= BUDGET_MAX;
+
+    // Daily tracks the budget; term scales inversely (floor 30 days). See offerFor().
+    const reps = AMOUNTS.map(a => offerFor(a, state.budget));
+    const fit = reps.filter(r => !r.over).sort((a,b)=>b.amount-a.amount);
+    const over = reps.filter(r => r.over).sort((a,b)=>a.amount-b.amount);
+
+    // keep selection on the same amount, but refresh its term to the new best fit
+    const selRep = state.selected ? fit.find(r => r.amount === state.selected.amount) : null;
+    if (selRep) state.selected = { amount: selRep.amount, days: selRep.days, daily: selRep.daily, mode: 'lipa' };
+    else state.selected = fit.length ? { amount: fit[0].amount, days: fit[0].days, daily: fit[0].daily, mode: 'lipa' } : null;
+
+    document.getElementById('C2-count').textContent = fit.length
+      ? fit.length + (fit.length===1?' loan fits':' loans fit') + ' your budget'
+      : 'No loans fit yet — pay a little more each day';
+
+    const rows = document.getElementById('C2-rows');
+    rows.innerHTML = '';
+    fit.forEach(r => rows.appendChild(cOfferCard(r.amount, {days:r.days, daily:r.daily}, false)));
+    if (over.length) {
+      const note = document.createElement('div');
+      note.className = 'unlocknote';
+      note.textContent = '— pay a little more daily to unlock —';
+      rows.appendChild(note);
+      const r = over[0];
+      rows.appendChild(cOfferCard(r.amount, {days:r.days, daily:r.daily}, true));
+    }
+    syncNext();
+  }
+
+  // ---------- Flow C offer card (acard form, amount as hero) ----------
+  function cOfferCard(amount, o, isOver){
+    const totalPay = o.days * o.daily;
+    const sel = !isOver && state.selected && state.selected.amount === amount && state.selected.days === o.days;
+    const rf = loanRhythm();
+    const rWord = rf.mult === 7 ? 'weekly' : rf.mult === 30 ? 'monthly' : 'daily';
+    const periodic = o.daily * rf.mult;
+    const card = document.createElement('div');
+    card.className = 'acard' + (isOver ? ' acard--over' : (sel ? ' acard--sel' : ''));
+    card.innerHTML =
+      '<div class="acard__head">' +
+        '<div class="acard__left"><span class="acard__radio"></span><span class="acard__amt">' + fmtMoney(amount) + '</span></div>' +
+        '<span class="acard__daily">' + fmtMoney(periodic) + (isOver ? ' · over' : ' ' + rWord) + '</span>' +
+      '</div>' +
+      '<div class="acard__details">' +
+        '<div class="acard__hr"></div>' +
+        '<div class="acard__dr"><span>Repay over</span><b>' + termLabel(o.days, rf) + '</b></div>' +
+        (rf.mult > 1 ? '<div class="acard__dr"><span>That\u2019s</span><b>' + fmtMoney(o.daily) + ' / day</b></div>' : '') +
+        '<div class="acard__dr"><span>Total amount to pay back</span><b>' + fmtMoney(totalPay) + '</b></div>' +
+        '<div class="acard__dr"><span>You receive</span><b>' + fmtMoney(amount) + '</b></div>' +
+      '</div>';
+    card.addEventListener('click', () => {
+      if (isOver) state.budget = clampBudget(Math.ceil(o.daily / BUDGET_STEP) * BUDGET_STEP);
+      state.selected = { amount, days: o.days, daily: o.daily, mode: 'lipa' };
+      renderLoansC();
+    });
+    return card;
+  }
+
+  // ---------- shared offer row ----------
+  function offerRow(amount, o, isOver){
+    const total = amount + (o.days * o.daily - amount); // = days*daily
+    const totalPay = o.days * o.daily;
+    const sel = state.selected && state.selected.amount === amount && state.selected.days === o.days;
+    const row = document.createElement('div');
+    row.className = 'loan' + (isOver ? ' loan--over' : (sel ? ' loan--sel' : ''));
+    row.innerHTML =
+      '<div class="loan__radio"></div>' +
+      '<div class="loan__amt">' + fmtMoney(amount) + '<small>' + o.days + ' days · total ' + fmtMoney(totalPay) + '</small></div>' +
+      '<div class="loan__day"><b>' + fmtMoney(o.daily) + '</b><small>' + (isOver ? 'over budget' : 'per day') + '</small></div>';
+    row.addEventListener('click', () => {
+      if (isOver) {
+        state.budget = clampBudget(Math.ceil(o.daily / BUDGET_STEP) * BUDGET_STEP);
+        state.selected = { amount, days: o.days, daily: o.daily };
+        renderLoansC();
+      } else {
+        state.selected = { amount, days: o.days, daily: o.daily };
+        // re-render whichever screen is active
+        const active = document.querySelector('.screen.active').dataset.screen;
+        if (active === 'listA') renderListA();
+        else if (active === 'selectB') renderB();
+        else if (active === 'loansC') renderLoansC();
+      }
+    });
+    return row;
+  }
+
+  function syncNext(){
+    document.querySelectorAll('[data-guard="sel"]').forEach(b => b.disabled = !state.selected);
+  }
+
+  // ---------- Flow S: amount only (single knob) — same offer cards as Flow 2 ----------
+  function renderS(){
+    const amt = state.sAmount;
+    document.getElementById('S-amt').textContent = amt.toLocaleString('en-US');
+    const ais = AMOUNTS.indexOf(amt);
+    document.getElementById('S-amt-minus').disabled = ais <= 0;
+    document.getElementById('S-amt-plus').disabled = ais >= AMOUNTS.length - 1;
+    const terms = offersFor(amt);
+    document.getElementById('S-count').textContent = terms.length + ' ways to repay ' + fmtMoney(amt);
+    const rows = document.getElementById('S-rows');
+    rows.innerHTML = '';
+    terms.forEach(o => {
+      const sel = state.selected && state.selected.amount === amt && state.selected.days === o.days;
+      rows.appendChild(bCard({
+        leftLabel: o.days + ' days',
+        rightLabel: fmtMoney(o.daily) + ' daily',
+        total: o.total,
+        periodLabel: 'You receive',
+        periodValue: fmtMoney(amt),
+        sel: sel,
+        onClick: () => { state.selected = { amount: amt, days: o.days, daily: o.daily, mode: 'lipa' }; renderS(); }
+      }));
+    });
+    syncNext();
+  }
+  document.getElementById('S-amt-minus').addEventListener('click', () => { const i = AMOUNTS.indexOf(state.sAmount); if (i > 0) { state.sAmount = AMOUNTS[i-1]; state.selected = null; renderS(); } });
+  document.getElementById('S-amt-plus').addEventListener('click', () => { const i = AMOUNTS.indexOf(state.sAmount); if (i < AMOUNTS.length-1) { state.sAmount = AMOUNTS[i+1]; state.selected = null; renderS(); } });
+
+  // ---------- Flow DD: amount dropdown — same offer cards as Flow 2 ----------
+  (function(){
+    const sel = document.getElementById('DD-select');
+    AMOUNTS.forEach(a => { const o = document.createElement('option'); o.value = String(a); o.textContent = fmtMoney(a); sel.appendChild(o); });
+    sel.addEventListener('change', e => { state.ddAmount = parseInt(e.target.value, 10); state.selected = null; renderDD(); });
+  })();
+  function renderDD(){
+    const amt = state.ddAmount;
+    document.getElementById('DD-select').value = String(amt);
+    const terms = offersFor(amt);
+    document.getElementById('DD-count').textContent = terms.length + ' ways to repay ' + fmtMoney(amt);
+    const rows = document.getElementById('DD-rows');
+    rows.innerHTML = '';
+    terms.forEach(o => {
+      const seld = state.selected && state.selected.amount === amt && state.selected.days === o.days;
+      rows.appendChild(bCard({
+        leftLabel: o.days + ' days',
+        rightLabel: fmtMoney(o.daily) + ' daily',
+        total: o.total,
+        periodLabel: 'You receive',
+        periodValue: fmtMoney(amt),
+        sel: seld,
+        onClick: () => { state.selected = { amount: amt, days: o.days, daily: o.daily, mode: 'lipa' }; renderDD(); }
+      }));
+    });
+    syncNext();
+  }
+
+  // ---------- Flow E: amount + daily — same offer cards, daily filters affordability ----------
+  function eDailies(){
+    return offersFor(state.eAmount).map(o => o.daily).sort((a,b) => a - b); // low → high
+  }
+  function renderE(){
+    const amt = state.eAmount;
+    const offers = offersFor(amt);
+    const dailies = eDailies();
+    if (state.eDaily == null) state.eDaily = dailies[Math.floor(dailies.length / 2)];
+    if (!dailies.includes(state.eDaily)) state.eDaily = dailies.reduce((p,c) => Math.abs(c - state.eDaily) < Math.abs(p - state.eDaily) ? c : p);
+    document.getElementById('E-amt').textContent = amt.toLocaleString('en-US');
+    document.getElementById('E-dailyval').textContent = state.eDaily.toLocaleString('en-US');
+    const ai = AMOUNTS.indexOf(amt);
+    document.getElementById('E-amt-minus').disabled = ai <= 0;
+    document.getElementById('E-amt-plus').disabled = ai >= AMOUNTS.length - 1;
+    const di = dailies.indexOf(state.eDaily);
+    document.getElementById('E-daily-minus').disabled = di <= 0;
+    document.getElementById('E-daily-plus').disabled = di >= dailies.length - 1;
+    const fits = offers.filter(o => o.daily <= state.eDaily);
+    document.getElementById('E-count').textContent = fits.length + ' of ' + offers.length + ' plans fit ' + fmtMoney(state.eDaily) + '/day';
+    const rows = document.getElementById('E-rows');
+    rows.innerHTML = '';
+    const makeECard = (o, blocked) => {
+      const sel = state.selected && state.selected.amount === amt && state.selected.days === o.days;
+      const card = bCard({
+        leftLabel: o.days + ' days',
+        rightLabel: fmtMoney(o.daily) + ' daily',
+        total: o.total,
+        periodLabel: 'You receive',
+        periodValue: fmtMoney(amt),
+        sel: sel,
+        onClick: () => { state.selected = { amount: amt, days: o.days, daily: o.daily, mode: 'lipa' }; renderE(); }
+      });
+      if (blocked) card.classList.add('acard--dim');
+      return card;
+    };
+    offers.filter(o => o.daily <= state.eDaily).forEach(o => rows.appendChild(makeECard(o, false)));
+    const blocked = offers.filter(o => o.daily > state.eDaily);
+    if (blocked.length) {
+      const note = document.createElement('div');
+      note.className = 'eblocked-note';
+      note.textContent = 'Increase daily payment to access these plans';
+      rows.appendChild(note);
+      blocked.forEach(o => rows.appendChild(makeECard(o, true)));
+    }
+    if (state.selected && state.selected.amount === amt) {
+      const stillFits = offers.some(o => o.days === state.selected.days && o.daily <= state.eDaily);
+      if (!stillFits) state.selected = null;
+    }
+    syncNext();
+  }
+  document.getElementById('E-amt-minus').addEventListener('click', () => { const i = AMOUNTS.indexOf(state.eAmount); if (i > 0) { state.eAmount = AMOUNTS[i-1]; state.eDaily = null; state.selected = null; renderE(); } });
+  document.getElementById('E-amt-plus').addEventListener('click', () => { const i = AMOUNTS.indexOf(state.eAmount); if (i < AMOUNTS.length-1) { state.eAmount = AMOUNTS[i+1]; state.eDaily = null; state.selected = null; renderE(); } });
+  document.getElementById('E-daily-minus').addEventListener('click', () => { const d = eDailies(); const i = d.indexOf(state.eDaily); if (i > 0) { state.eDaily = d[i-1]; renderE(); } });
+  document.getElementById('E-daily-plus').addEventListener('click', () => { const d = eDailies(); const i = d.indexOf(state.eDaily); if (i < d.length-1) { state.eDaily = d[i+1]; renderE(); } });
+
+  document.getElementById('budget-next').addEventListener('click', () => show(state.flow === 'D' ? 'selectD' : 'loansC'));
+
+  // ---------- Flow D: amount + daily (combined) ----------
+  const dInput = document.getElementById('D-input');
+  function dMaxDaily(){ const total = Math.round(state.bAmount * COST_FACTOR / 10) * 10; return Math.ceil(total / 30); }
+  function dClamp(v){ return Math.max(BUDGET_MIN, Math.min(dMaxDaily(), v)); }
+  dInput.addEventListener('input', () => {
+    const raw = parseInt(dInput.value.replace(/\D/g,''), 10);
+    const mult = loanRhythm().mult;
+    const clamped = isNaN(raw) ? BUDGET_MIN : dClamp(Math.round(raw / mult));
+    state.budget = clamped;
+    if (!isNaN(raw) && Math.round(raw / mult) > clamped) dInput.value = (clamped * mult).toLocaleString('en-US');  // snap to the 30-day cap
+    renderD(true);
+  });
+  dInput.addEventListener('blur', () => { dInput.value = (state.budget * loanRhythm().mult).toLocaleString('en-US'); });
+  dInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') dInput.blur(); });
+  document.getElementById('D-minus').addEventListener('click', () => { state.budget = dClamp(state.budget - BUDGET_STEP); renderD(); });
+  document.getElementById('D-plus').addEventListener('click', () => { state.budget = dClamp(state.budget + BUDGET_STEP); renderD(); });
+
+  function dOptionCard(o, isOver){
+    const total = o.days * o.daily;
+    const rf = loanRhythm();
+    const rWord = rf.mult === 7 ? 'weekly' : rf.mult === 30 ? 'monthly' : 'daily';
+    const periodic = o.daily * rf.mult;
+    const sel = !isOver && state.selected && state.selected.amount === state.bAmount && state.selected.days === o.days;
+    const card = document.createElement('div');
+    card.className = 'acard' + (isOver ? ' acard--over' : (sel ? ' acard--sel' : ''));
+    card.innerHTML =
+      '<div class="acard__head">' +
+        '<div class="acard__left"><span class="acard__radio"></span><span class="acard__amt">' + termLabel(o.days, rf) + '</span></div>' +
+        '<span class="acard__daily">' + fmtMoney(periodic) + ' ' + rWord + '</span>' +
+      '</div>' +
+      '<div class="acard__details">' +
+        '<div class="acard__hr"></div>' +
+        (rf.mult > 1 ? '<div class="acard__dr"><span>That’s</span><b>' + fmtMoney(o.daily) + ' / day</b></div>' : '') +
+        '<div class="acard__dr"><span>Total amount to pay back</span><b>' + fmtMoney(total) + '</b></div>' +
+        '<div class="acard__dr"><span>You receive</span><b>' + fmtMoney(state.bAmount) + '</b></div>' +
+        '<button class="btn acard__select">Choose this loan</button>' +
+      '</div>';
+    if (isOver){
+      card.addEventListener('click', () => { state.budget = clampBudget(Math.ceil(o.daily / BUDGET_STEP) * BUDGET_STEP); renderD(); });
+    } else {
+      card.addEventListener('click', () => { state.selected = { amount: state.bAmount, days: o.days, daily: o.daily, mode: 'lipa' }; renderD(); });
+      card.querySelector('.acard__select').addEventListener('click', (e) => { e.stopPropagation(); state.reviewFrom = document.querySelector('.screen.active').dataset.screen; show('review'); });
+    }
+    return card;
+  }
+
+  function renderD(keepInput){
+    const chips = document.getElementById('D-chips');
+    chips.innerHTML = '';
+    AMOUNTS.forEach(a => {
+      const b = document.createElement('button');
+      b.className = 'chip' + (a === state.bAmount ? ' chip--sel' : '');
+      b.textContent = fmtMoney(a);
+      b.addEventListener('click', () => { state.bAmount = a; state.selected = null; renderD(); });
+      chips.appendChild(b);
+    });
+    ensureChipVisible(chips);
+    const rf = loanRhythm();
+    document.getElementById('D-per').textContent = rf.per;
+    if (!keepInput) document.getElementById('D-input').value = (state.budget * rf.mult).toLocaleString('en-US');
+    document.getElementById('D-minus').disabled = state.budget <= BUDGET_MIN;
+    // The most you can pay/day is what clears the loan in the 30-day minimum term.
+    const total = Math.round(state.bAmount * COST_FACTOR / 10) * 10;
+    const maxDaily = Math.ceil(total / 30);
+    if (state.budget > maxDaily) { state.budget = maxDaily; document.getElementById('D-input').value = (state.budget * rf.mult).toLocaleString('en-US'); }
+    document.getElementById('D-plus').disabled = state.budget >= maxDaily;
+    const opts = D_DAY_OPTIONS.map(d => ({ amount: state.bAmount, days: d, daily: Math.ceil(total / d) }));
+    const afford = opts.filter(o => o.daily <= state.budget).sort((a,b) => a.days - b.days).slice(0, 5);
+    // keep selection if still valid, else default to the fastest affordable term
+    if (!state.selected || state.selected.amount !== state.bAmount || !afford.find(o => o.days === state.selected.days)) {
+      state.selected = afford.length ? { amount: state.bAmount, days: afford[0].days, daily: afford[0].daily, mode: 'lipa' } : null;
+    }
+    document.getElementById('D-count').textContent = afford.length
+      ? afford.length + ' repayment option' + (afford.length===1?'':'s') + ' at up to ' + fmtMoney(state.budget) + '/day'
+      : 'No options yet — raise your daily payment';
+    const rows = document.getElementById('D-rows');
+    rows.innerHTML = '';
+    afford.forEach(o => rows.appendChild(dOptionCard(o, false)));
+    syncNext();
+  }
+
+  // ---------- review ----------
+  function renderReview(){
+    const s = state.selected || { amount: 180000, ...CHEAPEST[180000] };
+    const paynow = s.mode === 'paynow';
+    const totalPay = paynow ? s.total : s.days * s.daily;
+    const grace = daysBetween(TODAY, state.startDate);
+    const finish = addDays(state.startDate, s.days);
+    
+    // ---- all flows use the confirm summary review ----
+    const variant = 'AC';
+    document.querySelectorAll('[data-rv]').forEach(el => {
+      el.style.display = el.getAttribute('data-rv') === variant ? '' : 'none';
+    });
+    
+    // ---- B (start-date) fields ----
+    document.getElementById('rv-amt').textContent = fmtMoney(s.amount);
+    document.getElementById('rv-meta').textContent = paynow
+      ? 'Pay in full · ' + s.days + ' days'
+      : fmtMoney(s.daily) + ' / day · ' + s.days + ' days';
+    document.getElementById('rv-receive').textContent = fmtMoney(s.amount);
+    document.getElementById('rv-daily-label').textContent = paynow ? 'One payment of' : 'Daily payment';
+    document.getElementById('rv-daily').textContent = paynow ? fmtMoney(totalPay) : fmtMoney(s.daily) + ' / day';
+    document.getElementById('rv-first-label').textContent = paynow ? 'Payment due' : 'First payment';
+    document.getElementById('rv-first').textContent = paynow ? fmtShort(finish) : fmtShort(state.startDate);
+    document.getElementById('rv-finish-row').style.display = paynow ? 'none' : '';
+    document.getElementById('rv-finish').textContent = fmtLong(finish);
+    document.getElementById('rv-total').textContent = fmtMoney(totalPay);
+    
+    // ---- A/C (confirm summary) fields ----
+    document.getElementById('ac-receive').textContent = fmtMoney(s.amount);
+    const acRf = loanRhythm();
+    const acWord = acRf.mult === 7 ? 'WEEKLY' : acRf.mult === 30 ? 'MONTHLY' : 'DAILY';
+    const acRepay = Math.round((s.daily || 0) * acRf.mult);   // standard repayment value
+    
+    // UPDATED LOGIC: We safely update the single repayment line
+    const newLbl = document.getElementById('ac-newlbl');
+    if (newLbl) newLbl.textContent = acWord + ' REPAYMENT';
+    
+    const dailyVal = document.getElementById('ac-daily');
+    if (dailyVal) dailyVal.textContent = fmtMoney(acRepay);
+    
+    // ---- loan details sheet (popup) ----
+    const months = s.days / 30;
+    const mpr = months > 0 ? ((totalPay - s.amount) / s.amount / months * 100) : 0;
+    document.getElementById('ld-amount').textContent = fmtMoney(s.amount);
+    document.getElementById('ld-interest').textContent = fmtMoney(totalPay - s.amount);
+    document.getElementById('ld-days').textContent = s.days + ' days';
+    document.getElementById('ld-daily').textContent = fmtMoney(s.daily);
+    document.getElementById('ld-mpr').textContent = mpr.toFixed(1) + '%';
+    document.getElementById('ld-total').textContent = fmtMoney(totalPay);
+  }
+  function setDetails(open){ /* legacy no-op */ }
+  document.getElementById('ac-viewdetails').addEventListener('click', () => {
+    document.getElementById('ld-scrim').classList.add('open');
+    document.getElementById('ld-sheet').classList.add('open');
+  });
+  function closeLd(){
+    document.getElementById('ld-scrim').classList.remove('open');
+    document.getElementById('ld-sheet').classList.remove('open');
+  }
+  document.getElementById('ld-close').addEventListener('click', closeLd);
+  document.getElementById('ld-scrim').addEventListener('click', closeLd);
+  document.getElementById('ld-continue').addEventListener('click', closeLd);
+  document.getElementById('ac-agree').addEventListener('click', () => show('success'));
+
+  // ---------- success ----------
+  function renderSuccess(){
+    const s = state.selected || { amount: 180000, ...CHEAPEST[180000] };
+    const paynow = s.mode === 'paynow';
+    const scTotal = paynow ? s.total : s.days * s.daily;
+    document.getElementById('sc-amt').textContent = fmtMoney(s.amount);
+    document.getElementById('sc-daily').textContent = fmtMoney(s.daily);
+    document.getElementById('sc-days').textContent = s.days + ' days';
+    document.getElementById('sc-total').textContent = fmtMoney(scTotal);
+  }
+
+  // ---------- drag-to-scroll for chip rows ----------
+  // keep the selected chip fully in view within its scroll row
+  function ensureChipVisible(container){
+    const sel = container.querySelector('.chip--sel');
+    if (!sel) return;
+    const cr = container.getBoundingClientRect();
+    const sr = sel.getBoundingClientRect();
+    const pad = 16;
+    if (sr.left < cr.left + pad) container.scrollLeft -= (cr.left + pad - sr.left);
+    else if (sr.right > cr.right - pad) container.scrollLeft += (sr.right - (cr.right - pad));
+  }
+
+  function enableDragScroll(el){
+    let down = false, startX = 0, startScroll = 0, moved = false;
+    el.addEventListener('pointerdown', (e) => {
+      down = true; moved = false; startX = e.clientX; startScroll = el.scrollLeft;
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      if (moved) el.scrollLeft = startScroll - dx;
+    });
+    const end = () => { down = false; };
+    el.addEventListener('pointerup', end);
+    window.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+    // swallow the click that ends a real drag so it doesn't select a chip
+    el.addEventListener('click', (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  }
+  enableDragScroll(document.getElementById('B-chips'));
+  enableDragScroll(document.getElementById('D-chips'));
+
+  // init
+  // ---------- loan laddering info sheet ----------
+  const ladderScrim = document.getElementById('ladder-scrim');
+  const ladderSheet = document.getElementById('ladder-sheet');
+  function openLadder(){ ladderScrim.classList.add('open'); ladderSheet.classList.add('open'); }
+  function closeLadder(){ ladderScrim.classList.remove('open'); ladderSheet.classList.remove('open'); }
+  document.querySelectorAll('[data-ladder]').forEach(b => b.addEventListener('click', openLadder));
+  ladderScrim.addEventListener('click', closeLadder);
+  document.getElementById('ladder-close').addEventListener('click', closeLadder);
+  document.getElementById('ladder-okay').addEventListener('click', closeLadder);
+
+  const _params = new URLSearchParams(location.search);
+  const _pflow = (_params.get('flow') || '').toUpperCase();
+  if (['A','B','S','E','DD'].includes(_pflow)) {
+    document.body.classList.add('test-mode');
+    setFlow(_pflow);
+    show('android');
+  } else {
+    setFlow('A');
+  }
+</script>
+</body>
+</html>
