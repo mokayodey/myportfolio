@@ -67,10 +67,10 @@ export default function Home() {
 
         <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
           <WorkCard
-            href="/work/helium-health"
-            src="/assets/helium-patient.png"
-            eyebrow="04 — Helium Health · 2021–2025"
-            title="$1M+ revenue from EMR interoperability"
+            href="/work/affordability-screen"
+            src="/assets/mkopa-cover.png"
+            eyebrow="04 — M-KOPA · South Africa"
+            title="Rescuing the affordability screen that lost 40% of applicants"
             className="h-[220px]"
             titleSize="text-lg md:text-xl"
           />
@@ -97,25 +97,25 @@ export default function Home() {
             imgBrightness="brightness(.6)"
           />
           <WorkCard
-            href="https://africa.businessinsider.com/local/lifestyle/transforming-maternal-care-in-nigeria-a-product-designers-role/kknswyv"
-            external
-            src="/assets/helium-background.png"
-            eyebrow="07 — Featured · Business Insider ↗"
-            title="Transforming maternal care in Nigeria"
+            href="/work/helium-health"
+            src="/assets/helium-patient.png"
+            eyebrow="07 — Helium Health · 2021–2025"
+            title="$1M+ revenue from EMR interoperability"
             className="h-[260px]"
             titleSize="text-xl md:text-[22px]"
-            imgBrightness="brightness(.5)"
           />
         </div>
 
         <div className="mb-4">
           <WorkCard
-            href="/work/affordability-screen"
-            src="/assets/mkopa-cover.png"
-            eyebrow="08 — M-KOPA · South Africa"
-            title="Rescuing the affordability screen that lost 40% of applicants"
+            href="https://africa.businessinsider.com/local/lifestyle/transforming-maternal-care-in-nigeria-a-product-designers-role/kknswyv"
+            external
+            src="/assets/helium-background.png"
+            eyebrow="08 — Featured · Business Insider ↗"
+            title="Transforming maternal care in Nigeria"
             className="h-[260px]"
             titleSize="text-xl md:text-[22px]"
+            imgBrightness="brightness(.5)"
           />
         </div>
       </div>
