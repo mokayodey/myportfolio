@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookieName, isGatedSlug, verifySlugToken } from "@/lib/gate";
 
-export async function proxy(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const slug = req.nextUrl.pathname.replace(/^\/work\//, "");
   if (!isGatedSlug(slug)) return NextResponse.next();
 
