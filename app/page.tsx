@@ -140,6 +140,80 @@ export default function Home() {
         </p>
       </div>
 
+      {/* AI in the process */}
+      <div id="ai" className="scroll-mt-20 border-t border-ink/12 px-4 py-16 sm:px-5 md:px-14 md:py-[72px]">
+        <div className="mb-4 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+          The Honest Bit
+        </div>
+        <h2 className="mb-6 max-w-[820px] font-archivo-expanded text-2xl font-extrabold leading-[1.2] tracking-[-.01em] md:text-[34px]">
+          This portfolio was ideated, designed, and built by Claude. I
+          directed every decision.
+        </h2>
+        <p className="mb-6 max-w-[760px] text-[16px] font-normal leading-relaxed text-ink/78 md:text-[17px]">
+          Most of the AI-and-design debate is stuck between panic —
+          it&apos;s coming for the job — and denial — it can&apos;t do any
+          part of it. Neither matches what&apos;s actually happening at the
+          desk. AI has no taste, no judgment, and no stake in whether the
+          thing works; what it has is speed. My job hasn&apos;t changed:
+          understand the problem, know what good looks like, make the call.
+          What changed is how long it takes to get from &quot;I think
+          this is the right flow&quot; to a version a real person can use
+          and break.
+        </p>
+        <div className="mb-6 max-w-[720px] border-l-[3px] border-accent py-1 pl-6">
+          <p className="m-0 font-archivo-expanded text-lg font-medium italic leading-[1.5] text-ink/90 md:text-xl">
+            &quot;Directing an AI well is a design skill. It rewards the
+            same instinct good design always has — knowing exactly what
+            you want, and recognising the moment what you&apos;re looking
+            at isn&apos;t it.&quot;
+          </p>
+        </div>
+        <p className="max-w-[760px] text-[16px] font-normal leading-relaxed text-ink/78 md:text-[17px]">
+          The Cash Loan UX case study on this page is the clearest proof:
+          five competing flows, built as real working code and field-tested
+          with borrowers in Kenya and Nigeria, in five days — not five days
+          of Figma, five days full stop. This site is the same story at a
+          bigger scale: every layout call, every round of revisions, every
+          line of the app running under this page, ideated and built
+          end-to-end with Claude, directing a real product cycle from brief
+          to shipped. If you&apos;re wondering whether I can actually
+          direct AI tools to ship product work rather than just talk about
+          it — you&apos;re looking at the answer.
+        </p>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="border-t border-ink/14 pt-4">
+            <div className="font-archivo-expanded text-base font-bold text-accent">
+              Prototyping, not pitching
+            </div>
+            <div className="mt-1.5 text-sm leading-relaxed text-ink/65">
+              Turn a flow idea into working code the same day, so testing
+              produces real behavioural signal instead of hypothetical
+              opinions about a static screen.
+            </div>
+          </div>
+          <div className="border-t border-ink/14 pt-4">
+            <div className="font-archivo-expanded text-base font-bold text-accent">
+              Research synthesis
+            </div>
+            <div className="mt-1.5 text-sm leading-relaxed text-ink/65">
+              Compress interview transcripts and usability sessions into
+              patterns fast enough to still be useful this week, not next
+              quarter.
+            </div>
+          </div>
+          <div className="border-t border-ink/14 pt-4">
+            <div className="font-archivo-expanded text-base font-bold text-accent">
+              Drafting, not deciding
+            </div>
+            <div className="mt-1.5 text-sm leading-relaxed text-ink/65">
+              AI writes the first pass of copy, code, and layout. Every
+              line ships only after I&apos;ve argued with it.
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Footer />
     </div>
   );
