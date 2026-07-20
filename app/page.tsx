@@ -24,7 +24,7 @@ export default function Home() {
         <div className="mt-10 flex flex-wrap gap-7 md:gap-14">
           <Stat value="10+ yrs" label="years of experience" />
           <Stat value="100M+" label="users served" />
-          <Stat value="30M+" label="users served today" />
+          <Stat value="10M+" label="users served today" />
           <Stat value="$100M+" label="revenue supported" />
         </div>
       </div>
