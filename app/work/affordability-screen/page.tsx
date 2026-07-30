@@ -491,14 +491,44 @@ export default function AffordabilityScreen() {
           </div>
         </Section>
 
-        {/* project status */}
-        <Section label="Project status" bg="ink" inverted>
-          <p className="m-0 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
-            Both solutions are built and slated for an A/B test against the
-            current production flow. This case study documents the
-            diagnosis, hypothesis and design decisions — quantitative
-            results will be added once the experiment reads out. Shared to
-            show recent work and process.
+        {/* the result */}
+        <Section label="The result" bg="ink" inverted>
+          <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
+            Solution 2 — the single-screen version — shipped to production
+            for South African cash-loan applicants, alongside the new
+            pre-qualify welcome screen. Early data says it worked:
+            conversion from the start of the flow through to loan
+            disbursement nearly doubled, and completion of the financial
+            background screen — the exact step that was losing 40% of
+            applicants — jumped sharply.
+          </p>
+          <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="rounded-md border border-canvas/20 p-5">
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.1em] text-gold">
+                Start of flow → loan disbursement
+              </div>
+              <div className="font-archivo-expanded text-2xl font-extrabold text-canvas md:text-[28px]">
+                23.8% → 47.4%
+              </div>
+            </div>
+            <div className="rounded-md border border-canvas/20 p-5">
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.1em] text-gold">
+                Financial background → submitted
+              </div>
+              <div className="font-archivo-expanded text-2xl font-extrabold text-canvas md:text-[28px]">
+                51% → 81%
+              </div>
+            </div>
+          </div>
+          <p className="m-0 max-w-[760px] text-base font-normal leading-relaxed text-canvas/72 md:text-base">
+            The welcome screen isn&apos;t free — a small share of users see
+            it and stop there rather than continuing — but the downstream
+            gain outweighs that cost by a wide margin. This is an early
+            read from a before/after comparison, not yet a fully
+            controlled test, so the plan is to re-confirm the lift over
+            the next few weeks before calling it final. Solution 1 stays
+            on the shelf as the higher-guidance variant if the data calls
+            for a gentler flow instead.
           </p>
         </Section>
 
