@@ -520,16 +520,6 @@ export default function AffordabilityScreen() {
               </div>
             </div>
           </div>
-          <p className="m-0 max-w-[760px] text-base font-normal leading-relaxed text-canvas/72 md:text-base">
-            The welcome screen isn&apos;t free — a small share of users see
-            it and stop there rather than continuing — but the downstream
-            gain outweighs that cost by a wide margin. This is an early
-            read from a before/after comparison, not yet a fully
-            controlled test, so the plan is to re-confirm the lift over
-            the next few weeks before calling it final. Solution 1 stays
-            on the shelf as the higher-guidance variant if the data calls
-            for a gentler flow instead.
-          </p>
         </Section>
 
         <NextCaseStudy href="/work/cash-loan-ux" name="Cash Loan UX" />
