@@ -37,7 +37,7 @@ const problems = [
   },
   {
     t: '3 · Confusing "remaining balance" field',
-    d: "Styled like a disabled input, no label explaining its significance.",
+    d: "Styled like a disabled input with no label explaining its significance — users had no way to tell whether this number determined their loan eligibility. It was also redundant: it had no bearing on the offer they'd actually receive.",
   },
   {
     t: "4 · No progress indicator",
