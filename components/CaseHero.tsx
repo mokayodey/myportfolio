@@ -5,14 +5,19 @@ export default function CaseHero({
   title,
   intro,
   facts,
+  id,
 }: {
   eyebrow: string;
   title: string;
   intro: string;
   facts: MetaFact[];
+  id?: string;
 }) {
   return (
-    <div className="border-b border-ink/12 px-4 pb-12 pt-14 sm:px-5 md:px-14 md:pb-12 md:pt-20">
+    <div
+      id={id}
+      className="scroll-mt-24 border-b border-ink/12 px-4 pb-12 pt-14 sm:px-5 md:px-14 md:pb-12 md:pt-20"
+    >
       <div className="mb-5 text-[13px] font-semibold uppercase leading-none tracking-[.14em] text-accent">
         {eyebrow}
       </div>

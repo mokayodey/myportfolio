@@ -5,6 +5,7 @@ import Section from "@/components/Section";
 import SectionRow from "@/components/SectionRow";
 import ScreenshotGrid from "@/components/ScreenshotGrid";
 import FullImage from "@/components/FullImage";
+import StatCard from "@/components/StatCard";
 import NextCaseStudy from "@/components/NextCaseStudy";
 import Footer from "@/components/Footer";
 import CaseTOC from "@/components/CaseTOC";
@@ -14,17 +15,15 @@ export const metadata: Metadata = {
 };
 
 const tocSections = [
-  { id: "result", label: "The result" },
-  { id: "problem", label: "The problem" },
-  { id: "old-screens", label: "Old screen" },
+  { id: "top", label: "About" },
+  { id: "result", label: "Impacts" },
+  { id: "problem", label: "The challenge" },
+  { id: "research", label: "Research" },
   { id: "hypothesis", label: "Hypothesis" },
-  { id: "welcome", label: "Welcome screen" },
-  { id: "solution-1", label: "Solution 1" },
-  { id: "attention", label: "Attention" },
-  { id: "flow", label: "The flow" },
-  { id: "solution-2", label: "Solution 2" },
-  { id: "comparison", label: "Comparison" },
-  { id: "measure", label: "What to measure" },
+  { id: "design-principles", label: "Design principles" },
+  { id: "solutions", label: "Solutions" },
+  { id: "iterations", label: "Iterations & trade-offs" },
+  { id: "flow", label: "Final flow" },
 ];
 
 const problems = [
@@ -183,31 +182,13 @@ const comparisonRows = [
   { l: "Progress", s1: "Step X of 3", s2: "No indicator" },
 ];
 
-const measures = [
-  {
-    l: "Primary",
-    d: "Completion rate on the financial background screen (income + spend confirmed).",
-  },
-  {
-    l: "Secondary",
-    d: "Time-to-complete from screen entry to consent confirmation; per-field abandonment split.",
-  },
-  {
-    l: "Qualitative",
-    d: 'Comprehension of "debt review" before and after the plain-language expansion.',
-  },
-  {
-    l: "Consent",
-    d: 'Consent-dialog drop-off rate, and whether the inline explainer reduces "Not now" taps.',
-  },
-];
-
 export default function AffordabilityScreen() {
   return (
       <div className="min-h-screen w-full bg-canvas text-ink">
         <CaseNav />
 
         <CaseHero
+          id="top"
           eyebrow="Product Design Lead · M-KOPA · South Africa"
           title="Rescuing the affordability screen that lost 40% of loan applicants."
           intro="The cash-loan flow was haemorrhaging applicants at a single step — the Financial Background screen. I diagnosed why, formed a hypothesis, and designed two competing redesigns to reduce cognitive load, separate consent from input, and rebuild trust at the exact moment users were asked for sensitive data."
@@ -218,12 +199,12 @@ export default function AffordabilityScreen() {
           ]}
         />
 
-        <div className="flex pt-10 lg:pl-14 lg:gap-10">
+        <div className="flex pt-10 lg:gap-10 lg:pl-14">
           <CaseTOC sections={tocSections} />
           <div className="min-w-0 flex-1">
 
-        {/* the result */}
-        <Section id="result" label="The result" bg="ink" inverted>
+        {/* impacts */}
+        <Section id="result" label="Impacts" bg="ink" inverted>
           <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
             Solution 2 — the single-screen version — shipped to production
             for South African cash-loan applicants, alongside the new
@@ -253,8 +234,8 @@ export default function AffordabilityScreen() {
           </div>
         </Section>
 
-        {/* the problem */}
-        <SectionRow id="problem" label="The problem">
+        {/* the challenge */}
+        <SectionRow id="problem" label="The challenge">
           <p className="mb-6 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
             The cash-loan application had a{" "}
             <b className="font-bold">drop-off rate over 40%</b> on the
@@ -280,13 +261,36 @@ export default function AffordabilityScreen() {
         </SectionRow>
 
         {/* old UI screens */}
-        <Section id="old-screens" label="The screen we were losing people on">
+        <Section label="The screen we were losing people on">
           <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/72">
             From the home-screen offer banner (&quot;Cash Loans up to ZAR
             198,000&quot;), applicants landed on the Financial Background
             screen. Over 40% dropped here — before ever seeing an offer.
           </p>
           <ScreenshotGrid items={oldScreens} cols={4} frame="phone" />
+        </Section>
+
+        {/* research */}
+        <Section id="research" label="Research">
+          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            Before writing a hypothesis, I went back to the people who had
+            actually dropped off. We called 30 customers who had started a
+            loan application on this screen but never completed it, to hear
+            in their own words where it broke down.
+          </p>
+          <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <StatCard value="30" label="drop-off customers called directly" />
+            <StatCard
+              value="80%"
+              label="didn't understand why the information was needed, or what it would be used for"
+            />
+          </div>
+          <p className="max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            The pattern was consistent: customers were being asked for
+            sensitive financial data with no explanation of why, and the
+            long consent text sitting in the middle of the form felt
+            overwhelming rather than reassuring.
+          </p>
         </Section>
 
         {/* hypothesis */}
@@ -309,93 +313,12 @@ export default function AffordabilityScreen() {
           </div>
         </Section>
 
-        {/* welcome screen spotlight */}
-        <div
-          id="welcome"
-          className="scroll-mt-24 flex flex-col gap-10 border-b border-ink/12 px-4 py-14 sm:px-5 md:flex-row md:gap-16 md:px-14 md:py-20"
-        >
-          <div className="flex-1 md:max-w-[640px]">
-            <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
-              A new screen · the biggest lever
-            </div>
-            <h2 className="m-0 mb-6 max-w-[560px] font-archivo-expanded text-2xl font-extrabold leading-[1.15] tracking-[-.01em] sm:text-3xl md:text-[34px]">
-              A warm welcome before a single question.
-            </h2>
-            <p className="mb-5 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              Before, tapping the offer banner dropped users straight into
-              being asked for their income — no context, no reassurance,
-              just a form. For a first-time, lower-literacy borrower, that
-              cold open is exactly where hesitation starts.
-            </p>
-            <p className="mb-7 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              So I introduced a pre-qualify welcome screen — an on-ramp, not
-              a gate. It leads with the reward (&quot;You could be eligible
-              for up to R 198,000&quot;), sets expectations with three quick
-              benefit rows, and only then invites the user forward. It
-              reframes the moment from &quot;fill out a form&quot; to
-              &quot;claim something that&apos;s already yours.&quot;
-            </p>
-            <div className="flex flex-col gap-3.5">
-              {welcomeReasons.map((r) => (
-                <div key={r.n} className="flex items-start gap-3.5">
-                  <span className="mt-0.5 flex-none font-archivo-expanded text-[13px] font-extrabold text-accent">
-                    {r.n}
-                  </span>
-                  <div>
-                    <div className="mb-1 font-archivo-expanded text-[15px] font-bold">
-                      {r.t}
-                    </div>
-                    <div className="text-[15px] font-normal leading-relaxed text-ink/72">
-                      {r.d}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex-none md:w-[280px]">
-            <div className="overflow-hidden rounded-[14px] bg-muted shadow-[0_16px_40px_rgba(12,14,12,.16)]">
-              <FullImage
-                src="/assets/s1-welcome.png"
-                alt="The pre-qualify welcome screen"
-              />
-            </div>
-            <div className="mt-3 text-center text-xs font-semibold leading-snug text-ink/60">
-              The pre-qualify welcome screen
-            </div>
-          </div>
-        </div>
-
-        {/* solution 1 */}
-        <div
-          id="solution-1"
-          className="scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20"
-        >
-          <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
-            Solution 1
-          </div>
-          <h2 className="m-0 mb-5 max-w-[820px] font-archivo-expanded text-2xl font-extrabold leading-[1.15] tracking-[-.01em] sm:text-3xl md:text-[34px]">
-            Progressive reveal — one question per screen
-          </h2>
-          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            Split the step into two dedicated full screens — one for income,
-            one for spend. Each shows a single large question, a helper line
-            and a ZAR field, with the keyboard auto-focused on entry. A trust
-            banner stays anchored above the keyboard, visible exactly when
-            anxiety peaks. Consent then appears as its own focused modal
-            before loading and offers. The bet: one question at a time keeps
-            attention undivided — optimised for first-time, lower-literacy,
-            anxious users.
-          </p>
-
-          <div className="mb-12">
-            <ScreenshotGrid items={solution1Screens} cols={4} frame="phone" />
-          </div>
-
+        {/* design principles */}
+        <Section id="design-principles" label="Design principles">
           <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Six design principles behind Solution 1
+            Solution 1 — six principles
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {solution1Principles.map((p) => (
               <div key={p.n} className="rounded-md bg-white p-6">
                 <div className="mb-2 font-archivo-expanded text-[13px] font-extrabold text-accent">
@@ -410,78 +333,9 @@ export default function AffordabilityScreen() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* attention analysis */}
-        <Section id="attention" label="Information hierarchy — attention analysis">
-          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            A heatmap of the income screen showed attention concentrated
-            exactly where it should be — on the question and the input. The
-            key fix: the &quot;ZAR 0.00&quot; placeholder read as a
-            pre-filled value and caused hesitation, so it became directive
-            &quot;ZAR Enter here&quot;.
-          </p>
-          <div className="flex max-w-[680px] flex-col gap-3.5">
-            {attentionBars.map((bar) => (
-              <div key={bar.l}>
-                <div className="mb-1.5 flex justify-between text-[13px] font-semibold">
-                  <span>{bar.l}</span>
-                  <span>{bar.v}%</span>
-                </div>
-                <div className="h-2.5 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full bg-accent"
-                    style={{ width: `${bar.v}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* flow summary */}
-        <Section id="flow" label="The redesigned flow" bg="muted">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {flowSteps.map((s) => (
-              <div key={s.n} className="rounded bg-white p-5">
-                <span className="font-archivo-expanded text-xs font-extrabold text-accent">
-                  {s.n}
-                </span>
-                <div className="mt-2 text-sm font-semibold leading-snug">
-                  {s.t}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* solution 2 */}
-        <div
-          id="solution-2"
-          className="scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20"
-        >
-          <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
-            Solution 2
-          </div>
-          <h2 className="m-0 mb-5 max-w-[820px] font-archivo-expanded text-2xl font-extrabold leading-[1.15] tracking-[-.01em] sm:text-3xl md:text-[34px]">
-            Single screen — both fields, inline
-          </h2>
-          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            An alternative to the same problem: both income and spend on one
-            screen with native inputs and a single &quot;Continue&quot; CTA.
-            Example-based placeholders (&quot;ZAR e.g. 20,000&quot;) show
-            format and scale; one deliberate action confirms both values.
-            The shared consent dialog is identical to Solution 1.
-            Lower-friction for confident and returning users — the trade-off
-            is more visual complexity upfront.
-          </p>
-
-          <div className="mb-12">
-            <ScreenshotGrid items={solution2Screens} cols={4} frame="phone" />
-          </div>
 
           <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Four design principles behind Solution 2
+            Solution 2 — four principles
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {solution2Principles.map((p) => (
@@ -498,13 +352,139 @@ export default function AffordabilityScreen() {
               </div>
             ))}
           </div>
-        </div>
+        </Section>
 
-        {/* comparison */}
-        <div
-          id="comparison"
-          className="scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20"
-        >
+        {/* solutions */}
+        <Section id="solutions" label="Solutions" bg="muted">
+          {/* welcome screen spotlight */}
+          <div className="mb-16 flex flex-col gap-10 md:flex-row md:gap-16">
+            <div className="flex-1 md:max-w-[640px]">
+              <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+                A new screen · the biggest lever
+              </div>
+              <h3 className="m-0 mb-6 max-w-[560px] font-archivo-expanded text-2xl font-extrabold leading-[1.15] tracking-[-.01em] sm:text-3xl md:text-[34px]">
+                A warm welcome before a single question.
+              </h3>
+              <p className="mb-5 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+                Before, tapping the offer banner dropped users straight into
+                being asked for their income — no context, no reassurance,
+                just a form. For a first-time, lower-literacy borrower, that
+                cold open is exactly where hesitation starts.
+              </p>
+              <p className="mb-7 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+                So I introduced a pre-qualify welcome screen — an on-ramp,
+                not a gate. It leads with the reward (&quot;You could be
+                eligible for up to R 198,000&quot;), sets expectations with
+                three quick benefit rows, and only then invites the user
+                forward. It reframes the moment from &quot;fill out a
+                form&quot; to &quot;claim something that&apos;s already
+                yours.&quot;
+              </p>
+              <div className="flex flex-col gap-3.5">
+                {welcomeReasons.map((r) => (
+                  <div key={r.n} className="flex items-start gap-3.5">
+                    <span className="mt-0.5 flex-none font-archivo-expanded text-[13px] font-extrabold text-accent">
+                      {r.n}
+                    </span>
+                    <div>
+                      <div className="mb-1 font-archivo-expanded text-[15px] font-bold">
+                        {r.t}
+                      </div>
+                      <div className="text-[15px] font-normal leading-relaxed text-ink/72">
+                        {r.d}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex-none md:w-[280px]">
+              <div className="overflow-hidden rounded-[14px] bg-canvas shadow-[0_16px_40px_rgba(12,14,12,.16)]">
+                <FullImage
+                  src="/assets/s1-welcome.png"
+                  alt="The pre-qualify welcome screen"
+                />
+              </div>
+              <div className="mt-3 text-center text-xs font-semibold leading-snug text-ink/60">
+                The pre-qualify welcome screen
+              </div>
+            </div>
+          </div>
+
+          {/* solution 1 */}
+          <div className="mb-16 border-t border-ink/12 pt-14">
+            <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+              Solution 1
+            </div>
+            <h3 className="m-0 mb-5 max-w-[820px] font-archivo-expanded text-2xl font-extrabold leading-[1.15] tracking-[-.01em] sm:text-3xl md:text-[34px]">
+              Progressive reveal — one question per screen
+            </h3>
+            <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              Split the step into two dedicated full screens — one for
+              income, one for spend. Each shows a single large question, a
+              helper line and a ZAR field, with the keyboard auto-focused on
+              entry. A trust banner stays anchored above the keyboard,
+              visible exactly when anxiety peaks. Consent then appears as
+              its own focused modal before loading and offers. The bet: one
+              question at a time keeps attention undivided — optimised for
+              first-time, lower-literacy, anxious users.
+            </p>
+            <ScreenshotGrid items={solution1Screens} cols={4} frame="phone" />
+          </div>
+
+          {/* solution 2 */}
+          <div className="border-t border-ink/12 pt-14">
+            <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+              Solution 2
+            </div>
+            <h3 className="m-0 mb-5 max-w-[820px] font-archivo-expanded text-2xl font-extrabold leading-[1.15] tracking-[-.01em] sm:text-3xl md:text-[34px]">
+              Single screen — both fields, inline
+            </h3>
+            <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              An alternative to the same problem: both income and spend on
+              one screen with native inputs and a single &quot;Continue&quot;
+              CTA. Example-based placeholders (&quot;ZAR e.g. 20,000&quot;)
+              show format and scale; one deliberate action confirms both
+              values. The shared consent dialog is identical to Solution 1.
+              Lower-friction for confident and returning users — the
+              trade-off is more visual complexity upfront.
+            </p>
+            <ScreenshotGrid items={solution2Screens} cols={4} frame="phone" />
+          </div>
+        </Section>
+
+        {/* iterations & trade-offs */}
+        <Section id="iterations" label="Iterations & trade-offs">
+          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            Attention analysis
+          </div>
+          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            A heatmap of the income screen showed attention concentrated
+            exactly where it should be — on the question and the input. The
+            key fix: the &quot;ZAR 0.00&quot; placeholder read as a
+            pre-filled value and caused hesitation, so it became directive
+            &quot;ZAR Enter here&quot;.
+          </p>
+          <div className="mb-16 flex max-w-[680px] flex-col gap-3.5">
+            {attentionBars.map((bar) => (
+              <div key={bar.l}>
+                <div className="mb-1.5 flex justify-between text-[13px] font-semibold">
+                  <span>{bar.l}</span>
+                  <span>{bar.v}%</span>
+                </div>
+                <div className="h-2.5 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full bg-accent"
+                    style={{ width: `${bar.v}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            Solution 1 vs Solution 2
+          </div>
           <div className="max-w-[820px] overflow-hidden overflow-x-auto rounded-lg border border-ink/14">
             <div className="min-w-[560px]">
               <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-ink text-canvas">
@@ -535,19 +515,19 @@ export default function AffordabilityScreen() {
             the safer path for anxious ones. The two were built to be tested
             against each other.
           </p>
-        </div>
+        </Section>
 
-        {/* what to measure */}
-        <Section id="measure" label="What to measure next">
-          <div className="flex max-w-[760px] flex-col gap-4">
-            {measures.map((m) => (
-              <div key={m.l}>
-                <span className="font-archivo-expanded text-[15px] font-bold text-accent">
-                  {m.l} —{" "}
+        {/* final flow */}
+        <Section id="flow" label="Final flow" bg="muted">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {flowSteps.map((s) => (
+              <div key={s.n} className="rounded bg-white p-5">
+                <span className="font-archivo-expanded text-xs font-extrabold text-accent">
+                  {s.n}
                 </span>
-                <span className="text-base font-normal leading-relaxed text-ink/80">
-                  {m.d}
-                </span>
+                <div className="mt-2 text-sm font-semibold leading-snug">
+                  {s.t}
+                </div>
               </div>
             ))}
           </div>
