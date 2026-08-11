@@ -93,36 +93,36 @@ const solution1Screens = [
   { src: "/assets/s1-f.png", caption: "Consent — focused modal, plain-language explainer" },
 ];
 
-const solution1Principles = [
+const mkopaPrinciples = [
   {
     n: "01",
-    t: "Pre-qualify celebration screen",
-    d: "Show the eligible amount (ZAR 198,000) with a count-up, the cash illustration, and three benefit rows before asking for effort. Showing the reward first is a proven conversion pattern.",
+    t: "Meet customers where they are",
+    q: "Built for me",
+    d: 'Auto-focused keyboards remove tap friction, and directive placeholder copy ("ZAR Enter here") reads as guidance rather than a pre-filled value — details that matter most to someone opening a loan app for the first time. Example-based placeholders ("R e.g. 20,000") show format and scale without assuming anyone already knows the currency conventions.',
   },
   {
     n: "02",
-    t: "One question per screen",
-    d: "Income and spend split into two full screens, each a single large question and input. One question at a time removes ambiguity and leaves no room for distraction.",
+    t: "Make the complex feel simple",
+    q: "A financial app that doesn't make me feel stressed",
+    d: 'Solution 1 asks one question per screen, so nothing competes for attention. A progress bar with a named goal ("Calculate My Loan Offer — Step 2 of 3") turns an abstract wait into something the user can actually track.',
   },
   {
     n: "03",
-    t: 'Auto-focused keyboard, "Enter here" hint',
-    d: 'Focus fires the system keyboard on screen entry — zero tap-to-focus friction. "ZAR Enter here" reads as guidance, not a pre-filled value. Send arrow stays disabled until a digit is entered.',
+    t: "Earn trust",
+    q: "With M-KOPA I always understand what I've agreed to",
+    d: 'The debt-review consent moved out of the dense mid-form paragraph and into its own focused modal, with a tappable "Not sure what this means?" explainer. A trust banner stays anchored above the keyboard — visible exactly when anxiety about handing over financial data peaks, not before.',
   },
   {
     n: "04",
-    t: "Consent as a centred modal",
-    d: 'After both values are entered, a dialog presents the debt-review consent with a tappable "Not sure what this means?" explainer. Impossible to miss; shown once users are already committed.',
+    t: "Celebrate progress",
+    q: "I'm not repaying M-KOPA, I'm investing in my future.",
+    d: 'The pre-qualify welcome screen leads with the reward, not the effort: the eligible amount animates in before a single question is asked, reframing the moment from "fill out a form" to "claim something that\'s already yours."',
   },
   {
     n: "05",
-    t: "Progress bar with a named goal",
-    d: '"Calculate My Loan Offer — Step X of 3" gives the bar meaning beyond position. Users understand how far they\'ve come and why they\'re doing it.',
-  },
-  {
-    n: "06",
-    t: "Trust banner anchored above the keyboard",
-    d: 'A shield + "Your information is private…" banner pinned to the top edge of the keyboard, guaranteed in eyeline while typing — anxiety peaks at the moment of entry, not before.',
+    t: "Build for real-world constraints",
+    q: "Works every day, everywhere, always.",
+    d: "Both solutions were designed and tested for first-time, lower-literacy, anxious borrowers specifically — not just confident, connected power users — so the flow that shipped had to hold up for the customers most likely to drop off, not the easiest ones to design for.",
   },
 ];
 
@@ -149,29 +149,6 @@ const solution2Screens = [
   { src: "/assets/s2-c.png", caption: 'Both fields, one screen — "R e.g" example placeholders' },
   { src: "/assets/s2-a.png", caption: "Filled — single Continue confirms both" },
   { src: "/assets/s2-b.png", caption: "Consent — shared dialog, dismissible" },
-];
-
-const solution2Principles = [
-  {
-    n: "01",
-    t: "Both fields on one screen",
-    d: 'Income and spend sit together with a single "Continue" — fewer transitions for confident, returning users who already know both numbers.',
-  },
-  {
-    n: "02",
-    t: "Example-based placeholders",
-    d: '"R e.g 20,000" shows both the currency format and a realistic scale, so users know exactly what — and how much — to type.',
-  },
-  {
-    n: "03",
-    t: "One deliberate confirmation",
-    d: '"Continue" stays disabled until both fields hold a value, so a single tap confirms the whole screen — no per-field submit ambiguity.',
-  },
-  {
-    n: "04",
-    t: "Same consent, same trust cue",
-    d: 'The debt-review dialog and "M-KOPA will only use this…" banner are shared with Solution 1 — so the A/B test isolates the layout, not the messaging.',
-  },
 ];
 
 const comparisonRows = [
@@ -315,40 +292,34 @@ export default function AffordabilityScreen() {
 
         {/* design principles */}
         <Section id="design-principles" label="Design principles">
-          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Solution 1 — six principles
-          </div>
-          <div className="mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {solution1Principles.map((p) => (
-              <div key={p.n} className="rounded-md bg-white p-6">
-                <div className="mb-2 font-archivo-expanded text-[13px] font-extrabold text-accent">
+          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            M-KOPA designs against five company-wide UX principles — a
+            shared framework the whole product and design team works from,
+            not something invented per project. Here&apos;s how they showed
+            up in this redesign specifically.
+          </p>
+          <div className="flex flex-col">
+            {mkopaPrinciples.map((p, i, arr) => (
+              <div
+                key={p.n}
+                className={`flex gap-5 border-t border-ink/14 py-7 sm:gap-7 ${
+                  i === arr.length - 1 ? "border-b" : ""
+                }`}
+              >
+                <div className="w-8 flex-none font-archivo-expanded text-xl font-extrabold text-accent sm:w-10 sm:text-2xl">
                   {p.n}
                 </div>
-                <div className="mb-2.5 font-archivo-expanded text-[17px] font-bold">
-                  {p.t}
+                <div>
+                  <div className="mb-1 font-archivo-expanded text-lg font-bold">
+                    {p.t}
+                  </div>
+                  <div className="mb-2.5 text-[13px] italic text-ink/45">
+                    &quot;{p.q}&quot;
+                  </div>
+                  <div className="text-base font-normal leading-relaxed text-ink/72">
+                    {p.d}
+                  </div>
                 </div>
-                <p className="m-0 text-[15px] font-normal leading-[1.6] text-ink/72">
-                  {p.d}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Solution 2 — four principles
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {solution2Principles.map((p) => (
-              <div key={p.n} className="rounded-md bg-white p-6">
-                <div className="mb-2 font-archivo-expanded text-[13px] font-extrabold text-accent">
-                  {p.n}
-                </div>
-                <div className="mb-2.5 font-archivo-expanded text-[17px] font-bold">
-                  {p.t}
-                </div>
-                <p className="m-0 text-[15px] font-normal leading-[1.6] text-ink/72">
-                  {p.d}
-                </p>
               </div>
             ))}
           </div>
