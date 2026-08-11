@@ -223,7 +223,7 @@ export default function AffordabilityScreen() {
             continue&quot; button that fused legal agreement with navigation.
             No progress indicator, no explanation of why the data was needed.
           </p>
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {problems.map((p) => (
               <div key={p.t} className="rounded-md bg-white px-5 py-5">
                 <div className="mb-1.5 font-archivo-expanded text-[15px] font-bold text-accent">
