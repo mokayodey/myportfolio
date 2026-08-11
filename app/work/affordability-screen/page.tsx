@@ -234,6 +234,9 @@ export default function AffordabilityScreen() {
             continue&quot; button that fused legal agreement with navigation.
             No progress indicator, no explanation of why the data was needed.
           </p>
+          <div className="mb-8">
+            <ScreenshotGrid items={oldScreens} cols={4} frame="phone" />
+          </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {problems.map((p) => (
               <div key={p.t} className="rounded-md bg-white px-5 py-5">
@@ -247,16 +250,6 @@ export default function AffordabilityScreen() {
             ))}
           </div>
         </SectionRow>
-
-        {/* old UI screens */}
-        <Section label="The screen we were losing people on">
-          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/72">
-            From the home-screen offer banner (&quot;Cash Loans up to ZAR
-            198,000&quot;), applicants landed on the Financial Background
-            screen. Over 40% dropped here — before ever seeing an offer.
-          </p>
-          <ScreenshotGrid items={oldScreens} cols={4} frame="phone" />
-        </Section>
 
         {/* research */}
         <Section id="research" label="Research">
