@@ -7,10 +7,25 @@ import ScreenshotGrid from "@/components/ScreenshotGrid";
 import FullImage from "@/components/FullImage";
 import NextCaseStudy from "@/components/NextCaseStudy";
 import Footer from "@/components/Footer";
+import CaseTOC from "@/components/CaseTOC";
 
 export const metadata: Metadata = {
   title: "Affordability Screen — Tosin Ariyibi",
 };
+
+const tocSections = [
+  { id: "result", label: "The result" },
+  { id: "problem", label: "The problem" },
+  { id: "old-screens", label: "Old screen" },
+  { id: "hypothesis", label: "Hypothesis" },
+  { id: "welcome", label: "Welcome screen" },
+  { id: "solution-1", label: "Solution 1" },
+  { id: "attention", label: "Attention" },
+  { id: "flow", label: "The flow" },
+  { id: "solution-2", label: "Solution 2" },
+  { id: "comparison", label: "Comparison" },
+  { id: "measure", label: "What to measure" },
+];
 
 const problems = [
   {
@@ -203,8 +218,12 @@ export default function AffordabilityScreen() {
           ]}
         />
 
+        <div className="flex pt-10 lg:pl-14 lg:gap-10">
+          <CaseTOC sections={tocSections} />
+          <div className="min-w-0 flex-1">
+
         {/* the result */}
-        <Section label="The result" bg="ink" inverted>
+        <Section id="result" label="The result" bg="ink" inverted>
           <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
             Solution 2 — the single-screen version — shipped to production
             for South African cash-loan applicants, alongside the new
@@ -235,7 +254,7 @@ export default function AffordabilityScreen() {
         </Section>
 
         {/* the problem */}
-        <SectionRow label="The problem">
+        <SectionRow id="problem" label="The problem">
           <p className="mb-6 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
             The cash-loan application had a{" "}
             <b className="font-bold">drop-off rate over 40%</b> on the
@@ -261,7 +280,7 @@ export default function AffordabilityScreen() {
         </SectionRow>
 
         {/* old UI screens */}
-        <Section label="The screen we were losing people on">
+        <Section id="old-screens" label="The screen we were losing people on">
           <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/72">
             From the home-screen offer banner (&quot;Cash Loans up to ZAR
             198,000&quot;), applicants landed on the Financial Background
@@ -271,7 +290,7 @@ export default function AffordabilityScreen() {
         </Section>
 
         {/* hypothesis */}
-        <Section label="The hypothesis" bg="muted">
+        <Section id="hypothesis" label="The hypothesis" bg="muted">
           <p className="mb-8 max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-ink md:text-2xl md:leading-[1.4]">
             If we reduce cognitive load at each step, separate consent from
             input, explain legal terms in plain language, and give a clear
@@ -291,7 +310,10 @@ export default function AffordabilityScreen() {
         </Section>
 
         {/* welcome screen spotlight */}
-        <div className="flex flex-col gap-10 border-b border-ink/12 px-4 py-14 sm:px-5 md:flex-row md:gap-16 md:px-14 md:py-20">
+        <div
+          id="welcome"
+          className="scroll-mt-24 flex flex-col gap-10 border-b border-ink/12 px-4 py-14 sm:px-5 md:flex-row md:gap-16 md:px-14 md:py-20"
+        >
           <div className="flex-1 md:max-w-[640px]">
             <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
               A new screen · the biggest lever
@@ -345,7 +367,10 @@ export default function AffordabilityScreen() {
         </div>
 
         {/* solution 1 */}
-        <div className="border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20">
+        <div
+          id="solution-1"
+          className="scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20"
+        >
           <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
             Solution 1
           </div>
@@ -388,7 +413,7 @@ export default function AffordabilityScreen() {
         </div>
 
         {/* attention analysis */}
-        <Section label="Information hierarchy — attention analysis">
+        <Section id="attention" label="Information hierarchy — attention analysis">
           <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
             A heatmap of the income screen showed attention concentrated
             exactly where it should be — on the question and the input. The
@@ -415,7 +440,7 @@ export default function AffordabilityScreen() {
         </Section>
 
         {/* flow summary */}
-        <Section label="The redesigned flow" bg="muted">
+        <Section id="flow" label="The redesigned flow" bg="muted">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {flowSteps.map((s) => (
               <div key={s.n} className="rounded bg-white p-5">
@@ -431,7 +456,10 @@ export default function AffordabilityScreen() {
         </Section>
 
         {/* solution 2 */}
-        <div className="border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20">
+        <div
+          id="solution-2"
+          className="scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20"
+        >
           <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
             Solution 2
           </div>
@@ -473,7 +501,10 @@ export default function AffordabilityScreen() {
         </div>
 
         {/* comparison */}
-        <div className="border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20">
+        <div
+          id="comparison"
+          className="scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20"
+        >
           <div className="max-w-[820px] overflow-hidden overflow-x-auto rounded-lg border border-ink/14">
             <div className="min-w-[560px]">
               <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-ink text-canvas">
@@ -507,7 +538,7 @@ export default function AffordabilityScreen() {
         </div>
 
         {/* what to measure */}
-        <Section label="What to measure next">
+        <Section id="measure" label="What to measure next">
           <div className="flex max-w-[760px] flex-col gap-4">
             {measures.map((m) => (
               <div key={m.l}>
@@ -521,6 +552,9 @@ export default function AffordabilityScreen() {
             ))}
           </div>
         </Section>
+
+          </div>
+        </div>
 
         <NextCaseStudy href="/work/cash-loan-ux" name="Cash Loan UX" />
         <Footer />

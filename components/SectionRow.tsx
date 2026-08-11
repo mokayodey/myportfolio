@@ -6,12 +6,14 @@ export default function SectionRow({
   bg = "canvas",
   inverted = false,
   className = "",
+  id,
 }: {
   label: string;
   children: ReactNode;
   bg?: "canvas" | "muted" | "ink";
   inverted?: boolean;
   className?: string;
+  id?: string;
 }) {
   const bgClass =
     bg === "muted" ? "bg-muted" : bg === "ink" ? "bg-ink" : "bg-canvas";
@@ -20,7 +22,8 @@ export default function SectionRow({
 
   return (
     <div
-      className={`flex flex-col gap-6 border-b border-ink/12 px-4 py-14 sm:px-5 md:flex-row md:gap-16 md:px-14 md:py-20 ${bgClass} ${textClass} ${className}`}
+      id={id}
+      className={`scroll-mt-24 flex flex-col gap-6 border-b border-ink/12 px-4 py-14 sm:px-5 md:flex-row md:gap-16 md:px-14 md:py-20 ${bgClass} ${textClass} ${className}`}
     >
       <div
         className={`flex-none text-xs font-semibold uppercase leading-none tracking-[.14em] md:w-[220px] ${labelClass}`}

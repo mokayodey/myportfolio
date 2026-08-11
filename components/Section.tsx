@@ -6,12 +6,14 @@ export default function Section({
   bg = "canvas",
   inverted = false,
   className = "",
+  id,
 }: {
   label: string;
   children: ReactNode;
   bg?: "canvas" | "muted" | "ink";
   inverted?: boolean;
   className?: string;
+  id?: string;
 }) {
   const bgClass =
     bg === "muted" ? "bg-muted" : bg === "ink" ? "bg-ink" : "bg-canvas";
@@ -20,7 +22,8 @@ export default function Section({
 
   return (
     <div
-      className={`border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20 ${bgClass} ${textClass} ${className}`}
+      id={id}
+      className={`scroll-mt-24 border-b border-ink/12 px-4 py-14 sm:px-5 md:px-14 md:py-20 ${bgClass} ${textClass} ${className}`}
     >
       <div
         className={`mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] ${labelClass}`}
