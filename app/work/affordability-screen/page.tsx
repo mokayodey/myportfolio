@@ -194,16 +194,13 @@ export default function AffordabilityScreen() {
             of applicants dropped off before ever seeing an offer.
           </p>
           <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-gold">
-            What shipped
+            What we achieved
           </div>
           <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
-            Solution 2 — the single-screen version — shipped to production
-            for South African cash-loan applicants, alongside the new
-            pre-qualify welcome screen. Early data says it worked:
-            conversion from the start of the flow through to loan
-            disbursement nearly doubled, and completion of the financial
-            background screen — the exact step that was losing 40% of
-            applicants — jumped sharply.
+            Early data says it worked: conversion from the start of the
+            flow through to loan disbursement nearly doubled, and
+            completion of the financial background screen — the exact
+            step that was losing 40% of applicants — jumped sharply.
           </p>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="rounded-md border border-canvas/20 p-5">
