@@ -143,6 +143,29 @@ const solution2Screens = [
   { src: "/assets/s2-b.png", caption: "Consent — shared dialog, dismissible" },
 ];
 
+const solutionProfiles = [
+  {
+    name: "Solution 1",
+    tag: "The safer path",
+    goal: "Reduce anxiety and cognitive load at every step of the form.",
+    bestFor: "First-time, lower-literacy, anxious borrowers.",
+    principle:
+      "Make the complex feel simple — one question at a time, guided and reassured throughout.",
+    tradeoff:
+      "Two extra screens to get through — slower to complete, but nobody gets left behind.",
+  },
+  {
+    name: "Solution 2",
+    tag: "The faster path",
+    goal: "Minimise friction and transitions for people who already know what they're doing.",
+    bestFor: "Confident, returning borrowers who already understand the process.",
+    principle:
+      "Respect the user's time — fewer taps, one deliberate confirmation instead of several small ones.",
+    tradeoff:
+      "More visual complexity upfront — faster, but less hand-holding along the way.",
+  },
+];
+
 const comparisonRows = [
   { l: "Income & spend", s1: "Two separate screens", s2: "Single screen, both fields" },
   { l: "Keyboard", s1: "Auto-focus per field", s2: "Tapped to focus" },
@@ -471,6 +494,59 @@ export default function AffordabilityScreen() {
           <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
             Solution 1 vs Solution 2
           </div>
+          <div className="grid max-w-[820px] grid-cols-1 gap-5 sm:grid-cols-2">
+            {solutionProfiles.map((sol) => (
+              <div
+                key={sol.name}
+                className="rounded-lg border-t-4 border-accent bg-white p-6"
+              >
+                <div className="mb-1 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-accent">
+                  {sol.tag}
+                </div>
+                <div className="mb-5 font-archivo-expanded text-lg font-bold leading-tight">
+                  {sol.name}
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <div className="mb-1 text-[11px] font-semibold uppercase leading-none tracking-[.08em] text-ink/45">
+                      Goal
+                    </div>
+                    <div className="text-sm leading-relaxed text-ink/75">
+                      {sol.goal}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="mb-1 text-[11px] font-semibold uppercase leading-none tracking-[.08em] text-ink/45">
+                      Best for
+                    </div>
+                    <div className="text-sm leading-relaxed text-ink/75">
+                      {sol.bestFor}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="mb-1 text-[11px] font-semibold uppercase leading-none tracking-[.08em] text-ink/45">
+                      Principle
+                    </div>
+                    <div className="text-sm leading-relaxed text-ink/75">
+                      {sol.principle}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="mb-1 text-[11px] font-semibold uppercase leading-none tracking-[.08em] text-ink/45">
+                      Trade-off
+                    </div>
+                    <div className="text-sm leading-relaxed text-ink/75">
+                      {sol.tradeoff}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-4 mt-10 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-ink/40">
+            The specifics
+          </div>
           <div className="max-w-[820px] overflow-hidden overflow-x-auto rounded-lg border border-ink/14">
             <div className="min-w-[560px]">
               <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-ink text-canvas">
@@ -496,11 +572,6 @@ export default function AffordabilityScreen() {
               ))}
             </div>
           </div>
-          <p className="m-0 mt-7 max-w-[720px] text-base font-normal leading-relaxed text-ink/72">
-            Solution 2 is the faster path for confident users; Solution 1 is
-            the safer path for anxious ones. The two were built to be tested
-            against each other.
-          </p>
         </Section>
 
         {/* final flow */}
