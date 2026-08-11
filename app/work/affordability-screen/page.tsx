@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const tocSections = [
   { id: "top", label: "About" },
-  { id: "result", label: "Impacts" },
+  { id: "result", label: "Goals & impact" },
   { id: "problem", label: "The challenge" },
   { id: "research", label: "Research" },
   { id: "hypothesis", label: "Hypothesis" },
@@ -181,7 +181,21 @@ export default function AffordabilityScreen() {
           <div className="min-w-0 flex-1">
 
         {/* impacts */}
-        <Section id="result" label="Impacts" bg="ink" inverted>
+        <Section id="result" label="Goals & impact" bg="ink" inverted>
+          <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-gold">
+            The goal
+          </div>
+          <p className="mb-7 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
+            The goal was simple to state: improve conversion on the
+            cash-loan flow. That question sent us into the behavioural
+            data — funnel and screen-level analytics — looking for exactly
+            where applicants were giving up. One step stood out
+            immediately: the Financial Background screen, where over 40%
+            of applicants dropped off before ever seeing an offer.
+          </p>
+          <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-gold">
+            What shipped
+          </div>
           <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
             Solution 2 — the single-screen version — shipped to production
             for South African cash-loan applicants, alongside the new
