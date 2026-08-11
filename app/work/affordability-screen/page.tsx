@@ -60,14 +60,6 @@ const oldScreens = [
   { src: "/assets/mkopa-old-filled.png", caption: 'Filled — confusing "remaining balance", fused CTA' },
 ];
 
-const hypothesisPoints = [
-  "Users abandon when they hit unexpected legal language mid-form.",
-  "First-time smartphone users with low financial literacy abandon when they don't understand a term they're asked to agree to.",
-  "A focused, separate consent moment makes the commitment feel deliberate, not alarming.",
-  "A visible progress bar reduces uncertainty and increases commitment.",
-  "One question at a time reduces decision fatigue and perceived complexity.",
-];
-
 const welcomeReasons = [
   {
     n: "01",
@@ -237,18 +229,6 @@ export default function AffordabilityScreen() {
           <div className="mb-8">
             <ScreenshotGrid items={oldScreens} cols={4} frame="phone" />
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {problems.map((p) => (
-              <div key={p.t} className="rounded-md bg-white px-5 py-5">
-                <div className="mb-1.5 font-archivo-expanded text-[15px] font-bold text-accent">
-                  {p.t}
-                </div>
-                <div className="text-[15px] font-normal leading-relaxed text-ink/72">
-                  {p.d}
-                </div>
-              </div>
-            ))}
-          </div>
         </SectionRow>
 
         {/* research */}
@@ -266,32 +246,37 @@ export default function AffordabilityScreen() {
               label="didn't understand why the information was needed, or what it would be used for"
             />
           </div>
-          <p className="max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
             The pattern was consistent: customers were being asked for
             sensitive financial data with no explanation of why, and the
             long consent text sitting in the middle of the form felt
             overwhelming rather than reassuring.
           </p>
+          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            The six problems this pointed to
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {problems.map((p) => (
+              <div key={p.t} className="rounded-md bg-white px-5 py-5">
+                <div className="mb-1.5 font-archivo-expanded text-[15px] font-bold text-accent">
+                  {p.t}
+                </div>
+                <div className="text-[15px] font-normal leading-relaxed text-ink/72">
+                  {p.d}
+                </div>
+              </div>
+            ))}
+          </div>
         </Section>
 
         {/* hypothesis */}
         <Section id="hypothesis" label="The hypothesis" bg="muted">
-          <p className="mb-8 max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-ink md:text-2xl md:leading-[1.4]">
-            If we reduce cognitive load at each step, separate consent from
-            input, explain legal terms in plain language, and give a clear
-            sense of progress and purpose — completion on the financial
-            background screen should increase.
+          <p className="max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-ink md:text-2xl md:leading-[1.4]">
+            If customers understand why we&apos;re asking for their
+            information — and feel welcomed and reassured before we ask,
+            not just informed after — they&apos;ll complete the Financial
+            Background screen instead of abandoning it.
           </p>
-          <div className="flex max-w-[720px] flex-col gap-2.5">
-            {hypothesisPoints.map((point) => (
-              <div
-                key={point}
-                className="text-base font-normal leading-[1.7] text-ink/80 md:text-[17px]"
-              >
-                • {point}
-              </div>
-            ))}
-          </div>
         </Section>
 
         {/* design principles */}
