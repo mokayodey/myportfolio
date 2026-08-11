@@ -415,7 +415,21 @@ export default function AffordabilityScreen() {
 
         {/* iterations & trade-offs */}
         <Section id="iterations" label="Iterations & trade-offs">
-          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+            Iterations
+          </div>
+          <div className="mb-2.5 font-archivo-expanded text-lg font-bold">
+            The welcome screen&apos;s first draft
+          </div>
+          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            This was the first iteration of the pre-qualify welcome screen.
+            It already reflected every functional need — the reward shown
+            first, the benefit rows, the single clear call to action — but
+            it still needed more work visually before it was ready to
+            ship. {/* TODO: swap in the first-iteration screenshot once saved to public/assets */}
+          </p>
+
+          <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
             Attention analysis
           </div>
           <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
@@ -442,7 +456,19 @@ export default function AffordabilityScreen() {
             ))}
           </div>
 
-          <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+          <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+            Trade-offs
+          </div>
+          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            After presenting both solutions to the team, we chose Solution
+            2 to ship first — mainly on time to implement. Solution 1 was
+            planned for a later release rather than dropped, which gave us
+            the ability to introduce improvements gradually and see
+            exactly what moved the needle, instead of shipping both at
+            once and losing that signal.
+          </p>
+
+          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
             Solution 1 vs Solution 2
           </div>
           <div className="max-w-[820px] overflow-hidden overflow-x-auto rounded-lg border border-ink/14">
