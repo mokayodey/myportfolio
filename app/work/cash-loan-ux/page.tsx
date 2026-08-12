@@ -8,13 +8,13 @@ import Footer from "@/components/Footer";
 import PrototypeFrame from "@/components/PrototypeFrame";
 import CashLoanPrototypeEffect from "@/components/CashLoanPrototypeEffect";
 import CaseTOC from "@/components/CaseTOC";
+import FullImage from "@/components/FullImage";
 
 export const metadata: Metadata = {
   title: "Cash Loan UX — Tosin Ariyibi",
 };
 
 const PROTO = "/prototypes/cash-loan/KE/flow.html";
-const PROTO_SHIPPED = "/prototypes/cash-loan-experiment/KE/flow.html";
 const PROTO_V2 = "/prototypes/cash-loan-v2/KE/flow.html";
 const PROTO_V2_LAUNCHER = "/prototypes/cash-loan-v2/index.html";
 
@@ -162,7 +162,7 @@ const HYPOTHESES = [
 const RECOMMENDATIONS = [
   {
     p: "P0",
-    text: "Advance Filter by Amount as the primary interaction model in both markets — the clearest performer in Kenya and Nigeria across two rounds of testing.",
+    text: "Advance Filter by Amount and Slider as the two strongest performers — both read clearly in Kenya and Nigeria across two rounds of testing.",
   },
   {
     p: "P0",
@@ -201,7 +201,7 @@ const cashLoanPrinciples = [
     n: "04",
     t: "Build for real-world constraints",
     q: "It took two rounds, and a bigger, more varied sample, to trust the answer",
-    d: "A first round pointed to a different winner in each market — a plausible read on a small sample. A second, larger round across both markets (13 Kenyan and 8 Nigerian participants) found Filter by Amount reading clearly everywhere, and caught a real usability problem in Amount Only that the first round had missed. Nigerian participants also specifically confused the repayment term in days with the loan amount in Naira, which still needs its own fix regardless of which variant ships.",
+    d: "A first round pointed to a different winner in each market — a plausible read on a small sample. A second, larger round across both markets (13 Kenyan and 8 Nigerian participants) is what actually decided the shipping call: Filter by Amount and Slider read clearly everywhere, and it caught a real usability problem in Amount Only that the first round had missed. Nigerian participants also specifically confused the repayment term in days with the loan amount in Naira, which still needs its own fix regardless of which variant ships.",
   },
 ];
 
@@ -256,28 +256,29 @@ export default function CashLoanUX() {
           </div>
           <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
             A first round of testing pointed to a different winner in each
-            market, so two of those variants shipped into a live A/B test to
-            settle it with real behaviour. A second, larger round of
-            research went further — and found a single variant, Filter by
-            Amount, reading clearly in both markets, while one of the two
-            variants already in that live test turned out to have a real
-            usability problem.
+            market — worth a second look at scale before committing either
+            way. A second, larger round tested further and is what actually
+            decided what shipped: two flows, Filter by Amount and Slider,
+            read clearly in both markets, while Amount Only turned out to
+            have a real usability problem. Those two went through a final
+            design pass in Figma before shipping into a live A/B test
+            against the current flow.
           </p>
           <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="rounded-md border border-canvas/20 p-5">
               <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.1em] text-gold">
-                Kenya — Filter by amount
+                Filter by amount
               </div>
               <div className="font-archivo-expanded text-2xl font-extrabold text-canvas md:text-[28px]">
-                SEQ 6.63 · SUS 96.5
+                KE SEQ 6.63 · NG SEQ 5.65
               </div>
             </div>
             <div className="rounded-md border border-canvas/20 p-5">
               <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.1em] text-gold">
-                Nigeria — Filter by amount
+                Slider
               </div>
               <div className="font-archivo-expanded text-2xl font-extrabold text-canvas md:text-[28px]">
-                SEQ 5.65 · SUS 81.7
+                KE SEQ 6.40 · NG SEQ 5.35
               </div>
             </div>
           </div>
@@ -286,11 +287,11 @@ export default function CashLoanUX() {
               Ruled out
             </div>
             <p className="m-0 font-archivo-expanded text-lg font-medium italic leading-[1.5] text-canvas/90">
-              Amount Only (single knob) — one of the two variants already
-              live in the A/B test — scored critically in the second round:
-              SEQ 4.31, SUS 43.1 in Kenya. Its blank starting state, with
-              only a plus/minus control, meant customers often couldn&apos;t
-              find the amount at all.
+              Amount Only (single knob) scored critically in the second
+              round: SEQ 4.31, SUS 43.1 in Kenya. Its blank starting state,
+              with only a plus/minus control, meant customers often
+              couldn&apos;t find the amount at all — which is why it didn&apos;t
+              advance despite being part of the original shortlist.
             </p>
           </div>
         </Section>
@@ -473,11 +474,13 @@ export default function CashLoanUX() {
               A second, larger round
             </div>
             <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              The first round pointed to a different winner in each market —
-              worth a second look at scale before either shipped for good.
-              This round tested a bigger, more varied sample against a
-              refined set of variants: the two-knob was dropped and a Slider
-              option added.
+              The first round is what triggered this one. A different winner
+              in each market, on a sample of 9 and 7, wasn&apos;t a confident
+              enough foundation for a production decision — it needed a
+              bigger, more varied sample before anything shipped. It also
+              gave a clear signal on what to drop: two-knob&apos;s competing
+              numbers were the single biggest source of confusion, so this
+              round replaced it with a new alternative, Slider, instead.
             </p>
             <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
               {SECOND_ROUND_STATS.map((s) => (
@@ -791,10 +794,10 @@ export default function CashLoanUX() {
               Decision
             </div>
             <p className="m-0 font-archivo-expanded text-[17px] font-medium leading-[1.5]">
-              Advance Filter by Amount for both Kenya and Nigeria. A second,
-              larger round of research confirmed it as the clearest
-              performer in both markets, while Amount Only — one of the two
-              variants already in the live A/B test — scored critically.
+              Advance Filter by Amount and Slider for both Kenya and
+              Nigeria — the second, larger round of research is what
+              decided this. Amount Only scored critically and didn&apos;t
+              advance.
             </p>
           </div>
 
@@ -874,18 +877,20 @@ export default function CashLoanUX() {
                   production.
                 </div>
                 <p className="mb-5 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-                  The research pointed to two directions worth backing:{" "}
-                  <b className="font-bold">Amount only (single knob)</b> and{" "}
-                  <b className="font-bold">Dropdown</b>. Both were refined
-                  into production builds and are now being rolled out as an
-                  A/B test against the current live experience —{" "}
+                  The second, larger round is what decided this — it&apos;s
+                  the round that actually informed the shipping decision, not
+                  the first: <b className="font-bold">Filter by amount</b> and{" "}
+                  <b className="font-bold">Slider</b> read clearly in both
+                  markets, so both went through a final design pass in Figma
+                  before the production build. They&apos;re now rolling out
+                  as an A/B test against the current live experience —{" "}
                   <b className="font-bold">Flow 1 (Today)</b> — so the final
                   call is made on real behaviour at scale, not just
                   moderated sessions.
                 </p>
                 <p className="text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-                  The two shipped screens are embedded below, exactly as
-                  they went out.
+                  The two shipped screens are below — Slider shown in its
+                  final Figma design, Filter by amount in the tested build.
                 </p>
               </div>
               <div className="flex flex-none flex-col gap-6 md:w-[280px]">
@@ -911,45 +916,34 @@ export default function CashLoanUX() {
             <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="flex flex-col rounded-lg bg-white p-6">
                 <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
-                  Amount only — shipped
+                  Filter by amount — shipped
                 </div>
                 <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
-                  The single-knob build that went to production.
+                  The strongest performer across both rounds of testing.
                 </p>
                 <PrototypeFrame
-                  src={`${PROTO_SHIPPED}?flow=S&screen=selectS`}
-                  screen="selectS"
-                  title="Amount only — shipped"
+                  src={`${PROTO_V2}?flow=B&screen=selectB`}
+                  screen="selectB"
+                  title="Filter by amount — shipped"
                   desktopHeight={560}
                 />
               </div>
               <div className="flex flex-col rounded-lg bg-white p-6">
                 <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
-                  Dropdown — shipped
+                  Slider — shipped
                 </div>
                 <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
-                  The dropdown build that went to production.
+                  The new variant from round two, shown here after its final
+                  design pass in Figma.
                 </p>
-                <PrototypeFrame
-                  src={`${PROTO_SHIPPED}?flow=DD&screen=selectDD`}
-                  screen="selectDD"
-                  title="Dropdown — shipped"
-                  desktopHeight={560}
-                />
+                <div className="flex items-start justify-center overflow-hidden rounded-md bg-muted">
+                  <FullImage
+                    src="/assets/cashloan-slider-shipped.png"
+                    alt="Slider — final shipped design"
+                  />
+                </div>
               </div>
             </div>
-            <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              While that test has been running, a second and larger round of
-              research — 13 Kenyan and 8 Nigerian participants, testing five
-              variants including a new Slider option — went deeper than the
-              first. It confirmed Filter by Amount as the clearest performer
-              in both markets, and caught a real problem with Amount Only:
-              its blank starting state, with only a plus/minus control,
-              scored critically (SEQ 4.31, SUS 43.1 in Kenya) because
-              customers often couldn&apos;t find the amount at all. That
-              finding is now feeding directly into what advances out of
-              this A/B test.
-            </p>
             <div className="max-w-[760px] border-l-[3px] border-accent py-1 pl-6">
               <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-[.12em] text-accent">
                 Disclaimer
@@ -967,13 +961,15 @@ export default function CashLoanUX() {
         {/* key takeaway */}
         <Section id="takeaway" label="Key takeaway" bg="ink" inverted>
           <p className="max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-canvas md:text-2xl md:leading-[1.4]">
-            The deeper we tested, the more the answer converged, not
-            diverged: showing every amount up front — Filter by Amount — is
-            what actually works, in Kenya and Nigeria alike, while every
-            flow that opened on a blank state lost people, no matter how
-            minimal it looked. Two rounds of research on five competing
-            directions is what turned a plausible per-market split into a
-            single, better-evidenced recommendation.
+            The first round&apos;s ambiguity — a different winner in each
+            market, on a small sample — is exactly what the second round was
+            for. Testing deeper, on a bigger sample, is what actually
+            decided what shipped: Filter by Amount and Slider read clearly
+            in Kenya and Nigeria alike, while every flow that opened on a
+            blank state lost people, no matter how minimal it looked. Two
+            rounds of research on five competing directions is what took a
+            plausible but shaky per-market split to two better-evidenced
+            flows, live in production.
           </p>
         </Section>
 
