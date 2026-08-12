@@ -55,9 +55,9 @@ const problems = [
 
 const oldScreens = [
   { src: "/assets/mkopa-old-home.png", caption: "Home — offer banner (entry point)" },
-  { src: "/assets/mkopa-old-empty.png", caption: "Financial background — both fields, dense consent" },
-  { src: "/assets/mkopa-old-focus.png", caption: "Income focused — no progress, no trust cue" },
-  { src: "/assets/mkopa-old-filled.png", caption: 'Filled — confusing "remaining balance", fused CTA' },
+  { src: "/assets/mkopa-old-focus.png", caption: "Financial background — both fields, dense consent" },
+  { src: "/assets/mkopa-old-filled.png", caption: "Income focused — no progress, no trust cue" },
+  { src: "/assets/mkopa-old-empty.png", caption: 'Filled — confusing "remaining balance", fused CTA' },
 ];
 
 const welcomeReasons = [
