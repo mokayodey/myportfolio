@@ -920,6 +920,7 @@ export default function CashLoanUX() {
                 </div>
                 <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
                   The strongest performer across both rounds of testing.
+                  Opens empty, with helper copy nudging the first tap.
                 </p>
                 <PrototypeFrame
                   src={`${PROTO_V2}?flow=B&screen=selectB`}
@@ -934,7 +935,8 @@ export default function CashLoanUX() {
                 </div>
                 <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
                   The new variant from round two, shown here after its final
-                  design pass in Figma.
+                  design pass in Figma. Opens empty too, with helper copy
+                  nudging the first drag.
                 </p>
                 <div className="flex items-start justify-center overflow-hidden rounded-md bg-muted">
                   <FullImage
@@ -944,6 +946,28 @@ export default function CashLoanUX() {
                 </div>
               </div>
             </div>
+            <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              One decision came directly out of that refinement: neither
+              flow pre-selects an amount. We&apos;d noticed a meaningful
+              share of users didn&apos;t realise the amount and repayment
+              plan were interactive at all until nudged — a pre-filled
+              number reads as &quot;this is what I qualify for,&quot; full
+              stop, not as a starting point. So both screens open empty,
+              with short helper copy nudging the first interaction
+              (&quot;Tap an amount to see your repayment options,&quot;
+              &quot;Drag the slider to choose an amount&quot;). The bet: let
+              people discover through doing that they have real choice,
+              rather than hand them one number and hope they notice the
+              other four.
+            </p>
+            <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              The repayment cards themselves lead with the daily figure, not
+              the term — &quot;KES 30 daily&quot; sits larger and first, with
+              the day count secondary. That&apos;s the same signal from
+              research carried all the way into the card layout: customers
+              reasoned from what they&apos;d pay each day, so that&apos;s the
+              number carrying the visual weight.
+            </p>
             <div className="max-w-[760px] border-l-[3px] border-accent py-1 pl-6">
               <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-[.12em] text-accent">
                 Disclaimer
