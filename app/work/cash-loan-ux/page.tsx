@@ -98,22 +98,81 @@ const KEY_FINDINGS = [
   },
 ];
 
+const SECOND_ROUND_STATS = [
+  {
+    v: "13",
+    l: "Kenya participants — mix of previous M-KOPA borrowers and M-Shwari users",
+  },
+  {
+    v: "8",
+    l: "Nigeria participants — mix of non-borrowers and customers who've borrowed from other providers, including M-KOPA",
+  },
+  { v: "5", l: "Prototypes tested — baseline plus Filter by Amount, Amount Only, Dropdown and a new Slider variant" },
+];
+
+const SECOND_ROUND_FINDINGS = [
+  {
+    title: "1. Visibility still wins",
+    body: "Customers preferred Filter by Amount and Slider because the loan limits and repayment options were visible before they had to do anything else.",
+    quote: "“Filter by amount — first of all I know what I will get when I look at the screen, I will just click on the amount that I want and proceed.” — KE customer",
+  },
+  {
+    title: "2. Blank-start controls caused real confusion",
+    body: "Amount Only and Dropdown both opened on an empty state — no amount shown until the customer tapped a plus button or a dropdown icon — and several customers didn't know what to do next.",
+    quote: "“I do not know how to increase the amount I want from here, could you explain to me? What if I want KES 17,000, can I edit the text box?” — KE customer",
+  },
+];
+
+const SCORECARD = [
+  { variant: "Filter by amount", keSeq: "6.63", keSus: "96.5", ngSeq: "5.65", ngSus: "81.7", n: "4 / 5" },
+  { variant: "Amount only (single knob)", keSeq: "4.31", keSus: "43.1", ngSeq: "—", ngSus: "—", n: "4 / —" },
+  { variant: "Dropdown", keSeq: "7.0", keSus: "73.1", ngSeq: "5.5", ngSus: "76.9", n: "3 / 6" },
+  { variant: "Slider", keSeq: "6.40", keSus: "76.9", ngSeq: "5.35", ngSus: "80.0", n: "3 / 5" },
+];
+
+const HYPOTHESES = [
+  {
+    n: "H1",
+    t: "Visibility beats interaction",
+    verdict: "Supported",
+    d: "Users consistently said the main reason they preferred Filter by Amount or Slider was that they could see all available amounts in one view before doing anything.",
+  },
+  {
+    n: "H2",
+    t: "Control matters for the amount-sensitive",
+    verdict: "Partially supported",
+    d: "Some customers who chose the slider caveated that they'd have preferred an amount somewhere in between the preset options — control still matters to a smaller group, just not as the primary driver.",
+  },
+  {
+    n: "H3",
+    t: "Low literacy raises the value of no-scroll, no-tap layouts",
+    verdict: "Supported",
+    d: 'A customer working through the Amount Only prototype described it as "really hard to understand, especially for illiterate people," after struggling to find the amount range at all.',
+  },
+  {
+    n: "H4",
+    t: "Trust is set before the UI",
+    verdict: "Supported",
+    d: "Every take/no-take decision customers made was justified by amount, interest rate, repayment fit, or need — never by the interface itself. The UI affects how easy it is to choose an offer; it doesn't decide whether someone borrows.",
+  },
+];
+
 const RECOMMENDATIONS = [
   {
     p: "P0",
-    text: "In Nigeria, visually separate loan amount from repayment term — larger type on the amount, an explicit currency prefix, and distance between the two controls.",
+    text: "Advance Filter by Amount as the primary interaction model in both markets — the clearest performer in Kenya and Nigeria across two rounds of testing.",
   },
   {
     p: "P0",
-    text: "Always show the full eligible amount range before requiring interaction — never hide it behind a stepper or a closed dropdown.",
+    text: "Reconsider Amount Only in its current form — a blank starting state with only a plus/minus control scored critically (KE SEQ 4.31, SUS 43.1) in follow-up testing; customers often couldn't find the amount at all.",
   },
   {
     p: "P1",
-    text: "Make it unmistakable when an amount can be changed — some users never noticed the plus/minus controls existed.",
+    text: "In Nigeria, visually separate loan amount from repayment term — larger type on the amount, an explicit currency prefix, and distance between the two controls.",
   },
   {
     p: "P1",
-    text: "Show one daily-repayment figure at a time — two-knob's competing numbers were the single biggest source of confusion in testing.",
+    text: "Make it unmistakable when an amount can be changed on any control-based variant — some users never located the plus/minus or dropdown affordance.",
   },
 ];
 
@@ -139,8 +198,8 @@ const cashLoanPrinciples = [
   {
     n: "04",
     t: "Build for real-world constraints",
-    q: "The strongest option differed by market",
-    d: "Kenya and Nigeria didn't converge on one winner, and Nigerian participants specifically confused the repayment term in days with the loan amount in Naira. Rather than force a single global flow, the two markets shipped different variants — Filter by Amount for Kenya, Amount Only for Nigeria — with the Nigerian build visually separating amount from term.",
+    q: "It took two rounds, and a bigger, more varied sample, to trust the answer",
+    d: "A first round pointed to a different winner in each market — a plausible read on a small sample. A second, larger round across both markets (13 Kenyan and 8 Nigerian participants) found Filter by Amount reading clearly everywhere, and caught a real usability problem in Amount Only that the first round had missed. Nigerian participants also specifically confused the repayment term in days with the loan amount in Naira, which still needs its own fix regardless of which variant ships.",
   },
 ];
 
@@ -194,27 +253,29 @@ export default function CashLoanUX() {
             What we achieved
           </div>
           <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
-            Testing surfaced a clear winner in each market and ruled one
-            variant out entirely. Filter by Amount and Amount Only were
-            refined into production builds and are now live as an A/B test
-            against the current flow, gathering real behavioural data on
-            whether the added personalization actually moves conversion.
+            A first round of testing pointed to a different winner in each
+            market, so two of those variants shipped into a live A/B test to
+            settle it with real behaviour. A second, larger round of
+            research went further — and found a single variant, Filter by
+            Amount, reading clearly in both markets, while one of the two
+            variants already in that live test turned out to have a real
+            usability problem.
           </p>
           <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="rounded-md border border-canvas/20 p-5">
               <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.1em] text-gold">
-                Kenya winner — Filter by amount
+                Kenya — Filter by amount
               </div>
               <div className="font-archivo-expanded text-2xl font-extrabold text-canvas md:text-[28px]">
-                SEQ 6.25 · SUS 81
+                SEQ 6.63 · SUS 96.5
               </div>
             </div>
             <div className="rounded-md border border-canvas/20 p-5">
               <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.1em] text-gold">
-                Nigeria winner — Amount only
+                Nigeria — Filter by amount
               </div>
               <div className="font-archivo-expanded text-2xl font-extrabold text-canvas md:text-[28px]">
-                SEQ 5.25 · 65% task outcome
+                SEQ 5.65 · SUS 81.7
               </div>
             </div>
           </div>
@@ -223,10 +284,11 @@ export default function CashLoanUX() {
               Ruled out
             </div>
             <p className="m-0 font-archivo-expanded text-lg font-medium italic leading-[1.5] text-canvas/90">
-              Amount + daily (two-knob) scored worst in both markets — SEQ
-              4.44 in Kenya, and a 0% task outcome rate in Nigeria. Two live
-              numbers on one screen didn&apos;t give users more control; it
-              gave them a contradiction they couldn&apos;t resolve.
+              Amount Only (single knob) — one of the two variants already
+              live in the A/B test — scored critically in the second round:
+              SEQ 4.31, SUS 43.1 in Kenya. Its blank starting state, with
+              only a plus/minus control, meant customers often couldn&apos;t
+              find the amount at all.
             </p>
           </div>
         </Section>
@@ -403,16 +465,122 @@ export default function CashLoanUX() {
               </div>
             </div>
           </div>
+
+          <div className="mt-14 border-t border-ink/12 pt-12">
+            <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
+              A second, larger round
+            </div>
+            <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              The first round pointed to a different winner in each market —
+              worth a second look at scale before either shipped for good.
+              This round tested a bigger, more varied sample against a
+              refined set of variants: the two-knob was dropped and a Slider
+              option added.
+            </p>
+            <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {SECOND_ROUND_STATS.map((s) => (
+                <div key={s.l} className="rounded-md bg-white p-[22px]">
+                  <div className="mb-2 font-archivo-expanded text-2xl font-extrabold text-accent md:text-[30px]">
+                    {s.v}
+                  </div>
+                  <div className="text-[13px] font-medium leading-[1.5] text-ink/65">
+                    {s.l}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+              What we heard, again
+            </div>
+            <div className="mb-10 flex flex-col gap-7">
+              {SECOND_ROUND_FINDINGS.map((k) => (
+                <div key={k.title}>
+                  <div className="mb-2 font-archivo-expanded text-[17px] font-bold text-accent">
+                    {k.title}
+                  </div>
+                  <p className="mb-2.5 text-base font-normal leading-[1.6] text-ink/78">
+                    {k.body}
+                  </p>
+                  <p className="m-0 rounded bg-white px-[18px] py-3.5 text-[15px] font-normal italic leading-[1.55] text-ink/70">
+                    {k.quote}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+              Scorecard at a glance
+            </div>
+            <div className="max-w-[820px] overflow-hidden overflow-x-auto rounded-lg border border-ink/14">
+              <div className="min-w-[620px]">
+                <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr_.8fr] bg-ink text-canvas">
+                  <div className="px-4 py-3.5 text-[13px] font-bold">Variant</div>
+                  <div className="px-4 py-3.5 text-[13px] font-bold">KE SEQ</div>
+                  <div className="px-4 py-3.5 text-[13px] font-bold">KE SUS</div>
+                  <div className="px-4 py-3.5 text-[13px] font-bold">NG SEQ</div>
+                  <div className="px-4 py-3.5 text-[13px] font-bold">NG SUS</div>
+                  <div className="px-4 py-3.5 text-[13px] font-bold">n (KE/NG)</div>
+                </div>
+                {SCORECARD.map((row, i) => (
+                  <div
+                    key={row.variant}
+                    className={`grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr_.8fr] border-t border-ink/10 text-sm leading-[1.4] ${
+                      i % 2 === 1 ? "bg-white/60" : ""
+                    }`}
+                  >
+                    <div className="px-4 py-3.5 font-semibold">{row.variant}</div>
+                    <div className="px-4 py-3.5 text-ink/72">{row.keSeq}</div>
+                    <div className="px-4 py-3.5 text-ink/72">{row.keSus}</div>
+                    <div className="px-4 py-3.5 text-ink/72">{row.ngSeq}</div>
+                    <div className="px-4 py-3.5 text-ink/72">{row.ngSus}</div>
+                    <div className="px-4 py-3.5 text-ink/72">{row.n}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </Section>
 
         {/* hypothesis */}
         <Section id="hypothesis" label="The hypothesis" bg="muted">
-          <p className="max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-ink md:text-2xl md:leading-[1.4]">
-            If customers choose based on what they can comfortably pay per
-            day — instead of how much they want to borrow — they&apos;ll
-            pick an amount faster and with more confidence, in Kenya and in
-            Nigeria alike.
+          <p className="mb-10 max-w-[820px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            The first round of research generated four hypotheses about why
+            some flows read clearly and others didn&apos;t. The second,
+            larger round tested every one of them again against a bigger
+            sample — here&apos;s what held up.
           </p>
+          <div className="flex flex-col">
+            {HYPOTHESES.map((h, i, arr) => (
+              <div
+                key={h.n}
+                className={`flex flex-col gap-2.5 border-t border-ink/14 py-7 sm:flex-row sm:gap-7 ${
+                  i === arr.length - 1 ? "border-b" : ""
+                }`}
+              >
+                <div className="flex flex-none items-center gap-3 sm:w-[140px] sm:flex-col sm:items-start sm:gap-2.5">
+                  <div className="font-archivo-expanded text-xl font-extrabold text-accent sm:text-2xl">
+                    {h.n}
+                  </div>
+                  <div
+                    className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[.06em] ${
+                      h.verdict === "Supported"
+                        ? "bg-accent/10 text-accent"
+                        : "bg-ink/8 text-ink/55"
+                    }`}
+                  >
+                    {h.verdict}
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-1.5 font-archivo-expanded text-lg font-bold">
+                    {h.t}
+                  </div>
+                  <div className="text-base font-normal leading-relaxed text-ink/72">
+                    {h.d}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </Section>
 
         {/* design principles */}
@@ -602,8 +770,10 @@ export default function CashLoanUX() {
               Decision
             </div>
             <p className="m-0 font-archivo-expanded text-[17px] font-medium leading-[1.5]">
-              Advance Filter by Amount for Kenya and Amount Only for Nigeria
-              into design refinement. Drop the two-knob variant entirely.
+              Advance Filter by Amount for both Kenya and Nigeria. A second,
+              larger round of research confirmed it as the clearest
+              performer in both markets, while Amount Only — one of the two
+              variants already in the live A/B test — scored critically.
             </p>
           </div>
 
@@ -747,6 +917,18 @@ export default function CashLoanUX() {
                 />
               </div>
             </div>
+            <p className="mb-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              While that test has been running, a second and larger round of
+              research — 13 Kenyan and 8 Nigerian participants, testing five
+              variants including a new Slider option — went deeper than the
+              first. It confirmed Filter by Amount as the clearest performer
+              in both markets, and caught a real problem with Amount Only:
+              its blank starting state, with only a plus/minus control,
+              scored critically (SEQ 4.31, SUS 43.1 in Kenya) because
+              customers often couldn&apos;t find the amount at all. That
+              finding is now feeding directly into what advances out of
+              this A/B test.
+            </p>
             <div className="max-w-[760px] border-l-[3px] border-accent py-1 pl-6">
               <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-[.12em] text-accent">
                 Disclaimer
@@ -764,12 +946,13 @@ export default function CashLoanUX() {
         {/* key takeaway */}
         <Section id="takeaway" label="Key takeaway" bg="ink" inverted>
           <p className="max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-canvas md:text-2xl md:leading-[1.4]">
-            No single flow won everywhere, and that was the finding: showing
-            the full eligible range up front and asking what customers could
-            pay each day beat every design that made them work for the
-            number. Letting Kenya and Nigeria diverge instead of forcing one
-            universal winner is what took five competing directions from
-            idea to two shipped, in-market experiments in five days.
+            The deeper we tested, the more the answer converged, not
+            diverged: showing every amount up front — Filter by Amount — is
+            what actually works, in Kenya and Nigeria alike, while every
+            flow that opened on a blank state lost people, no matter how
+            minimal it looked. Two rounds of research on five competing
+            directions is what turned a plausible per-market split into a
+            single, better-evidenced recommendation.
           </p>
         </Section>
 
