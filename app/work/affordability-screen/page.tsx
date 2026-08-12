@@ -415,16 +415,31 @@ export default function AffordabilityScreen() {
           <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
             Iterations
           </div>
-          <div className="mb-2.5 font-archivo-expanded text-lg font-bold">
-            The welcome screen&apos;s first draft
+          <div className="mb-8 flex flex-col gap-10 md:flex-row md:gap-16">
+            <div className="flex-1">
+              <div className="mb-2.5 font-archivo-expanded text-lg font-bold">
+                The welcome screen&apos;s first draft
+              </div>
+              <p className="max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+                This was the first iteration of the pre-qualify welcome
+                screen. It already reflected every functional need — the
+                reward shown first, the benefit rows, the single clear call
+                to action — but it still needed more work visually before it
+                was ready to ship.
+              </p>
+            </div>
+            <div className="flex-none md:w-[280px]">
+              <div className="overflow-hidden rounded-[14px] bg-canvas shadow-[0_16px_40px_rgba(12,14,12,.16)]">
+                <FullImage
+                  src="/assets/s1-welcome-draft.png"
+                  alt="First draft of the pre-qualify welcome screen"
+                />
+              </div>
+              <div className="mt-3 text-center text-xs font-semibold leading-snug text-ink/60">
+                First draft — before visual polish
+              </div>
+            </div>
           </div>
-          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            This was the first iteration of the pre-qualify welcome screen.
-            It already reflected every functional need — the reward shown
-            first, the benefit rows, the single clear call to action — but
-            it still needed more work visually before it was ready to
-            ship. {/* TODO: swap in the first-iteration screenshot once saved to public/assets */}
-          </p>
 
           <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
             Trade-offs
