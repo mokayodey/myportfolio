@@ -37,28 +37,29 @@ export default function Home() {
 
         <div className="mb-6 flex flex-col gap-6 md:flex-row">
           <WorkCard
-            href="/work/cash-loan-ux"
+            href="/work/affordability-screen"
             src="/assets/mkopa-cover.png"
-            eyebrow="01 — Cash Loan UX · 2026"
-            title="Four flows, two markets, one research study."
+            eyebrow="01 — M-KOPA · South Africa"
+            title="Rescuing the affordability screen that lost 40% of applicants"
             className="h-[280px] md:h-[420px] md:flex-[1.4]"
             titleSize="text-xl md:text-[28px]"
             imgBrightness="brightness(.6)"
           />
           <div className="flex flex-col gap-6 md:flex-1">
             <WorkCard
-              href="/work/tida-retail"
-              src="/assets/tida-cover.png"
-              eyebrow="02 — Tida Retail · 2025"
-              title="Closing the reconciliation gap in retail POS"
+              href="/work/cash-loan-ux"
+              src="/assets/mkopa-cover.png"
+              eyebrow="02 — Cash Loan UX · 2026"
+              title="Four flows, two markets, one research study."
               className="h-[198px]"
               titleSize="text-lg md:text-[19px]"
+              imgBrightness="brightness(.6)"
             />
             <WorkCard
-              href="/work/mkobo-bank"
-              src="/assets/mkobo-cover.png"
-              eyebrow="03 — Mkobo Bank · 2020–2022"
-              title="40,000 accounts in year one, from a blank canvas"
+              href="/work/tida-retail"
+              src="/assets/tida-cover.png"
+              eyebrow="03 — Tida Retail · 2025"
+              title="Closing the reconciliation gap in retail POS"
               className="h-[198px]"
               titleSize="text-lg md:text-[19px]"
             />
@@ -67,10 +68,10 @@ export default function Home() {
 
         <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
           <WorkCard
-            href="/work/affordability-screen"
-            src="/assets/mkopa-cover.png"
-            eyebrow="04 — M-KOPA · South Africa"
-            title="Rescuing the affordability screen that lost 40% of applicants"
+            href="/work/mkobo-bank"
+            src="/assets/mkobo-cover.png"
+            eyebrow="04 — Mkobo Bank · 2020–2022"
+            title="40,000 accounts in year one, from a blank canvas"
             className="h-[220px]"
             titleSize="text-lg md:text-xl"
           />
