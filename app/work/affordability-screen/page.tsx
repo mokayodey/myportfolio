@@ -416,11 +416,11 @@ export default function AffordabilityScreen() {
             Iterations
           </div>
           <div className="mb-8 flex flex-col gap-10 md:flex-row md:gap-16">
-            <div className="flex-1">
+            <div className="flex-1 md:max-w-[640px]">
               <div className="mb-2.5 font-archivo-expanded text-lg font-bold">
                 The welcome screen&apos;s first draft
               </div>
-              <p className="max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              <p className="text-base font-normal leading-relaxed text-ink/82 md:text-lg">
                 This was the first iteration of the pre-qualify welcome
                 screen. It already reflected every functional need — the
                 reward shown first, the benefit rows, the single clear call
