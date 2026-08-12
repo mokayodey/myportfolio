@@ -23,7 +23,7 @@ const tocSections = [
   { id: "design-principles", label: "Design principles" },
   { id: "solutions", label: "Solutions" },
   { id: "iterations", label: "Iterations & trade-offs" },
-  { id: "flow", label: "Final flow" },
+  { id: "takeaway", label: "Key takeaway" },
 ];
 
 const problems = [
@@ -118,24 +118,6 @@ const mkopaPrinciples = [
   },
 ];
 
-const attentionBars = [
-  { l: "Question + ZAR input", v: 68 },
-  { l: "Green submit key", v: 14 },
-  { l: "Step counter + progress bar", v: 9 },
-  { l: "Trust row (when visible)", v: 6 },
-  { l: "App bar + sub-headline", v: 3 },
-];
-
-const flowSteps = [
-  { n: "01", t: "Home — Congratulations offer card" },
-  { n: "02", t: "Pre-qualify — ZAR 198,000 animates in" },
-  { n: "03", t: "Income — Step 1 of 3, keyboard, trust row" },
-  { n: "04", t: 'Spend — Step 2 of 3, "ZAR Enter here"' },
-  { n: "05", t: "Consent — plain-language debt review" },
-  { n: "06", t: "Loading — shimmer skeleton, ~2s" },
-  { n: "07", t: "Offers — five options, expandable rows" },
-];
-
 const solution2Screens = [
   { src: "/assets/s1-welcome.png", caption: "Pre-qualify welcome — shared entry point" },
   { src: "/assets/s2-c.png", caption: 'Both fields, one screen — "R e.g" example placeholders' },
@@ -164,14 +146,6 @@ const solutionProfiles = [
     tradeoff:
       "More visual complexity upfront — faster, but less hand-holding along the way.",
   },
-];
-
-const comparisonRows = [
-  { l: "Income & spend", s1: "Two separate screens", s2: "Single screen, both fields" },
-  { l: "Keyboard", s1: "Auto-focus per field", s2: "Tapped to focus" },
-  { l: "Placeholder", s1: "ZAR Enter here", s2: "ZAR e.g. 20,000" },
-  { l: "Primary CTA", s1: "Send arrow per field", s2: "Continue, both required" },
-  { l: "Progress", s1: "Step X of 3", s2: "No indicator" },
 ];
 
 export default function AffordabilityScreen() {
@@ -452,33 +426,6 @@ export default function AffordabilityScreen() {
             ship. {/* TODO: swap in the first-iteration screenshot once saved to public/assets */}
           </p>
 
-          <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Attention analysis
-          </div>
-          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            A heatmap of the income screen showed attention concentrated
-            exactly where it should be — on the question and the input. The
-            key fix: the &quot;ZAR 0.00&quot; placeholder read as a
-            pre-filled value and caused hesitation, so it became directive
-            &quot;ZAR Enter here&quot;.
-          </p>
-          <div className="mb-16 flex max-w-[680px] flex-col gap-3.5">
-            {attentionBars.map((bar) => (
-              <div key={bar.l}>
-                <div className="mb-1.5 flex justify-between text-[13px] font-semibold">
-                  <span>{bar.l}</span>
-                  <span>{bar.v}%</span>
-                </div>
-                <div className="h-2.5 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full bg-accent"
-                    style={{ width: `${bar.v}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
           <div className="mb-6 border-t border-ink/12 pt-14 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
             Trade-offs
           </div>
@@ -543,51 +490,18 @@ export default function AffordabilityScreen() {
               </div>
             ))}
           </div>
-
-          <div className="mb-4 mt-10 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-ink/40">
-            The specifics
-          </div>
-          <div className="max-w-[820px] overflow-hidden overflow-x-auto rounded-lg border border-ink/14">
-            <div className="min-w-[560px]">
-              <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-ink text-canvas">
-                <div className="px-4 py-3.5 text-[13px] font-bold" />
-                <div className="px-4 py-3.5 text-[13px] font-bold">
-                  Solution 1
-                </div>
-                <div className="px-4 py-3.5 text-[13px] font-bold">
-                  Solution 2
-                </div>
-              </div>
-              {comparisonRows.map((row, i) => (
-                <div
-                  key={row.l}
-                  className={`grid grid-cols-[1.2fr_1fr_1fr] border-t border-ink/10 text-sm leading-[1.4] ${
-                    i % 2 === 1 ? "bg-white/60" : ""
-                  }`}
-                >
-                  <div className="px-4 py-3.5 font-semibold">{row.l}</div>
-                  <div className="px-4 py-3.5 text-ink/72">{row.s1}</div>
-                  <div className="px-4 py-3.5 text-ink/72">{row.s2}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </Section>
 
-        {/* final flow */}
-        <Section id="flow" label="Final flow" bg="muted">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {flowSteps.map((s) => (
-              <div key={s.n} className="rounded bg-white p-5">
-                <span className="font-archivo-expanded text-xs font-extrabold text-accent">
-                  {s.n}
-                </span>
-                <div className="mt-2 text-sm font-semibold leading-snug">
-                  {s.t}
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* key takeaway */}
+        <Section id="takeaway" label="Key takeaway" bg="ink" inverted>
+          <p className="max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-canvas md:text-2xl md:leading-[1.4]">
+            Naming the actual anxiety — not just redesigning the screen — is
+            what moved the number. Research told us why customers were
+            leaving, M-KOPA&apos;s principles kept every fix disciplined, and
+            shipping the faster solution first while holding the second for
+            an isolated release meant we could prove what worked, not just
+            hope it did.
+          </p>
         </Section>
 
           </div>
