@@ -178,14 +178,17 @@ export default function CashLoanUX() {
             The goal
           </div>
           <p className="mb-7 max-w-[760px] text-base font-normal leading-relaxed text-canvas/82 md:text-[17px]">
-            The production cash-loan flow asked customers to pick an amount,
-            then tap through to see what they&apos;d actually pay back — a
-            mental model we suspected was backwards, since most customers
-            already know what they can afford per day, not how much they
-            want to borrow in the abstract. The goal was to find an
-            amount-selection flow that actually held up with real borrowers
-            in both Kenya and Nigeria, not just the one that looked cleanest
-            in a mockup.
+            The underlying goal was to improve conversion on the cash-loan
+            flow, and a big lever for that was giving customers more
+            personalized offers. Previously, the loan engine gave each
+            customer a single eligible amount with one fixed repayment date.
+            It could now offer several eligible amounts — and for any given
+            amount, several repayment plans, each trading term length
+            against daily payment. That flexibility was the whole point, but
+            it only helps conversion if customers can actually make sense of
+            it. The goal was to find a way to present a genuinely larger set
+            of offers — more amounts, more repayment plans per amount —
+            without customers getting lost or picking the wrong one.
           </p>
           <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-gold">
             What we achieved
@@ -194,8 +197,8 @@ export default function CashLoanUX() {
             Testing surfaced a clear winner in each market and ruled one
             variant out entirely. Filter by Amount and Amount Only were
             refined into production builds and are now live as an A/B test
-            against the current flow, gathering real behavioural data in
-            market.
+            against the current flow, gathering real behavioural data on
+            whether the added personalization actually moves conversion.
           </p>
           <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="rounded-md border border-canvas/20 p-5">
@@ -231,11 +234,23 @@ export default function CashLoanUX() {
         {/* the challenge */}
         <SectionRow id="problem" label="The challenge">
           <p className="mb-5 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            The production cash-loan flow asked customers to pick an amount,
-            then tap through to see what they&apos;d actually pay back. It
-            worked, but we suspected the mental model was backwards — most
-            customers already know what they can afford <em>per day</em>, not
-            how much they want to borrow in the abstract.
+            M-KOPA had just expanded what the loan engine could offer.
+            Instead of a single eligible amount with one fixed repayment
+            date, customers could now choose from several eligible amounts —
+            and for any given amount, several repayment plans, each trading
+            term length against daily payment. It was a real increase in
+            personalization, but it created a new problem: how do you
+            present a genuinely larger set of offers without burying the
+            choice that actually matters to the customer?
+          </p>
+          <p className="mb-5 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            The production flow was still built for the old, simpler
+            shape — pick an amount, then tap through to see what
+            you&apos;d pay back — a mental model that no longer matched what
+            the product could now offer. We also suspected it was backwards
+            to begin with: most customers already know what they can afford{" "}
+            <em>per day</em>, not how much they want to borrow in the
+            abstract.
           </p>
           <p className="text-base font-normal leading-relaxed text-ink/82 md:text-lg">
             I designed four competing interaction models for choosing an
