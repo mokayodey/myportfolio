@@ -1,0 +1,33 @@
+/* ============================================================
+   Maendeleo · Spacing, radius & layout tokens
+   Base unit is 4px. Scale named SMALL → XLARGE per source file.
+   ============================================================ */
+
+:root {
+  /* Spacing scale */
+  --space-2: 2px;    /* SMALL  */
+  --space-4: 4px;    /* SMALL2 */
+  --space-6: 6px;    /* SMALL3 */
+  --space-8: 8px;    /* SMALL4 */
+  --space-12: 12px;  /* MEDIUM */
+  --space-16: 16px;  /* MEDIUM2 */
+  --space-20: 20px;  /* MEDIUM3 */
+  --space-24: 24px;  /* LARGE  */
+  --space-32: 32px;  /* LARGE2 */
+  --space-40: 40px;  /* LARGE3 */
+  --space-48: 48px;  /* XLARGE */
+  --space-56: 56px;  /* XLARGE2 */
+  --space-64: 64px;  /* XLARGE3 */
+
+  /* Corner radius */
+  --radius-none: 0px;
+  --radius-xs: 8px;       /* Corner/x-Small */
+  --radius-sm: 12px;      /* Corner/Small */
+  --radius-md: 16px;      /* Corner/Medium */
+  --radius-lg: 20px;      /* Corner/Large */
+  --radius-xl: 28px;      /* Corner/x-large */
+  --radius-full: 1000px;  /* Corner/Full (pills) */
+
+  /* Touch target floor (mobile) */
+  --hit-target: 44px;
+}

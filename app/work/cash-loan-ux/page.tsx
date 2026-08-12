@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 
 const PROTO = "/prototypes/cash-loan/KE/flow.html";
 const PROTO_SHIPPED = "/prototypes/cash-loan-experiment/KE/flow.html";
+const PROTO_V2 = "/prototypes/cash-loan-v2/KE/flow.html";
+const PROTO_V2_LAUNCHER = "/prototypes/cash-loan-v2/index.html";
 
 const tocSections = [
   { id: "top", label: "About" },
@@ -537,6 +539,23 @@ export default function CashLoanUX() {
                 ))}
               </div>
             </div>
+
+            <div className="mt-10 max-w-[280px]">
+              <div className="flex flex-col rounded-lg bg-white p-6">
+                <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
+                  Slider — the new variant
+                </div>
+                <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
+                  Drag a single control to set the amount; daily payment
+                  and term update live underneath.
+                </p>
+                <PrototypeFrame
+                  src={`${PROTO_V2}?flow=SL&screen=selectSL`}
+                  screen="selectSL"
+                  title="Slider"
+                />
+              </div>
+            </div>
           </div>
         </Section>
 
@@ -732,15 +751,17 @@ export default function CashLoanUX() {
               Test the flows yourself
             </div>
             <p className="mb-7 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              Pick one of the five flows, choose a market (Kenya or Nigeria),
-              then tap the <b className="font-bold">M-KOPA</b> app icon on
-              the phone&apos;s home screen to launch it — just as
-              participants did in testing. The{" "}
-              <b className="font-bold">All flows</b> icon returns you here to
-              try another.
+              This is the same prototype used in the second round of
+              testing — five flows, including the new Slider variant, now
+              running in Kenya, Nigeria and South Africa. Pick a flow,
+              choose a market, then tap the{" "}
+              <b className="font-bold">M-KOPA</b> app icon on the
+              phone&apos;s home screen to launch it — just as participants
+              did in testing. The <b className="font-bold">All flows</b>{" "}
+              icon returns you here to try another.
             </p>
             <iframe
-              src="/prototypes/cash-loan/index.html"
+              src={PROTO_V2_LAUNCHER}
               title="Cash loan prototype — try all flows"
               loading="lazy"
               className="mb-4 h-[640px] w-full max-w-[460px] rounded-md border-0 bg-muted md:h-[900px]"
