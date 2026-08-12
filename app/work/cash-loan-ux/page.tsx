@@ -606,22 +606,29 @@ export default function CashLoanUX() {
             <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
               Test the flows yourself
             </div>
-            <p className="mb-7 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              This is the same prototype used in the second round of
-              testing — five flows, including the new Slider variant, now
-              running in Kenya, Nigeria and South Africa. Pick a flow,
-              choose a market, then tap the{" "}
-              <b className="font-bold">M-KOPA</b> app icon on the
-              phone&apos;s home screen to launch it — just as participants
-              did in testing. The <b className="font-bold">All flows</b>{" "}
-              icon returns you here to try another.
-            </p>
-            <iframe
-              src={PROTO_V2_LAUNCHER}
-              title="Cash loan prototype — try all flows"
-              loading="lazy"
-              className="mb-4 h-[640px] w-full max-w-[460px] rounded-md border-0 bg-muted md:h-[900px]"
-            />
+            <div className="flex flex-col gap-10 md:flex-row md:gap-16">
+              <div className="flex-1 md:max-w-[560px]">
+                <p className="text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+                  This is the same prototype used in the second round of
+                  testing — five flows, including the new Slider variant,
+                  now running in Kenya, Nigeria and South Africa. Pick a
+                  flow, choose a market, then tap the{" "}
+                  <b className="font-bold">M-KOPA</b> app icon on the
+                  phone&apos;s home screen to launch it — just as
+                  participants did in testing. The{" "}
+                  <b className="font-bold">All flows</b> icon returns you
+                  here to try another.
+                </p>
+              </div>
+              <div className="flex-none md:w-[460px]">
+                <iframe
+                  src={PROTO_V2_LAUNCHER}
+                  title="Cash loan prototype — try all flows"
+                  loading="lazy"
+                  className="h-[640px] w-full rounded-md border-0 bg-muted md:h-[900px]"
+                />
+              </div>
+            </div>
           </div>
         </Section>
 
