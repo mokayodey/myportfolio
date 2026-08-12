@@ -112,6 +112,33 @@ const SECOND_ROUND_STATS = [
   { v: "5", l: "Prototypes tested — baseline plus Filter by Amount, Amount Only, Dropdown and a new Slider variant" },
 ];
 
+const SECOND_ROUND_FLOWS = [
+  {
+    title: "Filter by amount",
+    desc: "Amount chips up front; tapping one reveals repayment options.",
+    flow: "B",
+    screen: "selectB",
+  },
+  {
+    title: "Amount only (single knob)",
+    desc: "One plus/minus control adjusts the amount live.",
+    flow: "S",
+    screen: "selectS",
+  },
+  {
+    title: "Dropdown",
+    desc: "Pick a preset amount from a list, then choose a repayment plan.",
+    flow: "DD",
+    screen: "selectDD",
+  },
+  {
+    title: "Slider — new this round",
+    desc: "Drag a single control to set the amount; daily payment and term update live.",
+    flow: "SL",
+    screen: "selectSL",
+  },
+];
+
 const SECOND_ROUND_FINDINGS = [
   {
     title: "1. Visibility still wins",
@@ -330,7 +357,15 @@ export default function CashLoanUX() {
         {/* research */}
         <Section id="research" label="Research">
           <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            Moderated in-person usability interviews combined a
+            The first step wasn&apos;t testing — it was looking. I ran a
+            competitive analysis across direct and indirect competitors to
+            see how they actually presented loan offers: what they showed
+            up front, what they hid behind interaction, how they handled
+            repayment choice. That scan is what shaped the four interaction
+            models built for this study.
+          </p>
+          <p className="mb-8 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            Moderated in-person usability interviews then combined a
             borrowing-history intake with a prototype comparison — sequential
             monadic, with each participant shown a rotating subset of three
             variants to keep sessions short while preserving comparability
@@ -345,6 +380,35 @@ export default function CashLoanUX() {
                 <div className="text-[13px] font-medium leading-[1.5] text-ink/65">
                   {s.l}
                 </div>
+              </div>
+            ))}
+          </div>
+          <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            What we tested
+          </div>
+          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            Four working prototypes of the same decision — choosing a loan
+            amount and repayment plan — each testing a different
+            interaction model drawn from the competitive scan, plus the
+            existing production flow as a baseline.
+          </p>
+          <div className="mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {FOUR_FLOWS.map((f) => (
+              <div
+                key={f.title}
+                className="flex flex-col rounded-lg bg-white p-6"
+              >
+                <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
+                  {f.title}
+                </div>
+                <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
+                  {f.desc}
+                </p>
+                <PrototypeFrame
+                  src={`${PROTO}?flow=${f.flow}&screen=${f.screen}`}
+                  screen={f.screen}
+                  title={f.title}
+                />
               </div>
             ))}
           </div>
@@ -495,6 +559,33 @@ export default function CashLoanUX() {
               ))}
             </div>
             <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+              What we tested, again
+            </div>
+            <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+              Same underlying prototype, refined: two-knob dropped, Slider
+              added, both markets running through the same live builds.
+            </p>
+            <div className="mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {SECOND_ROUND_FLOWS.map((f) => (
+                <div
+                  key={f.title}
+                  className="flex flex-col rounded-lg bg-white p-6"
+                >
+                  <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
+                    {f.title}
+                  </div>
+                  <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
+                    {f.desc}
+                  </p>
+                  <PrototypeFrame
+                    src={`${PROTO_V2}?flow=${f.flow}&screen=${f.screen}`}
+                    screen={f.screen}
+                    title={f.title}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
               What we heard, again
             </div>
             <div className="mb-10 flex flex-col gap-7">
@@ -540,23 +631,6 @@ export default function CashLoanUX() {
                     <div className="px-4 py-3.5 text-ink/72">{row.n}</div>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            <div className="mt-10 max-w-[280px]">
-              <div className="flex flex-col rounded-lg bg-white p-6">
-                <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
-                  Slider — the new variant
-                </div>
-                <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
-                  Drag a single control to set the amount; daily payment
-                  and term update live underneath.
-                </p>
-                <PrototypeFrame
-                  src={`${PROTO_V2}?flow=SL&screen=selectSL`}
-                  screen="selectSL"
-                  title="Slider"
-                />
               </div>
             </div>
           </div>
@@ -641,41 +715,8 @@ export default function CashLoanUX() {
 
         {/* solutions */}
         <Section id="solutions" label="Solutions" bg="muted">
-          {/* four flows */}
-          <div className="mb-16">
-            <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
-              Four flows, one question
-            </div>
-            <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-              Rather than guess, I built four working prototypes of the same
-              decision — choosing a loan amount and repayment plan — each
-              testing a different interaction model, plus the existing
-              production flow as a baseline.
-            </p>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {FOUR_FLOWS.map((f) => (
-                <div
-                  key={f.title}
-                  className="flex flex-col rounded-lg bg-white p-6"
-                >
-                  <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
-                    {f.title}
-                  </div>
-                  <p className="mb-4.5 text-sm font-normal leading-relaxed text-ink/72">
-                    {f.desc}
-                  </p>
-                  <PrototypeFrame
-                    src={`${PROTO}?flow=${f.flow}&screen=${f.screen}`}
-                    screen={f.screen}
-                    title={f.title}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* affordability-first idea */}
-          <div className="mb-16 border-t border-ink/12 pt-14">
+          <div className="mb-16">
             <div className="mb-5 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
               The affordability-first idea
             </div>
