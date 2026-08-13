@@ -783,10 +783,12 @@ export default function CashLoanUX() {
                   Opens empty, with helper copy nudging the first tap.
                 </p>
                 <div className="flex items-start justify-center overflow-hidden rounded-md bg-muted">
-                  <FullImage
-                    src="/assets/cashloan-filter-shipped.png"
-                    alt="Filter by amount — final shipped design"
-                  />
+                  <div className="w-[260px] overflow-hidden rounded-[14px] shadow-[0_16px_40px_rgba(12,14,12,.16)]">
+                    <FullImage
+                      src="/assets/cashloan-filter-shipped.png"
+                      alt="Filter by amount — final shipped design"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col rounded-lg bg-white p-6">
@@ -799,10 +801,12 @@ export default function CashLoanUX() {
                   nudging the first drag.
                 </p>
                 <div className="flex items-start justify-center overflow-hidden rounded-md bg-muted">
-                  <FullImage
-                    src="/assets/cashloan-slider-shipped.png"
-                    alt="Slider — final shipped design"
-                  />
+                  <div className="w-[260px] overflow-hidden rounded-[14px] shadow-[0_16px_40px_rgba(12,14,12,.16)]">
+                    <FullImage
+                      src="/assets/cashloan-slider-shipped.png"
+                      alt="Slider — final shipped design"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
