@@ -229,7 +229,7 @@ export default function TidaRetail() {
           <div className="mb-4 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
             Small retail — the national picture
           </div>
-          <div className="mb-4 flex flex-wrap gap-10 md:gap-14">
+          <div className="mb-4 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 md:gap-x-14">
             <Stat
               value="1 in 4"
               label="informal business owners keep no business records at all"
@@ -240,32 +240,18 @@ export default function TidaRetail() {
               label="of those who do keep records only track them mentally — nothing written down"
               size="lg"
             />
-            <Stat
-              value="44%"
-              label="of informal businesses earn under ₦20,000 (~$12) a day — no margin left to absorb any of it"
-              size="lg"
-            />
           </div>
           <p className="m-0 max-w-[760px] text-sm font-normal italic leading-relaxed text-ink/55">
-            Sources: Moniepoint 2025 Informal Economy Report (400 informal
+            Source: Moniepoint 2025 Informal Economy Report (400 informal
             business owners surveyed across Nigeria&apos;s six geopolitical
             zones) — &quot;One in four informal business owners do not keep
             business records,&quot; and of those who do, &quot;38% say they
             keep track of their business mentally, without any written
-            records.&quot; Moniepoint 2024 Informal Economy Report — 44% of
-            informal businesses earn below ₦20,000 daily.
+            records.&quot;
           </p>
         </SectionRow>
 
         {/* research */}
-        <div className="px-4 sm:px-5 md:px-14">
-          <FullImage
-            src="/assets/tida-detail.png"
-            alt="Tida Retail detail"
-            className="mt-16 rounded"
-          />
-        </div>
-
         <SectionRow id="research" label="Research">
           <p className="mb-7 text-base font-normal leading-relaxed text-ink/78 md:text-[17px]">
             Rather than start from what a POS system could do, I started from
