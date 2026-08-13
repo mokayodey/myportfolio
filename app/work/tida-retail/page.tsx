@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 
 const tocSections = [
   { id: "top", label: "About" },
-  { id: "result", label: "Goals & impact" },
   { id: "problem", label: "The challenge" },
+  { id: "result", label: "Goals & impact" },
   { id: "research", label: "Research" },
   { id: "hypothesis", label: "Hypothesis" },
   { id: "design-principles", label: "Design principles" },
@@ -71,73 +71,6 @@ export default function TidaRetail() {
         <div className="flex pt-10 lg:gap-10 lg:pl-14">
           <CaseTOC sections={tocSections} />
           <div className="min-w-0 flex-1">
-
-        {/* goals & impact */}
-        <div id="result" className="scroll-mt-24 px-4 py-16 sm:px-5 md:px-14 md:py-24">
-          <div className="mb-9 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Proving the thesis — pilot results
-          </div>
-          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/75 md:text-[17px]">
-            Before scaling nationally, we needed to de-risk the core bet —
-            that closing the interface gap would close the trust gap too.
-            Two pilots, in different retail contexts, tested it.
-          </p>
-          <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {[
-              {
-                name: "Addide",
-                sub: "Mid-sized retail store, Lagos · 10-store pilot",
-                rows: [
-                  { l: "Revenue leakage", before: "2%–10%", after: "0%" },
-                  { l: "Reconciliation time", before: "1–2hrs", after: "<10min" },
-                  { l: "Recorded revenue", before: "Inconsistent", after: "+5%" },
-                ],
-              },
-              {
-                name: "Ace Supermarket",
-                sub: "Retail store operating across Nigeria · 5-store pilot",
-                rows: [
-                  { l: "Revenue leakage", before: "5%–10%", after: "0%" },
-                  { l: "Reconciliation time", before: "1–2hrs", after: "<10min" },
-                  { l: "Recorded revenue", before: "Inconsistent", after: "+10.9%" },
-                ],
-              },
-            ].map((card) => (
-              <div key={card.name} className="rounded-md bg-white p-8">
-                <div className="mb-0.5 font-archivo-expanded text-lg font-bold">
-                  {card.name}
-                </div>
-                <div className="mb-6 text-xs font-medium text-ink/50">
-                  {card.sub}
-                </div>
-                <div className="flex flex-col gap-3.5">
-                  {card.rows.map((r) => (
-                    <div
-                      key={r.l}
-                      className="flex items-baseline justify-between gap-4"
-                    >
-                      <span className="text-sm font-medium text-ink/65">
-                        {r.l}
-                      </span>
-                      <span className="text-[13px] font-medium text-ink/40 line-through">
-                        {r.before}
-                      </span>
-                      <span className="font-archivo-expanded text-xl font-extrabold text-accent">
-                        {r.after}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="m-0 max-w-[720px] text-base font-normal italic leading-relaxed text-ink/75 md:text-[17px]">
-            Two very different stores, the same result: when the interface
-            gap closed, the leakage went to zero and reconciliation dropped
-            from hours to minutes. That consistency, more than either number
-            alone, is what took this from pilot to platform bet.
-          </p>
-        </div>
 
         {/* the challenge */}
         <SectionRow id="problem" label="Context">
@@ -250,6 +183,73 @@ export default function TidaRetail() {
             records.&quot;
           </p>
         </SectionRow>
+
+        {/* goals & impact */}
+        <div id="result" className="scroll-mt-24 px-4 py-16 sm:px-5 md:px-14 md:py-24">
+          <div className="mb-9 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            Proving the thesis — pilot results
+          </div>
+          <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/75 md:text-[17px]">
+            Before scaling nationally, we needed to de-risk the core bet —
+            that closing the interface gap would close the trust gap too.
+            Two pilots, in different retail contexts, tested it.
+          </p>
+          <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {[
+              {
+                name: "Addide",
+                sub: "Mid-sized retail store, Lagos · 10-store pilot",
+                rows: [
+                  { l: "Revenue leakage", before: "2%–10%", after: "0%" },
+                  { l: "Reconciliation time", before: "1–2hrs", after: "<10min" },
+                  { l: "Recorded revenue", before: "Inconsistent", after: "+5%" },
+                ],
+              },
+              {
+                name: "Ace Supermarket",
+                sub: "Retail store operating across Nigeria · 5-store pilot",
+                rows: [
+                  { l: "Revenue leakage", before: "5%–10%", after: "0%" },
+                  { l: "Reconciliation time", before: "1–2hrs", after: "<10min" },
+                  { l: "Recorded revenue", before: "Inconsistent", after: "+10.9%" },
+                ],
+              },
+            ].map((card) => (
+              <div key={card.name} className="rounded-md bg-white p-8">
+                <div className="mb-0.5 font-archivo-expanded text-lg font-bold">
+                  {card.name}
+                </div>
+                <div className="mb-6 text-xs font-medium text-ink/50">
+                  {card.sub}
+                </div>
+                <div className="flex flex-col gap-3.5">
+                  {card.rows.map((r) => (
+                    <div
+                      key={r.l}
+                      className="flex items-baseline justify-between gap-4"
+                    >
+                      <span className="text-sm font-medium text-ink/65">
+                        {r.l}
+                      </span>
+                      <span className="text-[13px] font-medium text-ink/40 line-through">
+                        {r.before}
+                      </span>
+                      <span className="font-archivo-expanded text-xl font-extrabold text-accent">
+                        {r.after}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="m-0 max-w-[720px] text-base font-normal italic leading-relaxed text-ink/75 md:text-[17px]">
+            Two very different stores, the same result: when the interface
+            gap closed, the leakage went to zero and reconciliation dropped
+            from hours to minutes. That consistency, more than either number
+            alone, is what took this from pilot to platform bet.
+          </p>
+        </div>
 
         {/* research */}
         <SectionRow id="research" label="Research">
