@@ -749,8 +749,8 @@ export default function CashLoanUX() {
                   moderated sessions.
                 </p>
                 <p className="text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-                  The two shipped screens are below — Slider shown in its
-                  final Figma design, Filter by amount in the tested build.
+                  The two shipped screens are below, both shown in their
+                  final Figma design.
                 </p>
               </div>
               <div className="flex flex-none flex-col gap-6 md:w-[280px]">
@@ -782,12 +782,12 @@ export default function CashLoanUX() {
                   The strongest performer across both rounds of testing.
                   Opens empty, with helper copy nudging the first tap.
                 </p>
-                <PrototypeFrame
-                  src={`${PROTO_V2}?flow=B&screen=selectB`}
-                  screen="selectB"
-                  title="Filter by amount — shipped"
-                  desktopHeight={560}
-                />
+                <div className="flex items-start justify-center overflow-hidden rounded-md bg-muted">
+                  <FullImage
+                    src="/assets/cashloan-filter-shipped.png"
+                    alt="Filter by amount — final shipped design"
+                  />
+                </div>
               </div>
               <div className="flex flex-col rounded-lg bg-white p-6">
                 <div className="mb-2 font-archivo-expanded text-base font-bold text-accent">
