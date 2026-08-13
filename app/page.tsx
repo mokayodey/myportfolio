@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import Stat from "@/components/Stat";
 import WorkCard from "@/components/WorkCard";
@@ -27,6 +29,48 @@ export default function Home() {
           <Stat value="10M+" label="users served today" />
           <Stat value="$100M+" label="revenue supported" />
         </div>
+      </div>
+
+      {/* latest update */}
+      <div className="border-b border-ink/12 px-4 py-8 sm:px-5 md:px-14 md:py-10">
+        <Link
+          href="/work/cash-loan-ux"
+          className="group grid overflow-hidden rounded bg-ink text-canvas md:grid-cols-[minmax(0,1.05fr)_minmax(360px,.95fr)]"
+        >
+          <div className="flex min-h-[320px] flex-col justify-between p-6 sm:p-8 md:min-h-[390px] md:p-10">
+            <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[.14em] text-gold md:text-xs">
+              <span className="h-2 w-2 rounded-full bg-gold" />
+              New case study
+            </div>
+            <div>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[.14em] text-canvas/55">
+                Cash Loan UX · Kenya &amp; Nigeria
+              </p>
+              <h2 className="max-w-[680px] font-archivo-expanded text-[28px] font-extrabold leading-[1.08] tracking-[-.01em] sm:text-[36px] md:text-[44px]">
+                Four flows. Two markets. Five days to real evidence.
+              </h2>
+              <div className="mt-7 inline-flex items-center gap-3 text-sm font-semibold text-gold">
+                Read the study
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="relative min-h-[300px] overflow-hidden bg-accent md:min-h-full">
+            <Image
+              src="/assets/mkopa-flow-tabs.png"
+              alt="Cash loan prototype screens comparing different borrowing flows"
+              fill
+              sizes="(max-width: 768px) 100vw, 48vw"
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.025]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent" />
+          </div>
+        </Link>
       </div>
 
       {/* work grid */}
