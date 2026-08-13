@@ -201,9 +201,14 @@ export default function TidaRetail() {
             Manual reconciliation isn&apos;t just slow — it&apos;s a silent
             tax on the business. Every mismatch is either a loss no one
             notices, or an hour spent chasing a number that should never have
-            needed chasing.
+            needed chasing. The shape of that tax changes with the size of
+            the store, but nobody escapes it.
           </p>
-          <div className="flex flex-wrap gap-10 md:gap-14">
+
+          <div className="mb-4 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            Large retail — from our own research
+          </div>
+          <div className="mb-10 flex flex-wrap gap-10 md:gap-14">
             <Stat
               value="+2hrs"
               label="lost to manual reconciliation, daily, per store"
@@ -220,6 +225,36 @@ export default function TidaRetail() {
               size="lg"
             />
           </div>
+
+          <div className="mb-4 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
+            Small retail — the national picture
+          </div>
+          <div className="mb-4 flex flex-wrap gap-10 md:gap-14">
+            <Stat
+              value="1 in 4"
+              label="informal business owners keep no business records at all"
+              size="lg"
+            />
+            <Stat
+              value="38%"
+              label="of those who do keep records only track them mentally — nothing written down"
+              size="lg"
+            />
+            <Stat
+              value="44%"
+              label="of informal businesses earn under ₦20,000 (~$12) a day — no margin left to absorb any of it"
+              size="lg"
+            />
+          </div>
+          <p className="m-0 max-w-[760px] text-sm font-normal italic leading-relaxed text-ink/55">
+            Sources: Moniepoint 2025 Informal Economy Report (400 informal
+            business owners surveyed across Nigeria&apos;s six geopolitical
+            zones) — &quot;One in four informal business owners do not keep
+            business records,&quot; and of those who do, &quot;38% say they
+            keep track of their business mentally, without any written
+            records.&quot; Moniepoint 2024 Informal Economy Report — 44% of
+            informal businesses earn below ₦20,000 daily.
+          </p>
         </SectionRow>
 
         {/* research */}
