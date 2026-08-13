@@ -7,7 +7,7 @@ export default function CaseNav() {
         href="/"
         className="font-archivo-expanded text-[15px] font-extrabold leading-none tracking-[.02em]"
       >
-        TOSIN ARIYIBI
+        Tosin.
       </Link>
       <Link
         href="/#work"

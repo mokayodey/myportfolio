@@ -8,7 +8,7 @@ export default function SiteNav() {
         href="#top"
         className="font-archivo-expanded text-[13px] font-extrabold leading-none tracking-[.02em] sm:text-[15px]"
       >
-        TOSIN ARIYIBI
+        Tosin.
       </a>
       <div className="flex gap-3.5 text-[11px] font-semibold uppercase leading-none tracking-[.08em] text-ink sm:gap-9 sm:text-xs">
         <a href="#work">Work</a>
