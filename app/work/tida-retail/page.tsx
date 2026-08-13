@@ -33,8 +33,8 @@ export default function TidaRetail() {
         <CaseHero
           id="top"
           eyebrow="Product Design Lead · 2025–Present"
-          title="Tida Retail — the sale and the payment were never the same event."
-          intro="A design lead's account of unifying two disconnected systems of record inside Nigerian retail — without asking a single merchant to change how they work."
+          title="Tida Retail — closing the record gap standing between retailers and growth."
+          intro="A design lead's account of unifying how Nigerian retailers record a sale — from small shops locked out of credit for lack of a verifiable trail, to large chains running disconnected payment and POS systems."
           facts={[
             {
               label: "Role",
@@ -58,28 +58,39 @@ export default function TidaRetail() {
           </div>
         </div>
 
-        {/* thesis */}
-        <div className="border-b border-ink/12 px-4 py-16 sm:px-5 md:px-14 md:py-20">
-          <p className="m-0 max-w-[820px] font-archivo-expanded text-xl font-semibold leading-snug tracking-[-.005em] text-ink md:text-[34px]">
-            Everyone framed this as a payments problem. It wasn&apos;t. It was
-            a trust problem — the store owner didn&apos;t trust their own
-            numbers, and we weren&apos;t going to earn that trust by asking
-            them to change how they run their shop.
-          </p>
-        </div>
-
         <div className="flex pt-10 lg:gap-10 lg:pl-14">
           <CaseTOC sections={tocSections} />
           <div className="min-w-0 flex-1">
 
         {/* the challenge */}
         <SectionRow id="problem" label="Context">
-          <p className="mb-6 text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            In Nigerian retail, a sale and a payment are two disconnected
-            events, run on two disconnected systems, reconciled by a human
-            being at the end of a long shift. Three pieces of infrastructure
-            sit between a customer and a recorded sale — and none of them
-            talk to each other.
+          <p className="mb-3 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            For most Nigerian retailers, there&apos;s no system to
+            disconnect in the first place. An estimated 97% of the
+            country&apos;s retail transactions run through small,
+            independent shops, and most of those track sales the way
+            they&apos;ve always been tracked — a notebook, or nothing beyond
+            memory. That&apos;s not just an inconvenience: it&apos;s the
+            reason a shop that&apos;s been trading profitably for years
+            still can&apos;t get a loan. Credit facilities for small
+            businesses exist; what these retailers lack isn&apos;t access
+            to lenders, it&apos;s a verifiable trail of their own numbers
+            that a lender could use to judge them creditworthy.
+          </p>
+          <p className="m-0 mb-10 max-w-[760px] text-sm font-normal italic leading-relaxed text-ink/55">
+            Sources: Boston Consulting Group (2022), cited in Oxford Business
+            Group&apos;s Nigeria 2024 report; PwC Nigeria MSME Survey 2024
+            (lack of documentation cited among the core barriers to credit
+            access).
+          </p>
+          <p className="mb-6 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            Retailers who&apos;ve already moved past pen and paper
+            don&apos;t escape the problem — they just get a more
+            complicated version of it. In Nigerian retail, a sale and a
+            payment are two disconnected events, run on two disconnected
+            systems, reconciled by a human being at the end of a long
+            shift. Three pieces of infrastructure sit between a customer
+            and a recorded sale — and none of them talk to each other.
           </p>
           <div className="flex flex-col gap-px overflow-hidden rounded bg-ink/12">
             {[
@@ -109,23 +120,10 @@ export default function TidaRetail() {
               </div>
             ))}
           </div>
-          <p className="mt-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
-            This isn&apos;t only a large-retailer problem — it&apos;s mostly a
-            small-retailer one. An estimated 97% of Nigeria&apos;s retail
-            transactions run through small, independent shops rather than
-            large chains, and most of those retailers keep no formal record
-            of their own performance at all. That&apos;s not incidental to
-            the credit problem — it&apos;s the cause of it. Credit
-            facilities for small businesses exist; what most of these
-            retailers lack isn&apos;t access to lenders, it&apos;s a
-            verifiable trail of their own numbers that a lender could use to
-            judge them creditworthy.
-          </p>
-          <p className="m-0 mt-3 max-w-[760px] text-sm font-normal italic leading-relaxed text-ink/55">
-            Sources: Boston Consulting Group (2022), cited in Oxford Business
-            Group&apos;s Nigeria 2024 report; PwC Nigeria MSME Survey 2024
-            (lack of documentation cited among the core barriers to credit
-            access).
+          <p className="m-0 mt-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            Different starting points, same underlying leak — which is why
+            the fix had to work for both ends of the market, not just the
+            one with a terminal already on the counter.
           </p>
         </SectionRow>
 
@@ -189,7 +187,7 @@ export default function TidaRetail() {
           <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-accent">
             The goal
           </div>
-          <p className="mb-9 max-w-[760px] text-base font-normal leading-relaxed text-ink/78 md:text-[17px]">
+          <p className="mb-9 max-w-[820px] font-archivo-expanded text-lg font-medium leading-snug text-ink md:text-2xl md:leading-[1.4]">
             Two different questions turned out to be the same question. For
             a small retailer with no formal record of their own
             performance, it was: how do we improve their access to credit,
@@ -548,7 +546,7 @@ export default function TidaRetail() {
             below trades a &quot;more correct&quot; architecture for one
             merchants would actually adopt.
           </p>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             {[
               {
                 t: "Speed over control",
@@ -557,10 +555,6 @@ export default function TidaRetail() {
               {
                 t: "Standard connectors over bespoke integration",
                 d: "Rather than custom-code each provider, we designed one integration layer — accepting short-term rigidity for long-term speed onboarding new providers.",
-              },
-              {
-                t: "Invisibility over ownership of the moment",
-                d: "Merchants kept their terminal exactly as it was. Tida gave up the chance to “own” the payment moment in exchange for zero behaviour change at the till.",
               },
             ].map((c) => (
               <div
