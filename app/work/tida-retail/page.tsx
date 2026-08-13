@@ -211,7 +211,7 @@ export default function TidaRetail() {
           <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {[
               {
-                name: "Addide",
+                name: "Retail store 1",
                 sub: "Mid-sized retail store, Lagos · 10-store pilot",
                 rows: [
                   { l: "Revenue leakage", before: "2%–10%", after: "0%" },
@@ -220,7 +220,7 @@ export default function TidaRetail() {
                 ],
               },
               {
-                name: "Ace Supermarket",
+                name: "Retail store 2",
                 sub: "Retail store operating across Nigeria · 5-store pilot",
                 rows: [
                   { l: "Revenue leakage", before: "5%–10%", after: "0%" },
@@ -257,11 +257,34 @@ export default function TidaRetail() {
               </div>
             ))}
           </div>
-          <p className="m-0 max-w-[720px] text-base font-normal italic leading-relaxed text-ink/75 md:text-[17px]">
+          <p className="mb-9 max-w-[720px] text-base font-normal italic leading-relaxed text-ink/75 md:text-[17px]">
             Two very different stores, the same result: when the interface
             gap closed, the leakage went to zero and reconciliation dropped
             from hours to minutes. That consistency, more than either number
             alone, is what took this from pilot to platform bet.
+          </p>
+
+          <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-accent">
+            What this means for small retail
+          </div>
+          <p className="m-0 max-w-[760px] text-base font-normal leading-relaxed text-ink/78 md:text-[17px]">
+            The pilots ran on stores that already had the hardware and staff
+            to operate a full POS system — that&apos;s not most of the
+            market. For the small retailer who makes up the other 97%, the
+            priority isn&apos;t reconciliation software; it&apos;s
+            affordable access to hardware that lets them capture a sale
+            digitally in the first place. But that&apos;s the entry point,
+            not the destination. The same mechanism that took both pilot
+            stores&apos; leakage to zero — accurate, real-time
+            capture of every transaction — is what turns a small
+            retailer&apos;s sales into a verifiable history for the first
+            time. Recorded revenue jumped at both pilots as soon as capture
+            got accurate (+5% and +10.9%) — the same effect that, for a
+            retailer with no prior record at all, is the difference between
+            invisible and creditworthy. That verified history is also
+            exactly what a financing facility like the one we built with
+            Mkobo could actually underwrite against: hardware access first,
+            then the record that unlocks credit, and with it, growth.
           </p>
         </div>
 
