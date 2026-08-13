@@ -11,15 +11,14 @@ export default function Home() {
       {/* hero */}
       <div className="border-b border-ink/12 px-4 pb-14 pt-16 sm:px-5 md:px-14 md:pb-[72px] md:pt-24">
         <div className="mb-6 text-xs font-semibold uppercase leading-none tracking-[.14em] text-accent">
-          Senior Product Designer — Fintech &amp; Health-tech
+          Senior Product Designer — Trust at Scale
         </div>
         <h1 className="m-0 max-w-full font-archivo-expanded text-[34px] font-extrabold leading-[1.1] tracking-[-.01em] sm:text-5xl md:max-w-[920px] md:text-[68px] md:leading-[1.04]">
-          Designing trust into money &amp; medicine.
+          Designing trust into complicated systems.
         </h1>
         <p className="mt-8 max-w-[620px] text-base font-normal leading-relaxed text-ink/72 md:text-lg">
-          Leading end-to-end product design for banks, health platforms and
-          fintechs across Africa — turning complex regulated systems into
-          experiences people trust.
+          Leading end-to-end product design across Africa — turning complex,
+          high-stakes products into experiences people actually trust.
         </p>
         <div className="mt-10 flex flex-wrap gap-7 md:gap-14">
           <Stat value="10+ yrs" label="years of experience" />
