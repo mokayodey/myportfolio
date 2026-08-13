@@ -186,8 +186,24 @@ export default function TidaRetail() {
 
         {/* goals & impact */}
         <div id="result" className="scroll-mt-24 px-4 py-16 sm:px-5 md:px-14 md:py-24">
-          <div className="mb-9 text-xs font-semibold uppercase leading-none tracking-[.14em] text-ink/50">
-            Proving the thesis — pilot results
+          <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-accent">
+            The goal
+          </div>
+          <p className="mb-9 max-w-[760px] text-base font-normal leading-relaxed text-ink/78 md:text-[17px]">
+            Two different questions turned out to be the same question. For
+            a small retailer with no formal record of their own
+            performance, it was: how do we improve their access to credit,
+            and unlock room to grow? For a larger retailer already running
+            digital tools, it was: how do we improve how they actually
+            manage the operation those tools were supposed to simplify?
+            Different store sizes, same underlying leak — and at the scale
+            of a country where the vast majority of retail runs through
+            small, informal shops, that leak isn&apos;t a store-level
+            inconvenience. It&apos;s a tax on how fast the whole economy can
+            grow.
+          </p>
+          <div className="mb-1.5 text-[11px] font-semibold uppercase leading-none tracking-[.1em] text-accent">
+            What we achieved
           </div>
           <p className="mb-10 max-w-[720px] text-base font-normal leading-relaxed text-ink/75 md:text-[17px]">
             Before scaling nationally, we needed to de-risk the core bet —
