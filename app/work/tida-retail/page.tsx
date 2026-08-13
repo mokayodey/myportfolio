@@ -176,6 +176,24 @@ export default function TidaRetail() {
               </div>
             ))}
           </div>
+          <p className="mt-8 max-w-[760px] text-base font-normal leading-relaxed text-ink/82 md:text-lg">
+            This isn&apos;t only a large-retailer problem — it&apos;s mostly a
+            small-retailer one. An estimated 97% of Nigeria&apos;s retail
+            transactions run through small, independent shops rather than
+            large chains, and most of those retailers keep no formal record
+            of their own performance at all. That&apos;s not incidental to
+            the credit problem — it&apos;s the cause of it. Credit
+            facilities for small businesses exist; what most of these
+            retailers lack isn&apos;t access to lenders, it&apos;s a
+            verifiable trail of their own numbers that a lender could use to
+            judge them creditworthy.
+          </p>
+          <p className="m-0 mt-3 max-w-[760px] text-sm font-normal italic leading-relaxed text-ink/55">
+            Sources: Boston Consulting Group (2022), cited in Oxford Business
+            Group&apos;s Nigeria 2024 report; PwC Nigeria MSME Survey 2024
+            (lack of documentation cited among the core barriers to credit
+            access).
+          </p>
         </SectionRow>
 
         <SectionRow label="Cost of the gap" bg="muted">
